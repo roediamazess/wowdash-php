@@ -15,3 +15,5 @@ Stack trace:
 [31-Jul-2025 12:57:51 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: USR002
 [31-Jul-2025 12:58:40 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["USR004"]}
 [31-Jul-2025 12:58:40 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: USR004
+[31-Jul-2025 14:49:18 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["USR005"]}
+[31-Jul-2025 14:49:18 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: USR005

@@ -51,14 +51,6 @@ include_once __DIR__ . '/partials/get_tiers.php';
                             <iconify-icon icon="ri-add-line" class="icon text-xl line-height-1"></iconify-icon>
                         Add New User
                         </button>
-                        <button id="edit-user-btn" class="btn btn-warning text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2" disabled>
-                            <iconify-icon icon="ri-pencil-line" class="icon text-xl line-height-1"></iconify-icon> 
-                            Edit User
-                        </button>
-                        <button id="delete-user-btn" class="btn btn-danger text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center gap-2" disabled>
-                            <iconify-icon icon="ri-delete-bin-line" class="icon text-xl line-height-1"></iconify-icon> 
-                            Delete User
-                        </button>
                     </div>
                 </div>
                 <div class="card-body p-24">
@@ -66,14 +58,7 @@ include_once __DIR__ . '/partials/get_tiers.php';
                         <table class="table bordered-table sm-table mb-0">
                             <thead>
                                 <tr>
-                                    <th scope="col">
-                                        <div class="d-flex align-items-center gap-10">
-                                            <div class="form-check style-check d-flex align-items-center">
-                                                <input class="form-check-input radius-4 border input-form-dark" type="checkbox" id="selectAll">
-                                            </div>
-                                            User ID
-                                        </div>
-                                    </th>
+                                    <th scope="col">User ID</th>
                                     <th scope="col">User Name</th>
                                     <th scope="col">User Tier</th>
                                     <th scope="col">Start Work</th>
@@ -89,7 +74,7 @@ $sql = "SELECT user_id, user_name, user_tier, start_work, user_role, user_email,
 $result = $conn->query($sql);
 if ($result && $result->num_rows > 0) {
     while ($row = $result->fetch_assoc()) {
-        echo '<tr id="user-row-' . htmlspecialchars($row["user_id"]) . '" 
+        echo '<tr class="user-row" 
             data-user-id="' . htmlspecialchars($row["user_id"]) . '" 
             data-user-name="' . htmlspecialchars($row["user_name"]) . '" 
             data-user-tier="' . htmlspecialchars($row["user_tier"]) . '" 
@@ -97,14 +82,7 @@ if ($result && $result->num_rows > 0) {
             data-user-role="' . htmlspecialchars($row["user_role"]) . '" 
             data-user-email="' . htmlspecialchars($row["user_email"]) . '" 
             data-birthday="' . htmlspecialchars($row["birthday"]) . '">';
-        echo '<td>';
-        echo '<div class="d-flex align-items-center gap-10">';
-        echo '<div class="form-check style-check d-flex align-items-center">';
-        echo '<input class="form-check-input user-checkbox radius-4 border border-neutral-400" type="checkbox" value="' . htmlspecialchars($row["user_id"]) . '">';
-        echo '</div>';
-        echo '<span class="user-id">' . htmlspecialchars($row["user_id"]) . '</span>';
-        echo '</div>';
-        echo '</td>';
+        echo '<td class="user-id">' . htmlspecialchars($row["user_id"]) . '</td>';
         echo '<td class="user-name">' . htmlspecialchars($row["user_name"]) . '</td>';
         echo '<td class="user-tier">' . htmlspecialchars($row["user_tier"]) . '</td>';
         echo '<td class="start-work">' . htmlspecialchars($row["start_work"]) . '</td>';
@@ -114,7 +92,7 @@ if ($result && $result->num_rows > 0) {
         echo '</tr>';
     }
 } else {
-    echo '<tr><td colspan="8" class="text-center">No users found.</td></tr>';
+    echo '<tr><td colspan="7" class="text-center">No users found.</td></tr>';
 }
 ?>
                             </tbody>
@@ -200,6 +178,59 @@ if ($result && $result->num_rows > 0) {
             </div>
         </div>
 
+        <!-- User Detail Modal -->
+        <div class="modal fade" id="userDetailModal" tabindex="-1" aria-labelledby="userDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="userDetailModalLabel">User Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">User ID</label>
+                                    <p class="mb-0" id="detailUserId"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">User Name</label>
+                                    <p class="mb-0" id="detailUserName"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">User Tier</label>
+                                    <p class="mb-0" id="detailUserTier"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">Start Work</label>
+                                    <p class="mb-0" id="detailStartWork"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">User Roles</label>
+                                    <p class="mb-0" id="detailUserRole"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">User Email</label>
+                                    <p class="mb-0" id="detailUserEmail"></p>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">Birthday</label>
+                                    <p class="mb-0" id="detailBirthday"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" id="editUserBtn">Edit</button>
+                        <button type="button" class="btn btn-danger" id="deleteUserBtn">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Edit User Modal -->
         <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -250,25 +281,66 @@ if ($result && $result->num_rows > 0) {
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="updateUserBtn">Update</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="updateUserBtn">Update User</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- View User Modal -->
-        <!-- Removed View User Modal as per user request -->
+        <style>
+            /* Hover effects for user rows */
+            .user-row {
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .user-row:hover {
+                background-color: #90caf9 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(33, 150, 243, 0.3);
+                border-left: 4px solid #1565c0;
+                color: #0d47a1;
+                font-weight: 600;
+                border-radius: 4px;
+            }
+            
+            /* Table styling improvements */
+            .table tbody tr {
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .table tbody tr:last-child {
+                border-bottom: none;
+            }
+            
+            /* Smooth transitions for all interactive elements */
+            .btn {
+                transition: all 0.2s ease;
+            }
+            
+            .btn:hover {
+                transform: translateY(-1px);
+            }
+            
+            /* Modal styling */
+            .modal-lg {
+                max-width: 800px;
+            }
+            
+            .form-label.fw-semibold {
+                color: #6c757d;
+                font-size: 0.875rem;
+                margin-bottom: 0.25rem;
+            }
+        </style>
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
             document.addEventListener('DOMContentLoaded', function() {
                 const addUserModal = new bootstrap.Modal(document.getElementById('addUserModal'));
+                const userDetailModal = new bootstrap.Modal(document.getElementById('userDetailModal'));
                 const editUserModal = new bootstrap.Modal(document.getElementById('editUserModal'));
-                const editBtn = document.getElementById('edit-user-btn');
-                const deleteBtn = document.getElementById('delete-user-btn');
-                const selectAllCheckbox = document.getElementById('selectAll');
-                const userCheckboxes = document.querySelectorAll('.user-checkbox');
 
                 const showToast = (message, icon = 'success') => {
                     Swal.fire({
@@ -320,11 +392,54 @@ if ($result && $result->num_rows > 0) {
                         showToast(data.message);
                         addUserModal.hide();
                         document.getElementById('addUserForm').reset();
-                        // Instead of reloading, you can dynamically add the new row
-                        // For simplicity, we'll reload. For better UX, implement addTableRow().
                         location.reload(); 
                     } else if (data) {
                         showToast(data.message, 'error');
+                    }
+                });
+
+                // Row click event to show user details
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.user-row')) {
+                        const row = e.target.closest('.user-row');
+                        
+                        // Populate detail modal
+                        document.getElementById('detailUserId').textContent = row.dataset.userId;
+                        document.getElementById('detailUserName').textContent = row.dataset.userName;
+                        document.getElementById('detailUserTier').textContent = row.dataset.userTier;
+                        document.getElementById('detailStartWork').textContent = row.dataset.startWork;
+                        document.getElementById('detailUserRole').textContent = row.dataset.userRole;
+                        document.getElementById('detailUserEmail').textContent = row.dataset.userEmail;
+                        document.getElementById('detailBirthday').textContent = row.dataset.birthday;
+                        
+                        // Store current user data for edit/delete
+                        window.currentUserData = {
+                            userId: row.dataset.userId,
+                            userName: row.dataset.userName,
+                            userTier: row.dataset.userTier,
+                            startWork: row.dataset.startWork,
+                            userRole: row.dataset.userRole,
+                            userEmail: row.dataset.userEmail,
+                            birthday: row.dataset.birthday
+                        };
+                        
+                        userDetailModal.show();
+                    }
+                });
+
+                // Edit user button in detail modal
+                document.getElementById('editUserBtn').addEventListener('click', function() {
+                    if (window.currentUserData) {
+                        document.getElementById('editUserId').value = window.currentUserData.userId;
+                        document.getElementById('editUserName').value = window.currentUserData.userName;
+                        document.getElementById('editUserTier').value = window.currentUserData.userTier;
+                        document.getElementById('editStartWork').value = window.currentUserData.startWork;
+                        document.getElementById('editUserRole').value = window.currentUserData.userRole;
+                        document.getElementById('editUserEmail').value = window.currentUserData.userEmail;
+                        document.getElementById('editBirthday').value = window.currentUserData.birthday;
+                        
+                        userDetailModal.hide();
+                        editUserModal.show();
                     }
                 });
 
@@ -345,80 +460,49 @@ if ($result && $result->num_rows > 0) {
                         showToast(data.message);
                         editUserModal.hide();
                         updateTableRow(data.data);
+                        // Update detail modal data
+                        if (window.currentUserData) {
+                            window.currentUserData = data.data;
+                        }
                     } else {
                         showToast(data.message, 'error');
                     }
                 });
 
-                // Delete selected users
-                deleteBtn.addEventListener('click', function() {
-                    const selectedCheckboxes = document.querySelectorAll('.user-checkbox:checked');
-                    const userIds = Array.from(selectedCheckboxes).map(cb => cb.value);
+                // Delete user button in detail modal
+                document.getElementById('deleteUserBtn').addEventListener('click', function() {
+                    if (window.currentUserData) {
+                        const userName = window.currentUserData.userName;
+                        const userId = window.currentUserData.userId;
 
-                    if (userIds.length > 0) {
                         Swal.fire({
-                            title: `Are you sure you want to delete ${userIds.length} user(s)?`,
+                            title: `Are you sure you want to delete ${userName}?`,
                             text: "You won't be able to revert this!",
                             icon: 'warning',
                             showCancelButton: true,
-                            confirmButtonColor: '#3085d6',
-                            cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, delete them!'
+                            confirmButtonColor: '#dc3545',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Yes, delete!',
+                            cancelButtonText: 'Cancel'
                         }).then(async (result) => {
                             if (result.isConfirmed) {
-                                const data = await apiCall('api-user-delete.php', { userIds: userIds });
+                                const data = await apiCall('api-user-delete.php', { userIds: [userId] });
                                 if (data && data.success) {
-                                    showToast(data.message || `${userIds.length} user(s) deleted successfully.`);
-                                    userIds.forEach(userId => {
-                                        const row = document.getElementById(`user-row-${userId}`);
-                                        if (row) row.remove();
-                                    });
+                                    showToast(data.message || `${userName} deleted successfully.`);
+                                    userDetailModal.hide();
+                                    // Remove the row from table
+                                    const row = document.querySelector(`[data-user-id="${userId}"]`);
+                                    if (row) row.remove();
                                 } else {
-                                    showToast(data.message || 'Failed to delete users.', 'error');
+                                    showToast(data.message || 'Failed to delete user.', 'error');
                                 }
-                                // Uncheck select all and update button states
-                                selectAllCheckbox.checked = false;
-                                updateButtonStates();
                             }
                         });
                     }
                 });
 
-                // Edit selected user
-                editBtn.addEventListener('click', function() {
-                    const selectedCheckbox = document.querySelector('.user-checkbox:checked');
-                    if (selectedCheckbox) {
-                        const row = selectedCheckbox.closest('tr');
-                        document.getElementById('editUserId').value = row.dataset.userId;
-                        document.getElementById('editUserName').value = row.dataset.userName;
-                        document.getElementById('editUserTier').value = row.dataset.userTier;
-                        document.getElementById('editStartWork').value = row.dataset.startWork;
-                        document.getElementById('editUserRole').value = row.dataset.userRole;
-                        document.getElementById('editUserEmail').value = row.dataset.userEmail;
-                        document.getElementById('editBirthday').value = row.dataset.birthday;
-                        editUserModal.show();
-                    }
-                });
-
-                function updateButtonStates() {
-                    const selectedCount = document.querySelectorAll('.user-checkbox:checked').length;
-                    editBtn.disabled = selectedCount !== 1;
-                    deleteBtn.disabled = selectedCount === 0;
-                }
-
-                selectAllCheckbox.addEventListener('change', function() {
-                    userCheckboxes.forEach(checkbox => {
-                        checkbox.checked = this.checked;
-                    });
-                    updateButtonStates();
-                });
-
-                userCheckboxes.forEach(checkbox => {
-                    checkbox.addEventListener('change', updateButtonStates);
-                });
-
                 function updateTableRow(userData) {
-                    const row = document.getElementById(`user-row-${userData.userId}`);
+                    const row = document.querySelector(`[data-user-id="${userData.userId}"]`);
                     if (row) {
                         row.querySelector('.user-name').textContent = userData.userName;
                         row.querySelector('.user-tier').textContent = userData.userTier;
@@ -435,9 +519,7 @@ if ($result && $result->num_rows > 0) {
                         row.dataset.userEmail = userData.userEmail;
                         row.dataset.birthday = userData.birthday;
                     }
-                } 
-                // Initial state
-                updateButtonStates();
+                }
             });
         </script>
 
