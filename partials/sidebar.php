@@ -66,17 +66,7 @@
                 </a>
             </li>
 
-            <li class="dropdown">
-                <a href="javascript:void(0)">
-                    <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
-                    <span>Daily Activity</span>
-                </a>
-                <ul class="sidebar-submenu">
-                    <li>
-                        <a href="invoice-list.php"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> List</a>
-                    </li>
-                </ul>
-            </li>
+
 
 
 
