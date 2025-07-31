@@ -23,9 +23,18 @@ $emailCounts = [
     'trash' => 0
 ];
 
+// Debug information
+$debug = [];
+$debug['gmail_exists'] = file_exists('gmail-integration.php');
+$debug['gmail_configured'] = isset($gmail) ? $gmail->isConfigured() : false;
+$debug['is_authenticated'] = $isAuthenticated;
+$debug['session_token'] = isset($_SESSION['gmail_access_token']) ? 'exists' : 'not exists';
+
 if ($isAuthenticated && isset($gmail)) {
     try {
         $emailsData = $gmail->getEmails($_SESSION['gmail_access_token'], 20);
+        $debug['emails_data'] = $emailsData ? 'success' : 'failed';
+        
         if (isset($emailsData['messages'])) {
             foreach ($emailsData['messages'] as $message) {
                 $emailDetails = $gmail->getEmailDetails($_SESSION['gmail_access_token'], $message->id);
@@ -45,6 +54,7 @@ if ($isAuthenticated && isset($gmail)) {
     } catch (Exception $e) {
         // Handle error
         $error = "Error fetching emails: " . $e->getMessage();
+        $debug['error'] = $e->getMessage();
     }
 }
 ?>
@@ -81,6 +91,24 @@ if ($isAuthenticated && isset($gmail)) {
                             
                             <?php if (isset($gmail) && $gmail->isConfigured()): ?>
                             <p class="text-info mb-3"><small>Gmail API is configured. You can connect your Gmail account.</small></p>
+                            
+                            <!-- Debug Information (remove in production) -->
+                            <div class="alert alert-info mb-3">
+                                <h6><iconify-icon icon="mdi:bug" class="me-2"></iconify-icon>Debug Info:</h6>
+                                <small>
+                                    Gmail File: <?php echo $debug['gmail_exists'] ? '✓' : '✗'; ?><br>
+                                    Gmail Configured: <?php echo $debug['gmail_configured'] ? '✓' : '✗'; ?><br>
+                                    Authenticated: <?php echo $debug['is_authenticated'] ? '✓' : '✗'; ?><br>
+                                    Session Token: <?php echo $debug['session_token']; ?><br>
+                                    <?php if (isset($debug['emails_data'])): ?>
+                                    Emails Data: <?php echo $debug['emails_data']; ?><br>
+                                    <?php endif; ?>
+                                    <?php if (isset($debug['error'])): ?>
+                                    Error: <?php echo $debug['error']; ?><br>
+                                    <?php endif; ?>
+                                </small>
+                            </div>
+                            
                             <div class="d-flex gap-2 justify-content-center">
                                 <a href="<?php echo $authUrl; ?>" class="btn btn-primary">
                                     <iconify-icon icon="mdi:gmail" class="me-2"></iconify-icon>
