@@ -66,7 +66,6 @@
                 </a>
             </li>
 
-
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
@@ -76,17 +75,11 @@
                     <li>
                         <a href="invoice-list.php"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> List</a>
                     </li>
-                    <li>
-                        <a href="invoice-preview.php"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Preview</a>
-                    </li>
-                    <li>
-                        <a href="invoice-add.php"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add new</a>
-                    </li>
-                    <li>
-                        <a href="invoice-edit.php"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Edit</a>
-                    </li>
                 </ul>
             </li>
+
+
+
 
 
             <li class="sidebar-menu-group-title">UI Elements</li>

@@ -16,6 +16,20 @@
                 </ul>
             </div>
 
+            <!-- Add New Daily Activity Button -->
+            <div class="card mb-4">
+                <div class="card-body">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <h6 class="mb-0">Daily Activity Management</h6>
+                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addDailyActivityModal">
+                            <iconify-icon icon="ri-add-line" class="me-2"></iconify-icon>
+                            Add New Daily Activity
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Daily Activity List -->
             <div class="card">
                 <div class="card-header d-flex flex-wrap align-items-center justify-content-between gap-3">
                     <div class="d-flex flex-wrap align-items-center gap-3">
@@ -28,7 +42,7 @@
                             </select>
                         </div>
                         <div class="icon-field">
-                            <input type="text" name="#0" class="form-control form-control-sm w-auto" placeholder="Search">
+                            <input type="text" name="search" class="form-control form-control-sm w-auto" placeholder="Search Daily Activity">
                             <span class="icon">
                                 <iconify-icon icon="ion:search-outline"></iconify-icon>
                             </span>
@@ -36,374 +50,349 @@
                     </div>
                     <div class="d-flex flex-wrap align-items-center gap-3">
                         <select class="form-select form-select-sm w-auto">
-                            <option>Satatus</option>
-                            <option>Paid</option>
-                            <option>Pending</option>
+                            <option>All Status</option>
+                            <option>Open</option>
+                            <option>On Progress</option>
+                            <option>Need Requirement</option>
+                            <option>Done</option>
                         </select>
-                        <a href="invoice-add.php" class="btn btn-sm btn-primary-600"><i class="ri-add-line"></i> Create Daily Activity</a>
                     </div>
                 </div>
-                <div class="card-body">
-                    <table class="table bordered-table mb-0">
-                        <thead>
-                            <tr>
-                                <th scope="col">
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="checkAll">
-                                        <label class="form-check-label" for="checkAll">
-                                            S.L
-                                        </label>
+                <div class="card-body p-0">
+                    <div class="daily-activity-list">
+                        <div class="activity-item p-16 border-bottom" data-activity-id="1" onclick="viewDailyActivity(1)">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="activity-number">
+                                        <div class="w-32-px h-32-px bg-primary-600 rounded-circle d-flex align-items-center justify-content-center">
+                                            <span class="text-white fw-semibold text-sm">001</span>
+                                        </div>
                                     </div>
-                                </th>
-                                <th scope="col">Invoice</th>
-                                <th scope="col">Name</th>
-                                <th scope="col">Issued Date</th>
-                                <th scope="col">Amount</th>
-                                <th scope="col">Status</th>
-                                <th scope="col">Action</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check1">
-                                        <label class="form-check-label" for="check1">
-                                            01
-                                        </label>
+                                    <div>
+                                        <h6 class="mb-1 fw-semibold">John Doe - Manager</h6>
+                                        <p class="mb-1 text-secondary-light">Food & Beverage • POS System</p>
+                                        <p class="mb-0 text-secondary-light text-sm">Setup new POS system for restaurant area</p>
                                     </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#526534</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list1.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Kathryn Murphy</h6>
+                                </div>
+                                <div class="text-end">
+                                    <div class="mb-2">
+                                        <span class="bg-warning-focus text-warning-main px-24 py-4 rounded-pill fw-medium text-sm">On Progress</span>
                                     </div>
-                                </td>
-                                <td>25 Jan 2024</td>
-                                <td>$200.00</td>
-                                <td> <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Paid</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check2">
-                                        <label class="form-check-label" for="check2">
-                                            02
-                                        </label>
+                                    <div class="text-secondary-light text-sm">
+                                        <div>Info: 25 Jan 2024</div>
+                                        <div>Due: 30 Jan 2024</div>
                                     </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#696589</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list2.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Annette Black</h6>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="activity-item p-16 border-bottom" data-activity-id="2" onclick="viewDailyActivity(2)">
+                            <div class="d-flex align-items-center justify-content-between">
+                                <div class="d-flex align-items-center gap-3">
+                                    <div class="activity-number">
+                                        <div class="w-32-px h-32-px bg-primary-600 rounded-circle d-flex align-items-center justify-content-center">
+                                            <span class="text-white fw-semibold text-sm">002</span>
+                                        </div>
                                     </div>
-                                </td>
-                                <td>25 Jan 2024</td>
-                                <td>$200.00</td>
-                                <td> <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Paid</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check3">
-                                        <label class="form-check-label" for="check3">
-                                            03
-                                        </label>
+                                    <div>
+                                        <h6 class="mb-1 fw-semibold">Jane Smith - Supervisor</h6>
+                                        <p class="mb-1 text-secondary-light">Kitchen • Inventory System</p>
+                                        <p class="mb-0 text-secondary-light text-sm">Inventory system showing incorrect stock levels</p>
                                     </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#256584</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list3.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Ronald Richards</h6>
+                                </div>
+                                <div class="text-end">
+                                    <div class="mb-2">
+                                        <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Done</span>
                                     </div>
-                                </td>
-                                <td>10 Feb 2024</td>
-                                <td>$200.00</td>
-                                <td> <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Paid</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check4">
-                                        <label class="form-check-label" for="check4">
-                                            04
-                                        </label>
+                                    <div class="text-secondary-light text-sm">
+                                        <div>Info: 24 Jan 2024</div>
+                                        <div>Due: 26 Jan 2024</div>
                                     </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#526587</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list4.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Eleanor Pena</h6>
-                                    </div>
-                                </td>
-                                <td>10 Feb 2024</td>
-                                <td>$150.00</td>
-                                <td> <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Paid</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check5">
-                                        <label class="form-check-label" for="check5">
-                                            05
-                                        </label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#105986</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list5.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Leslie Alexander</h6>
-                                    </div>
-                                </td>
-                                <td>15 March 2024</td>
-                                <td>$150.00</td>
-                                <td> <span class="bg-warning-focus text-warning-main px-24 py-4 rounded-pill fw-medium text-sm">Pending</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check6">
-                                        <label class="form-check-label" for="check6">
-                                            06
-                                        </label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#526589</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list6.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Albert Flores</h6>
-                                    </div>
-                                </td>
-                                <td>15 March 2024</td>
-                                <td>$150.00</td>
-                                <td> <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Paid</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check7">
-                                        <label class="form-check-label" for="check7">
-                                            07
-                                        </label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#526520</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list7.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Jacob Jones</h6>
-                                    </div>
-                                </td>
-                                <td>27 April 2024</td>
-                                <td>$250.00</td>
-                                <td> <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Paid</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check8">
-                                        <label class="form-check-label" for="check8">
-                                            08
-                                        </label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#256584</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list8.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Jerome Bell</h6>
-                                    </div>
-                                </td>
-                                <td>27 April 2024</td>
-                                <td>$250.00</td>
-                                <td> <span class="bg-warning-focus text-warning-main px-24 py-4 rounded-pill fw-medium text-sm">Pending</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check9">
-                                        <label class="form-check-label" for="check9">
-                                            09
-                                        </label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#200257</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list9.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Marvin McKinney</h6>
-                                    </div>
-                                </td>
-                                <td>30 April 2024</td>
-                                <td>$250.00</td>
-                                <td> <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Paid</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>
-                                    <div class="form-check style-check d-flex align-items-center">
-                                        <input class="form-check-input" type="checkbox" value="" id="check110">
-                                        <label class="form-check-label" for="check110">
-                                            10
-                                        </label>
-                                    </div>
-                                </td>
-                                <td><a href="javascript:void(0)" class="text-primary-600">#526525</a></td>
-                                <td>
-                                    <div class="d-flex align-items-center">
-                                        <img src="assets/images/user-list/user-list10.png" alt="" class="flex-shrink-0 me-12 radius-8">
-                                        <h6 class="text-md mb-0 fw-medium flex-grow-1">Cameron Williamson</h6>
-                                    </div>
-                                </td>
-                                <td>30 April 2024</td>
-                                <td>$250.00</td>
-                                <td> <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Paid</span> </td>
-                                <td>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-primary-light text-primary-600 rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="iconamoon:eye-light"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-success-focus text-success-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="lucide:edit"></iconify-icon>
-                                    </a>
-                                    <a href="javascript:void(0)" class="w-32-px h-32-px bg-danger-focus text-danger-main rounded-circle d-inline-flex align-items-center justify-content-center">
-                                        <iconify-icon icon="mingcute:delete-2-line"></iconify-icon>
-                                    </a>
-                                </td>
-                            </tr>
-                        </tbody>
-                    </table>
-
-                    <div class="d-flex flex-wrap align-items-center justify-content-between gap-2 mt-24">
-                        <span>Showing 1 to 10 of 12 entries</span>
-                        <ul class="pagination d-flex flex-wrap align-items-center gap-2 justify-content-center">
-                            <li class="page-item">
-                                <a class="page-link text-secondary-light fw-medium radius-4 border-0 px-10 py-10 d-flex align-items-center justify-content-center h-32-px w-32-px bg-base" href="javascript:void(0)">
-                                    <iconify-icon icon="ep:d-arrow-left" class="text-xl"></iconify-icon>
-                                </a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link bg-primary-600 text-white fw-medium radius-4 border-0 px-10 py-10 d-flex align-items-center justify-content-center h-32-px w-32-px" href="javascript:void(0)">1</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link bg-primary-50 text-secondary-light fw-medium radius-4 border-0 px-10 py-10 d-flex align-items-center justify-content-center h-32-px w-32-px" href="javascript:void(0)">2</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link bg-primary-50 text-secondary-light fw-medium radius-4 border-0 px-10 py-10 d-flex align-items-center justify-content-center h-32-px w-32-px" href="javascript:void(0)">3</a>
-                            </li>
-                            <li class="page-item">
-                                <a class="page-link text-secondary-light fw-medium radius-4 border-0 px-10 py-10 d-flex align-items-center justify-content-center h-32-px w-32-px bg-base" href="javascript:void(0)">
-                                    <iconify-icon icon="ep:d-arrow-right" class="text-xl"></iconify-icon>
-                                </a>
-                            </li>
-                        </ul>
+                                </div>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-
         </div>
+
+        <!-- Add New Daily Activity Modal -->
+        <div class="modal fade" id="addDailyActivityModal" tabindex="-1" aria-labelledby="addDailyActivityModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="addDailyActivityModalLabel">Add New Daily Activity</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="dailyActivityForm">
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="informationDate" class="form-label">Information Date <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="informationDate" required>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="userPosition" class="form-label">User & Position <span class="text-danger">*</span></label>
+                                    <input type="text" class="form-control" id="userPosition" placeholder="e.g., John Doe - Manager" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="department" required>
+                                        <option value="">Select Department</option>
+                                        <option value="Food & Beverage">Food & Beverage</option>
+                                        <option value="Kitchen">Kitchen</option>
+                                        <option value="Room Division">Room Division</option>
+                                        <option value="Front Office">Front Office</option>
+                                        <option value="Housekeeping">Housekeeping</option>
+                                        <option value="Engineering">Engineering</option>
+                                        <option value="Sales & Marketing">Sales & Marketing</option>
+                                        <option value="IT / EDP">IT / EDP</option>
+                                        <option value="Accounting">Accounting</option>
+                                        <option value="Executive Office">Executive Office</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="application" class="form-label">Application <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="application" required>
+                                        <option value="">Select Application</option>
+                                        <option value="POS System">POS System</option>
+                                        <option value="Inventory System">Inventory System</option>
+                                        <option value="Booking System">Booking System</option>
+                                        <option value="HR System">HR System</option>
+                                        <option value="Accounting System">Accounting System</option>
+                                    </select>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="type" class="form-label">Type <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="type" required>
+                                        <option value="">Select Type</option>
+                                        <option value="Setup">Setup</option>
+                                        <option value="Question">Question</option>
+                                        <option value="Issue">Issue</option>
+                                        <option value="Report Issue">Report Issue</option>
+                                        <option value="Report Request">Report Request</option>
+                                        <option value="Feature Request">Feature Request</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="dueDate" class="form-label">Due Date <span class="text-danger">*</span></label>
+                                    <input type="date" class="form-control" id="dueDate" required>
+                                </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-6 mb-3">
+                                    <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
+                                    <select class="form-select" id="status" required>
+                                        <option value="">Select Status</option>
+                                        <option value="Open">Open</option>
+                                        <option value="On Progress">On Progress</option>
+                                        <option value="Need Requirement">Need Requirement</option>
+                                        <option value="Done">Done</option>
+                                    </select>
+                                </div>
+                                <div class="col-md-6 mb-3">
+                                    <label for="cncNumber" class="form-label">CNC Number</label>
+                                    <input type="text" class="form-control" id="cncNumber" placeholder="Enter CNC Number">
+                                </div>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="description" class="form-label">Description <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="description" rows="4" placeholder="Enter detailed description..." required></textarea>
+                            </div>
+                            
+                            <div class="mb-3">
+                                <label for="actionSolution" class="form-label">Action / Solution <span class="text-danger">*</span></label>
+                                <textarea class="form-control" id="actionSolution" rows="4" placeholder="Enter action or solution..." required></textarea>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-primary" onclick="saveDailyActivity()">Save Daily Activity</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View Daily Activity Modal -->
+        <div class="modal fade" id="viewDailyActivityModal" tabindex="-1" aria-labelledby="viewDailyActivityModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-xl">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewDailyActivityModalLabel">Daily Activity Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Information Date</label>
+                                <p class="mb-0" id="viewInformationDate"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">User & Position</label>
+                                <p class="mb-0" id="viewUserPosition"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Department</label>
+                                <p class="mb-0" id="viewDepartment"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Application</label>
+                                <p class="mb-0" id="viewApplication"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Type</label>
+                                <p class="mb-0" id="viewType"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Due Date</label>
+                                <p class="mb-0" id="viewDueDate"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">Status</label>
+                                <p class="mb-0" id="viewStatus"></p>
+                            </div>
+                            <div class="col-md-6 mb-3">
+                                <label class="form-label fw-semibold">CNC Number</label>
+                                <p class="mb-0" id="viewCncNumber"></p>
+                            </div>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Description</label>
+                            <p class="mb-0" id="viewDescription"></p>
+                        </div>
+                        
+                        <div class="mb-3">
+                            <label class="form-label fw-semibold">Action / Solution</label>
+                            <p class="mb-0" id="viewActionSolution"></p>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <div class="d-flex gap-2">
+                            <button type="button" class="btn btn-success" onclick="editDailyActivity()">Edit</button>
+                            <button type="button" class="btn btn-danger" onclick="deleteDailyActivity()">Delete</button>
+                        </div>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <style>
+            .activity-item {
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .activity-item:hover {
+                background-color: #e3f2fd;
+                border-left: 3px solid #2196f3;
+            }
+        </style>
+
+        <script>
+            // View Daily Activity
+            function viewDailyActivity(id) {
+                // Demo data - in real app, fetch from database
+                const demoData = {
+                    1: {
+                        informationDate: '2024-01-25',
+                        userPosition: 'John Doe - Manager',
+                        department: 'Food & Beverage',
+                        application: 'POS System',
+                        type: 'Setup',
+                        dueDate: '2024-01-30',
+                        status: 'On Progress',
+                        cncNumber: 'CNC-001',
+                        description: 'Setup new POS system for restaurant area. Need to configure menu items, pricing, and payment methods.',
+                        actionSolution: 'Installation completed. Training scheduled for staff on January 28th.'
+                    },
+                    2: {
+                        informationDate: '2024-01-24',
+                        userPosition: 'Jane Smith - Supervisor',
+                        department: 'Kitchen',
+                        application: 'Inventory System',
+                        type: 'Issue',
+                        dueDate: '2024-01-26',
+                        status: 'Done',
+                        cncNumber: 'CNC-002',
+                        description: 'Inventory system showing incorrect stock levels for kitchen supplies.',
+                        actionSolution: 'Database sync issue resolved. Stock levels updated correctly.'
+                    }
+                };
+                
+                const data = demoData[id];
+                if (data) {
+                    document.getElementById('viewInformationDate').textContent = data.informationDate;
+                    document.getElementById('viewUserPosition').textContent = data.userPosition;
+                    document.getElementById('viewDepartment').textContent = data.department;
+                    document.getElementById('viewApplication').textContent = data.application;
+                    document.getElementById('viewType').textContent = data.type;
+                    document.getElementById('viewDueDate').textContent = data.dueDate;
+                    document.getElementById('viewStatus').textContent = data.status;
+                    document.getElementById('viewCncNumber').textContent = data.cncNumber;
+                    document.getElementById('viewDescription').textContent = data.description;
+                    document.getElementById('viewActionSolution').textContent = data.actionSolution;
+                    
+                    // Store current activity ID for edit/delete
+                    window.currentActivityId = id;
+                    
+                    const modal = new bootstrap.Modal(document.getElementById('viewDailyActivityModal'));
+                    modal.show();
+                }
+            }
+            
+            // Edit Daily Activity
+            function editDailyActivity() {
+                if (window.currentActivityId) {
+                    // Implementation for edit functionality
+                    alert('Edit functionality for Daily Activity ID: ' + window.currentActivityId);
+                }
+            }
+            
+            // Delete Daily Activity
+            function deleteDailyActivity() {
+                if (window.currentActivityId) {
+                    if (confirm('Are you sure you want to delete this Daily Activity?')) {
+                        // Implementation for delete functionality
+                        alert('Delete functionality for Daily Activity ID: ' + window.currentActivityId);
+                        const modal = bootstrap.Modal.getInstance(document.getElementById('viewDailyActivityModal'));
+                        modal.hide();
+                    }
+                }
+            }
+            
+            // Save Daily Activity
+            function saveDailyActivity() {
+                const form = document.getElementById('dailyActivityForm');
+                if (form.checkValidity()) {
+                    // Implementation for save functionality
+                    alert('Daily Activity saved successfully!');
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addDailyActivityModal'));
+                    modal.hide();
+                    form.reset();
+                } else {
+                    form.reportValidity();
+                }
+            }
+        </script>
 
 <?php include './partials/layouts/layoutBottom.php' ?>
