@@ -1,4 +1,10 @@
-<?php include './partials/layouts/layoutTop.php' ?>
+<?php 
+include './partials/layouts/layoutTop.php';
+require_once './daily_activity_functions.php';
+
+// Get activities from database
+$activities = $dailyActivityManager->getAllActivities(20, 0, null);
+?>
 
         <div class="dashboard-main-body">
 
@@ -60,57 +66,51 @@
                 </div>
                 <div class="card-body p-0">
                     <div class="daily-activity-list">
-                        <div class="activity-item p-16 border-bottom" data-activity-id="1" onclick="viewDailyActivity(1)">
+                        <?php if (empty($activities)): ?>
+                        <div class="text-center py-5">
+                            <iconify-icon icon="mdi:clipboard-text-outline" class="text-4xl text-secondary mb-3"></iconify-icon>
+                            <h6 class="text-secondary">No Daily Activities Found</h6>
+                            <p class="text-secondary-light">Start by adding your first daily activity</p>
+                        </div>
+                        <?php else: ?>
+                        <?php foreach ($activities as $activity): ?>
+                        <div class="activity-item p-16 border-bottom" data-activity-id="<?php echo $activity['id']; ?>" onclick="viewDailyActivity(<?php echo $activity['id']; ?>)">
                             <div class="d-flex align-items-center justify-content-between">
                                 <div class="d-flex align-items-center gap-3">
                                     <div class="activity-number">
                                         <div class="w-32-px h-32-px bg-primary-600 rounded-circle d-flex align-items-center justify-content-center">
-                                            <span class="text-white fw-semibold text-sm">001</span>
+                                            <span class="text-white fw-semibold text-sm"><?php echo substr($activity['activity_number'], 3); ?></span>
                                         </div>
                                     </div>
                                     <div>
-                                        <h6 class="mb-1 fw-semibold">John Doe - Manager</h6>
-                                        <p class="mb-1 text-secondary-light">Food & Beverage • POS System</p>
-                                        <p class="mb-0 text-secondary-light text-sm">Setup new POS system for restaurant area</p>
+                                        <h6 class="mb-1 fw-semibold"><?php echo htmlspecialchars($activity['user_position']); ?></h6>
+                                        <p class="mb-1 text-secondary-light"><?php echo htmlspecialchars($activity['department']); ?> • <?php echo htmlspecialchars($activity['application']); ?></p>
+                                        <p class="mb-0 text-secondary-light text-sm"><?php echo htmlspecialchars(substr($activity['description'], 0, 80)) . (strlen($activity['description']) > 80 ? '...' : ''); ?></p>
                                     </div>
                                 </div>
                                 <div class="text-end">
                                     <div class="mb-2">
-                                        <span class="bg-warning-focus text-warning-main px-24 py-4 rounded-pill fw-medium text-sm">On Progress</span>
+                                        <?php
+                                        $statusClass = '';
+                                        switch($activity['status']) {
+                                            case 'Open': $statusClass = 'bg-primary-focus text-primary-main'; break;
+                                            case 'On Progress': $statusClass = 'bg-warning-focus text-warning-main'; break;
+                                            case 'Need Requirement': $statusClass = 'bg-info-focus text-info-main'; break;
+                                            case 'Done': $statusClass = 'bg-success-focus text-success-main'; break;
+                                            default: $statusClass = 'bg-secondary-focus text-secondary-main';
+                                        }
+                                        ?>
+                                        <span class="<?php echo $statusClass; ?> px-24 py-4 rounded-pill fw-medium text-sm"><?php echo htmlspecialchars($activity['status']); ?></span>
                                     </div>
                                     <div class="text-secondary-light text-sm">
-                                        <div>Info: 25 Jan 2024</div>
-                                        <div>Due: 30 Jan 2024</div>
+                                        <div>Info: <?php echo date('d M Y', strtotime($activity['information_date'])); ?></div>
+                                        <div>Due: <?php echo date('d M Y', strtotime($activity['due_date'])); ?></div>
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        
-                        <div class="activity-item p-16 border-bottom" data-activity-id="2" onclick="viewDailyActivity(2)">
-                            <div class="d-flex align-items-center justify-content-between">
-                                <div class="d-flex align-items-center gap-3">
-                                    <div class="activity-number">
-                                        <div class="w-32-px h-32-px bg-primary-600 rounded-circle d-flex align-items-center justify-content-center">
-                                            <span class="text-white fw-semibold text-sm">002</span>
-                                        </div>
-                                    </div>
-                                    <div>
-                                        <h6 class="mb-1 fw-semibold">Jane Smith - Supervisor</h6>
-                                        <p class="mb-1 text-secondary-light">Kitchen • Inventory System</p>
-                                        <p class="mb-0 text-secondary-light text-sm">Inventory system showing incorrect stock levels</p>
-                                    </div>
-                                </div>
-                                <div class="text-end">
-                                    <div class="mb-2">
-                                        <span class="bg-success-focus text-success-main px-24 py-4 rounded-pill fw-medium text-sm">Done</span>
-                                    </div>
-                                    <div class="text-secondary-light text-sm">
-                                        <div>Info: 24 Jan 2024</div>
-                                        <div>Due: 26 Jan 2024</div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <?php endforeach; ?>
+                        <?php endif; ?>
                     </div>
                 </div>
             </div>
@@ -142,27 +142,24 @@
                                     <label for="department" class="form-label">Department <span class="text-danger">*</span></label>
                                     <select class="form-select" id="department" required>
                                         <option value="">Select Department</option>
-                                        <option value="Food & Beverage">Food & Beverage</option>
-                                        <option value="Kitchen">Kitchen</option>
-                                        <option value="Room Division">Room Division</option>
-                                        <option value="Front Office">Front Office</option>
-                                        <option value="Housekeeping">Housekeeping</option>
-                                        <option value="Engineering">Engineering</option>
-                                        <option value="Sales & Marketing">Sales & Marketing</option>
-                                        <option value="IT / EDP">IT / EDP</option>
-                                        <option value="Accounting">Accounting</option>
-                                        <option value="Executive Office">Executive Office</option>
+                                        <?php 
+                                        $departments = $dailyActivityManager->getDepartments();
+                                        foreach ($departments as $dept): 
+                                        ?>
+                                        <option value="<?php echo htmlspecialchars($dept['name']); ?>"><?php echo htmlspecialchars($dept['name']); ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
                                     <label for="application" class="form-label">Application <span class="text-danger">*</span></label>
                                     <select class="form-select" id="application" required>
                                         <option value="">Select Application</option>
-                                        <option value="POS System">POS System</option>
-                                        <option value="Inventory System">Inventory System</option>
-                                        <option value="Booking System">Booking System</option>
-                                        <option value="HR System">HR System</option>
-                                        <option value="Accounting System">Accounting System</option>
+                                        <?php 
+                                        $applications = $dailyActivityManager->getApplications();
+                                        foreach ($applications as $app): 
+                                        ?>
+                                        <option value="<?php echo htmlspecialchars($app['name']); ?>"><?php echo htmlspecialchars($app['name']); ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                             </div>
@@ -172,12 +169,12 @@
                                     <label for="type" class="form-label">Type <span class="text-danger">*</span></label>
                                     <select class="form-select" id="type" required>
                                         <option value="">Select Type</option>
-                                        <option value="Setup">Setup</option>
-                                        <option value="Question">Question</option>
-                                        <option value="Issue">Issue</option>
-                                        <option value="Report Issue">Report Issue</option>
-                                        <option value="Report Request">Report Request</option>
-                                        <option value="Feature Request">Feature Request</option>
+                                        <?php 
+                                        $types = $dailyActivityManager->getActivityTypes();
+                                        foreach ($types as $type): 
+                                        ?>
+                                        <option value="<?php echo htmlspecialchars($type['name']); ?>"><?php echo htmlspecialchars($type['name']); ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -191,10 +188,12 @@
                                     <label for="status" class="form-label">Status <span class="text-danger">*</span></label>
                                     <select class="form-select" id="status" required>
                                         <option value="">Select Status</option>
-                                        <option value="Open">Open</option>
-                                        <option value="On Progress">On Progress</option>
-                                        <option value="Need Requirement">Need Requirement</option>
-                                        <option value="Done">Done</option>
+                                        <?php 
+                                        $statuses = $dailyActivityManager->getStatusOptions();
+                                        foreach ($statuses as $status): 
+                                        ?>
+                                        <option value="<?php echo htmlspecialchars($status['name']); ?>"><?php echo htmlspecialchars($status['name']); ?></option>
+                                        <?php endforeach; ?>
                                     </select>
                                 </div>
                                 <div class="col-md-6 mb-3">
@@ -311,53 +310,43 @@
         <script>
             // View Daily Activity
             function viewDailyActivity(id) {
-                // Demo data - in real app, fetch from database
-                const demoData = {
-                    1: {
-                        informationDate: '2024-01-25',
-                        userPosition: 'John Doe - Manager',
-                        department: 'Food & Beverage',
-                        application: 'POS System',
-                        type: 'Setup',
-                        dueDate: '2024-01-30',
-                        status: 'On Progress',
-                        cncNumber: 'CNC-001',
-                        description: 'Setup new POS system for restaurant area. Need to configure menu items, pricing, and payment methods.',
-                        actionSolution: 'Installation completed. Training scheduled for staff on January 28th.'
+                // Fetch activity data from database
+                fetch('daily_activity_functions.php', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/x-www-form-urlencoded',
                     },
-                    2: {
-                        informationDate: '2024-01-24',
-                        userPosition: 'Jane Smith - Supervisor',
-                        department: 'Kitchen',
-                        application: 'Inventory System',
-                        type: 'Issue',
-                        dueDate: '2024-01-26',
-                        status: 'Done',
-                        cncNumber: 'CNC-002',
-                        description: 'Inventory system showing incorrect stock levels for kitchen supplies.',
-                        actionSolution: 'Database sync issue resolved. Stock levels updated correctly.'
+                    body: `action=get_activity&id=${id}`
+                })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success && data.data) {
+                        const activity = data.data;
+                        
+                        document.getElementById('viewInformationDate').textContent = activity.information_date;
+                        document.getElementById('viewUserPosition').textContent = activity.user_position;
+                        document.getElementById('viewDepartment').textContent = activity.department;
+                        document.getElementById('viewApplication').textContent = activity.application;
+                        document.getElementById('viewType').textContent = activity.type;
+                        document.getElementById('viewDueDate').textContent = activity.due_date;
+                        document.getElementById('viewStatus').textContent = activity.status;
+                        document.getElementById('viewCncNumber').textContent = activity.cnc_number || 'N/A';
+                        document.getElementById('viewDescription').textContent = activity.description;
+                        document.getElementById('viewActionSolution').textContent = activity.action_solution;
+                        
+                        // Store current activity ID for edit/delete
+                        window.currentActivityId = id;
+                        
+                        const modal = new bootstrap.Modal(document.getElementById('viewDailyActivityModal'));
+                        modal.show();
+                    } else {
+                        alert('Failed to load activity details');
                     }
-                };
-                
-                const data = demoData[id];
-                if (data) {
-                    document.getElementById('viewInformationDate').textContent = data.informationDate;
-                    document.getElementById('viewUserPosition').textContent = data.userPosition;
-                    document.getElementById('viewDepartment').textContent = data.department;
-                    document.getElementById('viewApplication').textContent = data.application;
-                    document.getElementById('viewType').textContent = data.type;
-                    document.getElementById('viewDueDate').textContent = data.dueDate;
-                    document.getElementById('viewStatus').textContent = data.status;
-                    document.getElementById('viewCncNumber').textContent = data.cncNumber;
-                    document.getElementById('viewDescription').textContent = data.description;
-                    document.getElementById('viewActionSolution').textContent = data.actionSolution;
-                    
-                    // Store current activity ID for edit/delete
-                    window.currentActivityId = id;
-                    
-                    const modal = new bootstrap.Modal(document.getElementById('viewDailyActivityModal'));
-                    modal.show();
-                }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('Error loading activity details');
+                });
             }
             
             // Edit Daily Activity
@@ -372,10 +361,30 @@
             function deleteDailyActivity() {
                 if (window.currentActivityId) {
                     if (confirm('Are you sure you want to delete this Daily Activity?')) {
-                        // Implementation for delete functionality
-                        alert('Delete functionality for Daily Activity ID: ' + window.currentActivityId);
-                        const modal = bootstrap.Modal.getInstance(document.getElementById('viewDailyActivityModal'));
-                        modal.hide();
+                        // Delete from database
+                        fetch('daily_activity_functions.php', {
+                            method: 'POST',
+                            headers: {
+                                'Content-Type': 'application/x-www-form-urlencoded',
+                            },
+                            body: `action=delete_activity&id=${window.currentActivityId}`
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            if (data.success) {
+                                alert('Activity deleted successfully!');
+                                const modal = bootstrap.Modal.getInstance(document.getElementById('viewDailyActivityModal'));
+                                modal.hide();
+                                // Reload page to refresh list
+                                location.reload();
+                            } else {
+                                alert('Failed to delete activity: ' + data.message);
+                            }
+                        })
+                        .catch(error => {
+                            console.error('Error:', error);
+                            alert('Error deleting activity');
+                        });
                     }
                 }
             }
@@ -384,11 +393,30 @@
             function saveDailyActivity() {
                 const form = document.getElementById('dailyActivityForm');
                 if (form.checkValidity()) {
-                    // Implementation for save functionality
-                    alert('Daily Activity saved successfully!');
-                    const modal = bootstrap.Modal.getInstance(document.getElementById('addDailyActivityModal'));
-                    modal.hide();
-                    form.reset();
+                    const formData = new FormData(form);
+                    formData.append('action', 'create_activity');
+                    
+                    fetch('daily_activity_functions.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            alert('Daily Activity saved successfully!');
+                            const modal = bootstrap.Modal.getInstance(document.getElementById('addDailyActivityModal'));
+                            modal.hide();
+                            form.reset();
+                            // Reload page to refresh list
+                            location.reload();
+                        } else {
+                            alert('Failed to save activity: ' + data.message);
+                        }
+                    })
+                    .catch(error => {
+                        console.error('Error:', error);
+                        alert('Error saving activity');
+                    });
                 } else {
                     form.reportValidity();
                 }
