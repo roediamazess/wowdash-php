@@ -35,21 +35,32 @@ if ($isAuthenticated && isset($gmail)) {
         $emailsData = $gmail->getEmails($_SESSION['gmail_access_token'], 20);
         $debug['emails_data'] = $emailsData ? 'success' : 'failed';
         
-        if (isset($emailsData['messages'])) {
+        if (isset($emailsData['messages']) && is_array($emailsData['messages'])) {
             foreach ($emailsData['messages'] as $message) {
-                $emailDetails = $gmail->getEmailDetails($_SESSION['gmail_access_token'], $message->id);
-                $headers = $gmail->parseEmailHeaders($emailDetails['payload']['headers']);
+                // Check if message is object or array
+                $messageId = is_object($message) ? $message->id : $message['id'];
                 
-                $emails[] = [
-                    'id' => $message->id,
-                    'subject' => $headers['Subject'] ?? 'No Subject',
-                    'from' => $headers['From'] ?? 'Unknown',
-                    'date' => $headers['Date'] ?? '',
-                    'snippet' => $emailDetails['snippet'] ?? '',
-                    'isRead' => !in_array('UNREAD', $emailDetails['labelIds'] ?? []),
-                    'isStarred' => in_array('STARRED', $emailDetails['labelIds'] ?? [])
-                ];
+                $emailDetails = $gmail->getEmailDetails($_SESSION['gmail_access_token'], $messageId);
+                
+                // Check if emailDetails is valid
+                if ($emailDetails && isset($emailDetails['payload']) && isset($emailDetails['payload']['headers'])) {
+                    $headers = $gmail->parseEmailHeaders($emailDetails['payload']['headers']);
+                    
+                    $emails[] = [
+                        'id' => $messageId,
+                        'subject' => $headers['Subject'] ?? 'No Subject',
+                        'from' => $headers['From'] ?? 'Unknown',
+                        'date' => $headers['Date'] ?? '',
+                        'snippet' => $emailDetails['snippet'] ?? '',
+                        'isRead' => !in_array('UNREAD', $emailDetails['labelIds'] ?? []),
+                        'isStarred' => in_array('STARRED', $emailDetails['labelIds'] ?? [])
+                    ];
+                } else {
+                    $debug['error'] = 'Invalid email details structure';
+                }
             }
+        } else {
+            $debug['error'] = 'No messages found or invalid structure';
         }
     } catch (Exception $e) {
         // Handle error
@@ -106,8 +117,23 @@ if ($isAuthenticated && isset($gmail)) {
                                     <?php if (isset($debug['error'])): ?>
                                     Error: <?php echo $debug['error']; ?><br>
                                     <?php endif; ?>
+                                    <?php if (isset($error)): ?>
+                                    <strong>PHP Error:</strong> <?php echo $error; ?><br>
+                                    <?php endif; ?>
                                 </small>
                             </div>
+                            
+                            <?php if (isset($debug['error']) || isset($error)): ?>
+                            <div class="alert alert-warning mb-3">
+                                <h6><iconify-icon icon="mdi:alert" class="me-2"></iconify-icon>Gmail Connection Issue</h6>
+                                <p class="mb-2">There seems to be an issue with the Gmail connection. You can:</p>
+                                <ul class="mb-0">
+                                    <li>Try connecting again by clicking "Connect Gmail Account"</li>
+                                    <li>Use demo emails by clicking "Show Demo Emails"</li>
+                                    <li>Check your Gmail API configuration</li>
+                                </ul>
+                            </div>
+                            <?php endif; ?>
                             
                             <div class="d-flex gap-2 justify-content-center">
                                 <a href="<?php echo $authUrl; ?>" class="btn btn-primary">
