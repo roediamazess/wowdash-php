@@ -71,19 +71,7 @@
                 </a>
             </li>
 
-            <li>
-                <a href="activity.php">
-                    <iconify-icon icon="mdi:chart-timeline-variant" class="menu-icon"></iconify-icon>
-                    <span>List</span>
-                </a>
-            </li>
 
-            <li>
-                <a href="activity.php?view=kanban">
-                    <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
-                    <span>Kanban Board</span>
-                </a>
-            </li>
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
@@ -104,26 +92,7 @@
                     </li>
                 </ul>
             </li>
-            <li class="dropdown">
-                <a href="javascript:void(0)">
-                    <i class="ri-btc-line text-xl me-6 d-flex w-auto"></i>
-                    <span>Crypto Currency</span>
-                </a>
-                <ul class="sidebar-submenu">
-                    <li>
-                        <a href="wallet.php"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Wallet</a>
-                    </li>
-                    <li>
-                        <a href="marketplace.php"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Marketplace</a>
-                    </li>
-                    <li>
-                        <a href="marketplace-details.php"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Marketplace Details</a>
-                    </li>
-                    <li>
-                        <a href="portfolio.php"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Portfolios</a>
-                    </li>
-                </ul>
-            </li>
+
 
             <li class="sidebar-menu-group-title">UI Elements</li>
 
@@ -287,27 +256,6 @@
                     <span>Settings</span>
                 </a>
                 <ul class="sidebar-submenu">
-                    <li>
-                        <a href="company.php"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Company</a>
-                    </li>
-                    <li>
-                        <a href="notification.php"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Notification</a>
-                    </li>
-                    <li>
-                        <a href="notification-alert.php"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Notification Alert</a>
-                    </li>
-                    <li>
-                        <a href="theme.php"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Theme</a>
-                    </li>
-                    <li>
-                        <a href="currencies.php"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Currencies</a>
-                    </li>
-                    <li>
-                        <a href="language.php"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Languages</a>
-                    </li>
-                    <li>
-                        <a href="payment-gateway.php"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Payment Gateway</a>
-                    </li>
                     <li>
                         <a href="project-status.php"><i class="ri-circle-fill circle-icon text-success-main w-auto"></i> Project Status</a>
                     </li>

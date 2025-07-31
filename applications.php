@@ -35,23 +35,12 @@
                                         <tr>
                                             <th scope="col">App Code</th>
                                             <th scope="col">App Name</th>
-                                            <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr class="app-row" data-app-code="FO8" data-app-name="Cloud FO">
                                             <td>FO8</td>
                                             <td>Cloud FO</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editAppModal" data-code="FO8" data-name="Cloud FO">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAppModal" data-code="FO8">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
                                         <tr>
                                             <td>POS8</td>

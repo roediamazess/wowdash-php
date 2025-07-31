@@ -35,191 +35,60 @@
                                         <tr>
                                             <th scope="col">Project ID</th>
                                             <th scope="col">Project Name</th>
-                                            <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Implementation" data-type-name="Implementation">
                                             <td>Implementation</td>
                                             <td>Implementation</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Implementation" data-name="Implementation">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Implementation">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Upgrade" data-type-name="Upgrade">
                                             <td>Upgrade</td>
                                             <td>Upgrade</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Upgrade" data-name="Upgrade">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Upgrade">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Maintenance" data-type-name="Maintenance">
                                             <td>Maintenance</td>
                                             <td>Maintenance</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Maintenance" data-name="Maintenance">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Maintenance">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Retraining" data-type-name="Retraining">
                                             <td>Retraining</td>
                                             <td>Retraining</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Retraining" data-name="Retraining">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Retraining">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="On Line Maintenance" data-type-name="On Line Maintenance">
                                             <td>On Line Maintenance</td>
                                             <td>On Line Maintenance</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="On Line Maintenance" data-name="On Line Maintenance">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="On Line Maintenance">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Remote Installation" data-type-name="Remote Installation">
                                             <td>Remote Installation</td>
                                             <td>Remote Installation</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Remote Installation" data-name="Remote Installation">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Remote Installation">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="On Line Training" data-type-name="On Line Training">
                                             <td>On Line Training</td>
                                             <td>On Line Training</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="On Line Training" data-name="On Line Training">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="On Line Training">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="In House Training" data-type-name="In House Training">
                                             <td>In House Training</td>
                                             <td>In House Training</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="In House Training" data-name="In House Training">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="In House Training">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Special Request" data-type-name="Special Request">
                                             <td>Special Request</td>
                                             <td>Special Request</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Special Request" data-name="Special Request">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Special Request">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="2nd Implementation" data-type-name="2nd Implementation">
                                             <td>2nd Implementation</td>
                                             <td>2nd Implementation</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="2nd Implementation" data-name="2nd Implementation">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="2nd Implementation">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Others" data-type-name="Others">
                                             <td>Others</td>
                                             <td>Others</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Others" data-name="Others">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Others">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Jakarta Support" data-type-name="Jakarta Support">
                                             <td>Jakarta Support</td>
                                             <td>Jakarta Support</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Jakarta Support" data-name="Jakarta Support">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Jakarta Support">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="type-row" data-type-id="Bali Support" data-type-name="Bali Support">
                                             <td>Bali Support</td>
                                             <td>Bali Support</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editTypeModal" data-id="Bali Support" data-name="Bali Support">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteTypeModal" data-id="Bali Support">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -258,6 +127,39 @@
             </div>
         </div>
 
+        <!-- Type Detail Modal -->
+        <div class="modal fade" id="typeDetailModal" tabindex="-1" aria-labelledby="typeDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="typeDetailModalLabel">Type Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">Project ID</label>
+                                    <p class="mb-0" id="detailTypeId"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">Project Name</label>
+                                    <p class="mb-0" id="detailTypeName"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" id="editTypeBtn">Edit</button>
+                        <button type="button" class="btn btn-danger" id="deleteTypeBtn">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Edit Type Modal -->
         <div class="modal fade" id="editTypeModal" tabindex="-1" aria-labelledby="editTypeModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -276,98 +178,170 @@
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="updateTypeBtn">Update</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="updateTypeBtn">Update Type</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Delete Type Modal -->
-        <div class="modal fade" id="deleteTypeModal" tabindex="-1" aria-labelledby="deleteTypeModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteTypeModalLabel">Delete Type</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this type?</p>
-                        <input type="hidden" id="deleteTypeId">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <style>
+            /* Hover effects for type rows */
+            .type-row {
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .type-row:hover {
+                background-color: #90caf9 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(33, 150, 243, 0.3);
+                border-left: 4px solid #1565c0;
+                color: #0d47a1;
+                font-weight: 600;
+                border-radius: 4px;
+            }
+            
+            /* Table styling improvements */
+            .table tbody tr {
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .table tbody tr:last-child {
+                border-bottom: none;
+            }
+            
+            /* Smooth transitions for all interactive elements */
+            .btn {
+                transition: all 0.2s ease;
+            }
+            
+            .btn:hover {
+                transform: translateY(-1px);
+            }
+            
+            /* Modal styling */
+            .modal-lg {
+                max-width: 800px;
+            }
+            
+            .form-label.fw-semibold {
+                color: #6c757d;
+                font-size: 0.875rem;
+                margin-bottom: 0.25rem;
+            }
+        </style>
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            // Add event listeners for edit buttons
-            document.querySelectorAll('[data-bs-target="#editTypeModal"]').forEach(button => {
-                button.addEventListener('click', function() {
-                    const typeId = this.getAttribute('data-id');
-                    const name = this.getAttribute('data-name');
+            document.addEventListener('DOMContentLoaded', function() {
+                const addTypeModal = new bootstrap.Modal(document.getElementById('addTypeModal'));
+                const typeDetailModal = new bootstrap.Modal(document.getElementById('typeDetailModal'));
+                const editTypeModal = new bootstrap.Modal(document.getElementById('editTypeModal'));
+
+                const showToast = (message, icon = 'success') => {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: icon,
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                };
+
+                // Row click event to show type details
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.type-row')) {
+                        const row = e.target.closest('.type-row');
+                        
+                        // Populate detail modal
+                        document.getElementById('detailTypeId').textContent = row.dataset.typeId;
+                        document.getElementById('detailTypeName').textContent = row.dataset.typeName;
+                        
+                        // Store current type data for edit/delete
+                        window.currentTypeData = {
+                            typeId: row.dataset.typeId,
+                            typeName: row.dataset.typeName
+                        };
+                        
+                        typeDetailModal.show();
+                    }
+                });
+
+                // Edit type button in detail modal
+                document.getElementById('editTypeBtn').addEventListener('click', function() {
+                    if (window.currentTypeData) {
+                        document.getElementById('editTypeId').value = window.currentTypeData.typeId;
+                        document.getElementById('editTypeName').value = window.currentTypeData.typeName;
+                        
+                        typeDetailModal.hide();
+                        editTypeModal.show();
+                    }
+                });
+
+                // Delete type button in detail modal
+                document.getElementById('deleteTypeBtn').addEventListener('click', function() {
+                    if (window.currentTypeData) {
+                        const typeId = window.currentTypeData.typeId;
+
+                        Swal.fire({
+                            title: `Are you sure you want to delete type "${typeId}"?`,
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#dc3545',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Yes, delete!',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Here you would typically send the data to the server
+                                console.log('Deleting type:', typeId);
+                                
+                                showToast('Type deleted successfully!');
+                                typeDetailModal.hide();
+                                
+                                // Remove the row from table
+                                const row = document.querySelector(`[data-type-id="${typeId}"]`);
+                                if (row) row.remove();
+                            }
+                        });
+                    }
+                });
+
+                // Save type button event
+                document.getElementById('saveTypeBtn').addEventListener('click', function() {
+                    const typeId = document.getElementById('typeId').value;
+                    const typeName = document.getElementById('typeName').value;
                     
-                    document.getElementById('editTypeId').value = typeId;
-                    document.getElementById('editTypeName').value = name;
+                    // Here you would typically send the data to the server
+                    console.log('Saving type:', { typeId, typeName });
+                    
+                    showToast('Type saved successfully!');
+                    addTypeModal.hide();
+                    document.getElementById('addTypeForm').reset();
                 });
-            });
 
-            // Add event listeners for delete buttons
-            document.querySelectorAll('[data-bs-target="#deleteTypeModal"]').forEach(button => {
-                button.addEventListener('click', function() {
-                    const typeId = this.getAttribute('data-id');
-                    document.getElementById('deleteTypeId').value = typeId;
+                // Update type button event
+                document.getElementById('updateTypeBtn').addEventListener('click', function() {
+                    const typeId = document.getElementById('editTypeId').value;
+                    const typeName = document.getElementById('editTypeName').value;
+                    
+                    // Here you would typically send the data to the server
+                    console.log('Updating type:', { typeId, typeName });
+                    
+                    showToast('Type updated successfully!');
+                    editTypeModal.hide();
+                    
+                    // Update the row in table
+                    const row = document.querySelector(`[data-type-id="${typeId}"]`);
+                    if (row) {
+                        row.dataset.typeName = typeName;
+                        row.querySelector('td:last-child').textContent = typeName;
+                    }
                 });
-            });
-
-            // Save type button event
-            document.getElementById('saveTypeBtn').addEventListener('click', function() {
-                const typeId = document.getElementById('typeId').value;
-                const name = document.getElementById('typeName').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Saving type:', { typeId, name });
-                
-                // Close the modal
-                document.getElementById('addTypeModal').querySelector('.btn-close').click();
-                
-                // Reset form
-                document.getElementById('addTypeForm').reset();
-                
-                // Show success message (in a real app)
-                alert('Type saved successfully!');
-            });
-
-            // Update type button event
-            document.getElementById('updateTypeBtn').addEventListener('click', function() {
-                const typeId = document.getElementById('editTypeId').value;
-                const name = document.getElementById('editTypeName').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Updating type:', { typeId, name });
-                
-                // Close the modal
-                document.getElementById('editTypeModal').querySelector('.btn-close').click();
-                
-                // Show success message (in a real app)
-                alert('Type updated successfully!');
-            });
-
-            // Delete type button event
-            document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-                const typeId = document.getElementById('deleteTypeId').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Deleting type:', typeId);
-                
-                // Close the modal
-                document.getElementById('deleteTypeModal').querySelector('.btn-close').click();
-                
-                // Show success message (in a real app)
-                alert('Type deleted successfully!');
             });
         </script>
 

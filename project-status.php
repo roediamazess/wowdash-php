@@ -35,107 +35,36 @@
                                         <tr>
                                             <th scope="col">Status ID</th>
                                             <th scope="col">Description</th>
-                                            <th scope="col">Actions</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
+                                        <tr class="status-row" data-status-id="Scheduled" data-description="Jadwal yang telah diagendakan">
                                             <td>Scheduled</td>
                                             <td>Jadwal yang telah diagendakan</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editStatusModal" data-id="Scheduled" data-description="Jadwal yang telah diagendakan">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStatusModal" data-id="Scheduled">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="status-row" data-status-id="Running" data-description="Projek sedang berjalan">
                                             <td>Running</td>
                                             <td>Projek sedang berjalan</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editStatusModal" data-id="Running" data-description="Projek sedang berjalan">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStatusModal" data-id="Running">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="status-row" data-status-id="Document" data-description="Projek selesai, namun team belum menyerahkan Berita Acara">
                                             <td>Document</td>
                                             <td>Projek selesai, namun team belum menyerahkan Berita Acara</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editStatusModal" data-id="Document" data-description="Projek selesai, namun team belum menyerahkan Berita Acara">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStatusModal" data-id="Document">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="status-row" data-status-id="Document Check" data-description="Projek selesai, team sudah menyerahkan Berita Acara, belum dicek">
                                             <td>Document Check</td>
                                             <td>Projek selesai, team sudah menyerahkan Berita Acara, belum dicek</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editStatusModal" data-id="Document Check" data-description="Projek selesai, team sudah menyerahkan Berita Acara, belum dicek">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStatusModal" data-id="Document Check">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="status-row" data-status-id="Done" data-description="Projek selesai, Berita Acara sudah diserahkan dan sudah dilakukan pengecekan">
                                             <td>Done</td>
                                             <td>Projek selesai, Berita Acara sudah diserahkan dan sudah dilakukan pengecekan</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editStatusModal" data-id="Done" data-description="Projek selesai, Berita Acara sudah diserahkan dan sudah dilakukan pengecekan">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStatusModal" data-id="Done">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="status-row" data-status-id="Cancel" data-description="Projek dibatalkan">
                                             <td>Cancel</td>
                                             <td>Projek dibatalkan</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editStatusModal" data-id="Cancel" data-description="Projek dibatalkan">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStatusModal" data-id="Cancel">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
-                                        <tr>
+                                        <tr class="status-row" data-status-id="Rejected" data-description="Pengajuan Projek, namun ditolak oleh pihak hotel">
                                             <td>Rejected</td>
                                             <td>Pengajuan Projek, namun ditolak oleh pihak hotel</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editStatusModal" data-id="Rejected" data-description="Pengajuan Projek, namun ditolak oleh pihak hotel">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteStatusModal" data-id="Rejected">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -174,6 +103,39 @@
             </div>
         </div>
 
+        <!-- Status Detail Modal -->
+        <div class="modal fade" id="statusDetailModal" tabindex="-1" aria-labelledby="statusDetailModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="statusDetailModalLabel">Status Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">Status ID</label>
+                                    <p class="mb-0" id="detailStatusId"></p>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label fw-semibold text-secondary">Description</label>
+                                    <p class="mb-0" id="detailStatusDescription"></p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-warning" id="editStatusBtn">Edit</button>
+                        <button type="button" class="btn btn-danger" id="deleteStatusBtn">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
         <!-- Edit Status Modal -->
         <div class="modal fade" id="editStatusModal" tabindex="-1" aria-labelledby="editStatusModalLabel" aria-hidden="true">
             <div class="modal-dialog">
@@ -192,98 +154,170 @@
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="updateStatusBtn">Update</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="updateStatusBtn">Update Status</button>
                     </div>
                 </div>
             </div>
         </div>
 
-        <!-- Delete Status Modal -->
-        <div class="modal fade" id="deleteStatusModal" tabindex="-1" aria-labelledby="deleteStatusModalLabel" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <h5 class="modal-title" id="deleteStatusModalLabel">Delete Status</h5>
-                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                    </div>
-                    <div class="modal-body">
-                        <p>Are you sure you want to delete this status?</p>
-                        <input type="hidden" id="deleteStatusId">
-                    </div>
-                    <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
-                        <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
-                    </div>
-                </div>
-            </div>
-        </div>
+        <style>
+            /* Hover effects for status rows */
+            .status-row {
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .status-row:hover {
+                background-color: #90caf9 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(33, 150, 243, 0.3);
+                border-left: 4px solid #1565c0;
+                color: #0d47a1;
+                font-weight: 600;
+                border-radius: 4px;
+            }
+            
+            /* Table styling improvements */
+            .table tbody tr {
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .table tbody tr:last-child {
+                border-bottom: none;
+            }
+            
+            /* Smooth transitions for all interactive elements */
+            .btn {
+                transition: all 0.2s ease;
+            }
+            
+            .btn:hover {
+                transform: translateY(-1px);
+            }
+            
+            /* Modal styling */
+            .modal-lg {
+                max-width: 800px;
+            }
+            
+            .form-label.fw-semibold {
+                color: #6c757d;
+                font-size: 0.875rem;
+                margin-bottom: 0.25rem;
+            }
+        </style>
 
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            // Add event listeners for edit buttons
-            document.querySelectorAll('[data-bs-target="#editStatusModal"]').forEach(button => {
-                button.addEventListener('click', function() {
-                    const statusId = this.getAttribute('data-id');
-                    const description = this.getAttribute('data-description');
+            document.addEventListener('DOMContentLoaded', function() {
+                const addStatusModal = new bootstrap.Modal(document.getElementById('addStatusModal'));
+                const statusDetailModal = new bootstrap.Modal(document.getElementById('statusDetailModal'));
+                const editStatusModal = new bootstrap.Modal(document.getElementById('editStatusModal'));
+
+                const showToast = (message, icon = 'success') => {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: icon,
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                };
+
+                // Row click event to show status details
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.status-row')) {
+                        const row = e.target.closest('.status-row');
+                        
+                        // Populate detail modal
+                        document.getElementById('detailStatusId').textContent = row.dataset.statusId;
+                        document.getElementById('detailStatusDescription').textContent = row.dataset.description;
+                        
+                        // Store current status data for edit/delete
+                        window.currentStatusData = {
+                            statusId: row.dataset.statusId,
+                            description: row.dataset.description
+                        };
+                        
+                        statusDetailModal.show();
+                    }
+                });
+
+                // Edit status button in detail modal
+                document.getElementById('editStatusBtn').addEventListener('click', function() {
+                    if (window.currentStatusData) {
+                        document.getElementById('editStatusId').value = window.currentStatusData.statusId;
+                        document.getElementById('editStatusDescription').value = window.currentStatusData.description;
+                        
+                        statusDetailModal.hide();
+                        editStatusModal.show();
+                    }
+                });
+
+                // Delete status button in detail modal
+                document.getElementById('deleteStatusBtn').addEventListener('click', function() {
+                    if (window.currentStatusData) {
+                        const statusId = window.currentStatusData.statusId;
+
+                        Swal.fire({
+                            title: `Are you sure you want to delete status "${statusId}"?`,
+                            text: "You won't be able to revert this!",
+                            icon: 'warning',
+                            showCancelButton: true,
+                            confirmButtonColor: '#dc3545',
+                            cancelButtonColor: '#6c757d',
+                            confirmButtonText: 'Yes, delete!',
+                            cancelButtonText: 'Cancel'
+                        }).then((result) => {
+                            if (result.isConfirmed) {
+                                // Here you would typically send the data to the server
+                                console.log('Deleting status:', statusId);
+                                
+                                showToast('Status deleted successfully!');
+                                statusDetailModal.hide();
+                                
+                                // Remove the row from table
+                                const row = document.querySelector(`[data-status-id="${statusId}"]`);
+                                if (row) row.remove();
+                            }
+                        });
+                    }
+                });
+
+                // Save status button event
+                document.getElementById('saveStatusBtn').addEventListener('click', function() {
+                    const statusId = document.getElementById('statusId').value;
+                    const description = document.getElementById('statusDescription').value;
                     
-                    document.getElementById('editStatusId').value = statusId;
-                    document.getElementById('editStatusDescription').value = description;
+                    // Here you would typically send the data to the server
+                    console.log('Saving status:', { statusId, description });
+                    
+                    showToast('Status saved successfully!');
+                    addStatusModal.hide();
+                    document.getElementById('addStatusForm').reset();
                 });
-            });
 
-            // Add event listeners for delete buttons
-            document.querySelectorAll('[data-bs-target="#deleteStatusModal"]').forEach(button => {
-                button.addEventListener('click', function() {
-                    const statusId = this.getAttribute('data-id');
-                    document.getElementById('deleteStatusId').value = statusId;
+                // Update status button event
+                document.getElementById('updateStatusBtn').addEventListener('click', function() {
+                    const statusId = document.getElementById('editStatusId').value;
+                    const description = document.getElementById('editStatusDescription').value;
+                    
+                    // Here you would typically send the data to the server
+                    console.log('Updating status:', { statusId, description });
+                    
+                    showToast('Status updated successfully!');
+                    editStatusModal.hide();
+                    
+                    // Update the row in table
+                    const row = document.querySelector(`[data-status-id="${statusId}"]`);
+                    if (row) {
+                        row.dataset.description = description;
+                        row.querySelector('td:last-child').textContent = description;
+                    }
                 });
-            });
-
-            // Save status button event
-            document.getElementById('saveStatusBtn').addEventListener('click', function() {
-                const statusId = document.getElementById('statusId').value;
-                const description = document.getElementById('statusDescription').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Saving status:', { statusId, description });
-                
-                // Close the modal
-                document.getElementById('addStatusModal').querySelector('.btn-close').click();
-                
-                // Reset form
-                document.getElementById('addStatusForm').reset();
-                
-                // Show success message (in a real app)
-                alert('Status saved successfully!');
-            });
-
-            // Update status button event
-            document.getElementById('updateStatusBtn').addEventListener('click', function() {
-                const statusId = document.getElementById('editStatusId').value;
-                const description = document.getElementById('editStatusDescription').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Updating status:', { statusId, description });
-                
-                // Close the modal
-                document.getElementById('editStatusModal').querySelector('.btn-close').click();
-                
-                // Show success message (in a real app)
-                alert('Status updated successfully!');
-            });
-
-            // Delete status button event
-            document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-                const statusId = document.getElementById('deleteStatusId').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Deleting status:', statusId);
-                
-                // Close the modal
-                document.getElementById('deleteStatusModal').querySelector('.btn-close').click();
-                
-                // Show success message (in a real app)
-                alert('Status deleted successfully!');
             });
         </script>
 
