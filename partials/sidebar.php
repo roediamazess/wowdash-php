@@ -50,12 +50,7 @@
                 </ul>
             </li>
             <li class="sidebar-menu-group-title">Application</li>
-            <li>
-                <a href="email.php">
-                    <iconify-icon icon="mage:email" class="menu-icon"></iconify-icon>
-                    <span>Email</span>
-                </a>
-            </li>
+
             <!--
             <li>
                 <a href="chat-message.php">
