@@ -47,154 +47,6 @@ if ($isAuthenticated && isset($gmail)) {
         $error = "Error fetching emails: " . $e->getMessage();
     }
 }
-
-$script = '<script>
-    // Email functionality
-    document.addEventListener("DOMContentLoaded", function() {
-        // Star email functionality
-        document.querySelectorAll(".star-email").forEach(button => {
-            button.addEventListener("click", function(e) {
-                e.preventDefault();
-                this.classList.toggle("starred");
-            });
-        });
-        
-        // Email selection
-        document.querySelectorAll(".email-checkbox").forEach(checkbox => {
-            checkbox.addEventListener("change", function() {
-                updateEmailSelection();
-            });
-        });
-        
-        // Select all emails
-        const selectAllElement = document.getElementById("selectAllEmails");
-        if (selectAllElement) {
-            selectAllElement.addEventListener("change", function() {
-                const checkboxes = document.querySelectorAll(".email-checkbox");
-                checkboxes.forEach(checkbox => {
-                    checkbox.checked = this.checked;
-                });
-                updateEmailSelection();
-            });
-        }
-        
-        function updateEmailSelection() {
-            const selectedEmails = document.querySelectorAll(".email-checkbox:checked");
-            const deleteBtn = document.querySelector(".delete-selected");
-            
-            if (selectedEmails.length > 0) {
-                deleteBtn.classList.remove("d-none");
-            } else {
-                deleteBtn.classList.add("d-none");
-            }
-        }
-    });
-    
-    // Demo emails function
-    function showDemoEmails() {
-        const demoEmails = [
-            {
-                id: "demo1",
-                from: "john.doe@example.com",
-                subject: "Meeting Tomorrow",
-                snippet: "Hi, just a reminder about our meeting tomorrow at 10 AM...",
-                date: "2024-01-15",
-                isRead: false,
-                isStarred: true
-            },
-            {
-                id: "demo2", 
-                from: "sarah.smith@company.com",
-                subject: "Project Update",
-                snippet: "Here is the latest update on the project we discussed...",
-                date: "2024-01-14",
-                isRead: true,
-                isStarred: false
-            },
-            {
-                id: "demo3",
-                from: "support@service.com", 
-                subject: "Your Order #12345",
-                snippet: "Thank you for your order. Your items will be shipped...",
-                date: "2024-01-13",
-                isRead: true,
-                isStarred: false
-            },
-            {
-                id: "demo4",
-                from: "newsletter@tech.com",
-                subject: "Weekly Tech News",
-                snippet: "This week in tech: AI developments, new gadgets...",
-                date: "2024-01-12", 
-                isRead: false,
-                isStarred: true
-            }
-        ];
-        
-        const emailList = document.querySelector(".email-list");
-        if (emailList) {
-            emailList.innerHTML = "";
-            
-            demoEmails.forEach(email => {
-                const unreadClass = !email.isRead ? 'unread' : '';
-                const starredClass = email.isStarred ? 'starred' : '';
-                const boldClass = !email.isRead ? 'fw-bold' : '';
-                const starIcon = email.isStarred ? '-fill' : '';
-                const avatar = email.from.charAt(0).toUpperCase();
-                const date = new Date(email.date).toLocaleDateString("en-US", {month: "short", day: "numeric"});
-                
-                const emailHtml = "<div class=\"email-item p-16 border-bottom " + unreadClass + "\" data-email-id=\"" + email.id + "\">" +
-                    "<div class=\"d-flex align-items-center gap-3\">" +
-                        "<div class=\"form-check style-check d-flex align-items-center\">" +
-                            "<input class=\"form-check-input email-checkbox radius-4 border input-form-dark\" type=\"checkbox\" value=\"" + email.id + "\">" +
-                        "</div>" +
-                        "<button class=\"btn btn-sm btn-link star-email p-0 " + starredClass + "\">" +
-                            "<iconify-icon icon=\"ph:star" + starIcon + "\" class=\"text-warning\"></iconify-icon>" +
-                        "</button>" +
-                        "<div class=\"flex-grow-1\">" +
-                            "<div class=\"d-flex align-items-center justify-content-between\">" +
-                                "<div class=\"d-flex align-items-center gap-3\">" +
-                                    "<div class=\"avatar\">" +
-                                        "<div class=\"w-32-px h-32-px bg-primary-600 rounded-circle d-flex align-items-center justify-content-center\">" +
-                                            "<span class=\"text-white fw-semibold text-sm\">" + avatar + "</span>" +
-                                        "</div>" +
-                                    "</div>" +
-                                    "<div>" +
-                                        "<h6 class=\"mb-1 " + boldClass + "\">" + email.from + "</h6>" +
-                                        "<p class=\"mb-1 text-secondary-light\">" + email.subject + "</p>" +
-                                        "<p class=\"mb-0 text-secondary-light text-sm\">" + email.snippet + "</p>" +
-                                    "</div>" +
-                                "</div>" +
-                                "<div class=\"text-end\">" +
-                                    "<span class=\"text-secondary-light text-sm\">" + date + "</span>" +
-                                "</div>" +
-                            "</div>" +
-                        "</div>" +
-                    "</div>" +
-                "</div>";
-                emailList.innerHTML += emailHtml;
-            });
-            
-            // Update email counts
-            document.querySelector(".fw-medium").textContent = demoEmails.length;
-            document.querySelectorAll(".fw-medium")[1].textContent = demoEmails.filter(e => e.isStarred).length;
-            
-            // Reattach event listeners
-            document.querySelectorAll(".star-email").forEach(button => {
-                button.addEventListener("click", function(e) {
-                    e.preventDefault();
-                    this.classList.toggle("starred");
-                });
-            });
-            
-            document.querySelectorAll(".email-checkbox").forEach(checkbox => {
-                checkbox.addEventListener("change", function() {
-                    updateEmailSelection();
-                });
-            });
-        }
-    }
-</script>';
 ?>
 
 <?php include './partials/layouts/layoutTop.php' ?>
@@ -474,5 +326,153 @@ $script = '<script>
                 transition: all 0.3s ease;
             }
         </style>
+
+        <script>
+            // Email functionality
+            document.addEventListener("DOMContentLoaded", function() {
+                // Star email functionality
+                document.querySelectorAll(".star-email").forEach(button => {
+                    button.addEventListener("click", function(e) {
+                        e.preventDefault();
+                        this.classList.toggle("starred");
+                    });
+                });
+                
+                // Email selection
+                document.querySelectorAll(".email-checkbox").forEach(checkbox => {
+                    checkbox.addEventListener("change", function() {
+                        updateEmailSelection();
+                    });
+                });
+                
+                // Select all emails
+                const selectAllElement = document.getElementById("selectAllEmails");
+                if (selectAllElement) {
+                    selectAllElement.addEventListener("change", function() {
+                        const checkboxes = document.querySelectorAll(".email-checkbox");
+                        checkboxes.forEach(checkbox => {
+                            checkbox.checked = this.checked;
+                        });
+                        updateEmailSelection();
+                    });
+                }
+                
+                function updateEmailSelection() {
+                    const selectedEmails = document.querySelectorAll(".email-checkbox:checked");
+                    const deleteBtn = document.querySelector(".delete-selected");
+                    
+                    if (selectedEmails.length > 0) {
+                        deleteBtn.classList.remove("d-none");
+                    } else {
+                        deleteBtn.classList.add("d-none");
+                    }
+                }
+            });
+            
+            // Demo emails function
+            function showDemoEmails() {
+                const demoEmails = [
+                    {
+                        id: "demo1",
+                        from: "john.doe@example.com",
+                        subject: "Meeting Tomorrow",
+                        snippet: "Hi, just a reminder about our meeting tomorrow at 10 AM...",
+                        date: "2024-01-15",
+                        isRead: false,
+                        isStarred: true
+                    },
+                    {
+                        id: "demo2", 
+                        from: "sarah.smith@company.com",
+                        subject: "Project Update",
+                        snippet: "Here is the latest update on the project we discussed...",
+                        date: "2024-01-14",
+                        isRead: true,
+                        isStarred: false
+                    },
+                    {
+                        id: "demo3",
+                        from: "support@service.com", 
+                        subject: "Your Order #12345",
+                        snippet: "Thank you for your order. Your items will be shipped...",
+                        date: "2024-01-13",
+                        isRead: true,
+                        isStarred: false
+                    },
+                    {
+                        id: "demo4",
+                        from: "newsletter@tech.com",
+                        subject: "Weekly Tech News",
+                        snippet: "This week in tech: AI developments, new gadgets...",
+                        date: "2024-01-12", 
+                        isRead: false,
+                        isStarred: true
+                    }
+                ];
+                
+                const emailList = document.querySelector(".email-list");
+                if (emailList) {
+                    emailList.innerHTML = "";
+                    
+                    demoEmails.forEach(email => {
+                        const unreadClass = !email.isRead ? 'unread' : '';
+                        const starredClass = email.isStarred ? 'starred' : '';
+                        const boldClass = !email.isRead ? 'fw-bold' : '';
+                        const starIcon = email.isStarred ? '-fill' : '';
+                        const avatar = email.from.charAt(0).toUpperCase();
+                        const date = new Date(email.date).toLocaleDateString("en-US", {month: "short", day: "numeric"});
+                        
+                        const emailHtml = "<div class=\"email-item p-16 border-bottom " + unreadClass + "\" data-email-id=\"" + email.id + "\">" +
+                            "<div class=\"d-flex align-items-center gap-3\">" +
+                                "<div class=\"form-check style-check d-flex align-items-center\">" +
+                                    "<input class=\"form-check-input email-checkbox radius-4 border input-form-dark\" type=\"checkbox\" value=\"" + email.id + "\">" +
+                                "</div>" +
+                                "<button class=\"btn btn-sm btn-link star-email p-0 " + starredClass + "\">" +
+                                    "<iconify-icon icon=\"ph:star" + starIcon + "\" class=\"text-warning\"></iconify-icon>" +
+                                "</button>" +
+                                "<div class=\"flex-grow-1\">" +
+                                    "<div class=\"d-flex align-items-center justify-content-between\">" +
+                                        "<div class=\"d-flex align-items-center gap-3\">" +
+                                            "<div class=\"avatar\">" +
+                                                "<div class=\"w-32-px h-32-px bg-primary-600 rounded-circle d-flex align-items-center justify-content-center\">" +
+                                                    "<span class=\"text-white fw-semibold text-sm\">" + avatar + "</span>" +
+                                                "</div>" +
+                                            "</div>" +
+                                            "<div>" +
+                                                "<h6 class=\"mb-1 " + boldClass + "\">" + email.from + "</h6>" +
+                                                "<p class=\"mb-1 text-secondary-light\">" + email.subject + "</p>" +
+                                                "<p class=\"mb-0 text-secondary-light text-sm\">" + email.snippet + "</p>" +
+                                            "</div>" +
+                                        "</div>" +
+                                        "<div class=\"text-end\">" +
+                                            "<span class=\"text-secondary-light text-sm\">" + date + "</span>" +
+                                        "</div>" +
+                                    "</div>" +
+                                "</div>" +
+                            "</div>" +
+                        "</div>";
+                        emailList.innerHTML += emailHtml;
+                    });
+                    
+                    // Update email counts
+                    document.querySelector(".fw-medium").textContent = demoEmails.length;
+                    document.querySelectorAll(".fw-medium")[1].textContent = demoEmails.filter(e => e.isStarred).length;
+                    
+                    // Reattach event listeners
+                    document.querySelectorAll(".star-email").forEach(button => {
+                        button.addEventListener("click", function(e) {
+                            e.preventDefault();
+                            this.classList.toggle("starred");
+                        });
+                    });
+                    
+                    document.querySelectorAll(".email-checkbox").forEach(checkbox => {
+                        checkbox.addEventListener("change", function() {
+                            updateEmailSelection();
+                        });
+                    });
+                }
+            }
+        </script>
 
 <?php include './partials/layouts/layoutBottom.php' ?>
