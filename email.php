@@ -136,14 +136,21 @@ $script = '<script>
             emailList.innerHTML = "";
             
             demoEmails.forEach(email => {
+                const unreadClass = !email.isRead ? 'unread' : '';
+                const starredClass = email.isStarred ? 'starred' : '';
+                const boldClass = !email.isRead ? 'fw-bold' : '';
+                const starIcon = email.isStarred ? '-fill' : '';
+                const avatar = email.from.charAt(0).toUpperCase();
+                const date = new Date(email.date).toLocaleDateString("en-US", {month: "short", day: "numeric"});
+                
                 const emailHtml = \`
-                    <div class="email-item p-16 border-bottom \${!email.isRead ? \\'unread\\' : \\'\\'}" data-email-id="\${email.id}">
+                    <div class="email-item p-16 border-bottom \${unreadClass}" data-email-id="\${email.id}">
                         <div class="d-flex align-items-center gap-3">
                             <div class="form-check style-check d-flex align-items-center">
                                 <input class="form-check-input email-checkbox radius-4 border input-form-dark" type="checkbox" value="\${email.id}">
                             </div>
-                            <button class="btn btn-sm btn-link star-email p-0 \${email.isStarred ? \\'starred\\' : \\'\\'}">
-                                <iconify-icon icon="ph:star\${email.isStarred ? \\'-fill\\' : \\'\\'}" class="text-warning"></iconify-icon>
+                            <button class="btn btn-sm btn-link star-email p-0 \${starredClass}">
+                                <iconify-icon icon="ph:star\${starIcon}" class="text-warning"></iconify-icon>
                             </button>
                             <div class="flex-grow-1">
                                 <div class="d-flex align-items-center justify-content-between">
@@ -151,12 +158,12 @@ $script = '<script>
                                         <div class="avatar">
                                             <div class="w-32-px h-32-px bg-primary-600 rounded-circle d-flex align-items-center justify-content-center">
                                                 <span class="text-white fw-semibold text-sm">
-                                                    \${email.from.charAt(0).toUpperCase()}
+                                                    \${avatar}
                                                 </span>
                                             </div>
                                         </div>
                                         <div>
-                                            <h6 class="mb-1 \${!email.isRead ? \\'fw-bold\\' : \\'\\'}">
+                                            <h6 class="mb-1 \${boldClass}">
                                                 \${email.from}
                                             </h6>
                                             <p class="mb-1 text-secondary-light">
@@ -169,7 +176,7 @@ $script = '<script>
                                     </div>
                                     <div class="text-end">
                                         <span class="text-secondary-light text-sm">
-                                            \${new Date(email.date).toLocaleDateString("en-US", {month: "short", day: "numeric"})}
+                                            \${date}
                                         </span>
                                     </div>
                                 </div>
