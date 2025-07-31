@@ -76,9 +76,11 @@ if ($isAuthenticated && isset($gmail)) {
                             <div class="mb-4">
                                 <iconify-icon icon="mdi:gmail" class="text-6xl text-danger"></iconify-icon>
                             </div>
-                            <h5 class="mb-3">Connect Your Gmail Account</h5>
-                            <p class="text-secondary mb-4">To view your emails, please connect your Gmail account first.</p>
-                            <p class="text-warning mb-3"><small>Note: Gmail API setup required. For demo, click "Show Demo Emails" below.</small></p>
+                            <h5 class="mb-3">Email Dashboard</h5>
+                            <p class="text-secondary mb-4">Welcome to your email dashboard. You can view demo emails or connect your Gmail account.</p>
+                            
+                            <?php if (isset($gmail) && $gmail->isConfigured()): ?>
+                            <p class="text-info mb-3"><small>Gmail API is configured. You can connect your Gmail account.</small></p>
                             <div class="d-flex gap-2 justify-content-center">
                                 <a href="<?php echo $authUrl; ?>" class="btn btn-primary">
                                     <iconify-icon icon="mdi:gmail" class="me-2"></iconify-icon>
@@ -89,6 +91,19 @@ if ($isAuthenticated && isset($gmail)) {
                                     Show Demo Emails
                                 </button>
                             </div>
+                            <?php else: ?>
+                            <p class="text-warning mb-3"><small>Gmail API not configured. Using demo mode.</small></p>
+                            <div class="d-flex gap-2 justify-content-center">
+                                <button type="button" class="btn btn-primary" onclick="showDemoEmails()">
+                                    <iconify-icon icon="mdi:email-outline" class="me-2"></iconify-icon>
+                                    Show Demo Emails
+                                </button>
+                                <button type="button" class="btn btn-outline-secondary" onclick="showGmailSetup()">
+                                    <iconify-icon icon="mdi:cog" class="me-2"></iconify-icon>
+                                    Setup Gmail API
+                                </button>
+                            </div>
+                            <?php endif; ?>
                         </div>
                     </div>
                 </div>
@@ -472,6 +487,78 @@ if ($isAuthenticated && isset($gmail)) {
                         });
                     });
                 }
+            }
+            
+            // Gmail API Setup function
+            function showGmailSetup() {
+                const setupHtml = `
+                    <div class="modal fade" id="gmailSetupModal" tabindex="-1" aria-labelledby="gmailSetupModalLabel" aria-hidden="true">
+                        <div class="modal-dialog modal-lg">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="gmailSetupModalLabel">Setup Gmail API</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                </div>
+                                <div class="modal-body">
+                                    <div class="alert alert-info">
+                                        <h6><iconify-icon icon="mdi:information" class="me-2"></iconify-icon>Setup Instructions</h6>
+                                        <p class="mb-0">To connect your Gmail account, you need to configure the Gmail API first.</p>
+                                    </div>
+                                    
+                                    <h6 class="mt-4">Step 1: Create Google Cloud Project</h6>
+                                    <ol>
+                                        <li>Go to <a href="https://console.cloud.google.com/" target="_blank">Google Cloud Console</a></li>
+                                        <li>Create a new project or select existing project</li>
+                                        <li>Enable Gmail API for your project</li>
+                                    </ol>
+                                    
+                                    <h6 class="mt-4">Step 2: Create OAuth 2.0 Credentials</h6>
+                                    <ol>
+                                        <li>Go to "APIs & Services" > "Credentials"</li>
+                                        <li>Click "Create Credentials" > "OAuth 2.0 Client IDs"</li>
+                                        <li>Set Application Type to "Web application"</li>
+                                        <li>Add Authorized redirect URI: <code>http://localhost/Ultimate-Dashboard/wowdash-php/gmail-callback.php</code></li>
+                                        <li>Copy the Client ID and Client Secret</li>
+                                    </ol>
+                                    
+                                    <h6 class="mt-4">Step 3: Update Configuration</h6>
+                                    <ol>
+                                        <li>Open file: <code>wowdash-php/gmail-integration.php</code></li>
+                                        <li>Replace the placeholder values:</li>
+                                        <ul>
+                                            <li><code>clientId</code> with your actual Client ID</li>
+                                            <li><code>clientSecret</code> with your actual Client Secret</li>
+                                        </ul>
+                                    </ol>
+                                    
+                                    <div class="alert alert-warning mt-3">
+                                        <small><strong>Note:</strong> This is for development only. For production, use proper environment variables and security measures.</small>
+                                    </div>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                    <a href="https://console.cloud.google.com/" target="_blank" class="btn btn-primary">
+                                        <iconify-icon icon="mdi:google" class="me-2"></iconify-icon>
+                                        Go to Google Cloud Console
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                
+                // Remove existing modal if any
+                const existingModal = document.getElementById('gmailSetupModal');
+                if (existingModal) {
+                    existingModal.remove();
+                }
+                
+                // Add modal to body
+                document.body.insertAdjacentHTML('beforeend', setupHtml);
+                
+                // Show modal
+                const modal = new bootstrap.Modal(document.getElementById('gmailSetupModal'));
+                modal.show();
             }
         </script>
 
