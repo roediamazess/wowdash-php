@@ -28,7 +28,7 @@
                                     <thead>
                                         <tr>
                                             <th>S.L</th>
-                                            <th>Invoice</th>
+                                            <th>Activity</th>
                                             <th>Name</th>
                                             <th>Issued Date</th>
                                             <th>Amount</th>
@@ -96,7 +96,7 @@
                                 <table class="table basic-border-table mb-0">
                                     <thead>
                                         <tr>
-                                            <th>Invoice </th>
+                                            <th>Activity </th>
                                             <th>Name</th>
                                             <th>Issued Date</th>
                                             <th>Amount</th>
@@ -558,7 +558,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Users</th>
-                                            <th scope="col">Invoice</th>
+                                            <th scope="col">Activity</th>
                                             <th scope="col">Items</th>
                                             <th scope="col">Qty</th>
                                             <th scope="col">Amount</th>

@@ -1,0 +1,17 @@
+[31-Jul-2025 06:51:45 Europe/Berlin] PHP Fatal error:  Uncaught mysqli_sql_exception: Table 'db_ultimate.users' doesn't exist in C:\xampp\htdocs\Ultimate-Dashboard\wowdash-php\api-user.php:51
+Stack trace:
+#0 C:\xampp\htdocs\Ultimate-Dashboard\wowdash-php\api-user.php(51): mysqli->prepare('INSERT INTO use...')
+#1 {main}
+  thrown in C:\xampp\htdocs\Ultimate-Dashboard\wowdash-php\api-user.php on line 51
+[31-Jul-2025 10:42:27 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":[5]}
+[31-Jul-2025 10:42:27 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: 5
+[31-Jul-2025 10:48:27 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":[1,2,3]}
+[31-Jul-2025 10:48:27 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: 1, 2, 3
+[31-Jul-2025 11:31:53 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["6"]}
+[31-Jul-2025 11:31:53 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: 6
+[31-Jul-2025 12:49:58 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["USR001"]}
+[31-Jul-2025 12:49:58 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: USR001
+[31-Jul-2025 12:57:51 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["USR002"]}
+[31-Jul-2025 12:57:51 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: USR002
+[31-Jul-2025 12:58:40 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["USR004"]}
+[31-Jul-2025 12:58:40 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: USR004

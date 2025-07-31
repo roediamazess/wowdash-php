@@ -1,0 +1,533 @@
+<?php 
+$script = '<script>
+                        $(".delete-btn").on("click", function() {
+                            $(this).closest(".user-grid-card").addClass("d-none")
+                        });
+                </script>';
+                
+// Include tier data functions
+include_once __DIR__ . '/partials/get_tiers.php';
+?>
+
+<?php include './partials/layouts/layoutTop.php' ?>
+
+        <div class="dashboard-main-body">
+            <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
+                <h6 class="fw-semibold mb-0">Users Grid</h6>
+                <ul class="d-flex align-items-center gap-2">
+                    <li class="fw-medium">
+                        <a href="index.php" class="d-flex align-items-center gap-1 hover-text-primary">
+                            <iconify-icon icon="solar:home-smile-angle-outline" class="icon text-lg"></iconify-icon>
+                            Dashboard
+                        </a>
+                    </li>
+                    <li>-</li>
+                    <li class="fw-medium">Users Grid</li>
+                </ul>
+            </div>
+
+            <div class="card h-100 p-0 radius-12">
+                <div class="card-header border-bottom bg-base py-16 px-24 d-flex align-items-center flex-wrap gap-3 justify-content-between">
+                    <div class="d-flex align-items-center flex-wrap gap-3">
+                        <span class="text-md fw-medium text-secondary-light mb-0">Show</span>
+                        <select class="form-select form-select-sm w-auto ps-12 py-6 radius-12 h-40-px">
+                            <option>1</option>
+                            <option>2</option>
+                            <option>3</option>
+                            <option>4</option>
+                            <option>5</option>
+                            <option>6</option>
+                            <option>7</option>
+                            <option>8</option>
+                            <option>9</option>
+                            <option>10</option>
+                        </select>
+                        <form class="navbar-search">
+                            <input type="text" class="bg-base h-40-px w-auto" name="search" placeholder="Search">
+                            <iconify-icon icon="ion:search-outline" class="icon"></iconify-icon>
+                        </form>
+                    </div>
+                </div>
+                <div class="card-body p-24">
+                    <div class="row gy-4">
+                        <!-- AKBAR - Fajar Achmad Akbar -->
+                        <div class="col-xxl-3 col-md-6 user-grid-card">
+                            <div class="position-relative border radius-16 overflow-hidden">
+                                <img src="assets/images/user-grid/user-grid-bg1.png" alt="" class="w-100 object-fit-cover">
+
+                                <div class="dropdown position-absolute top-0 end-0 me-16 mt-16">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="bg-white-gradient-light w-32-px h-32-px radius-8 border border-light-white d-flex justify-content-center align-items-center text-white">
+                                        <iconify-icon icon="entypo:dots-three-vertical" class="icon"></iconify-icon>
+                                    </button>
+                                    <ul class="dropdown-menu p-12 border bg-base shadow">
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="AKBAR" data-user-name="Fajar Achmad Akbar" data-user-tier="Tier 3" data-start-work="09/03/2017" data-user-role="User" data-user-email="" data-birthday="02/12/1994">
+                                                View
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="AKBAR" data-user-name="Fajar Achmad Akbar" data-user-tier="Tier 3" data-start-work="09/03/2017" data-user-role="User" data-user-email="" data-birthday="02/12/1994">
+                                                Edit
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="delete-btn dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-danger-100 text-hover-danger-600 d-flex align-items-center gap-10">
+                                                Delete
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-16 pb-16 pe-16 text-center mt--50">
+                                    <img src="assets/images/user-grid/user-grid-img1.png" alt="" class="border br-white border-width-2-px w-100-px h-100-px rounded-circle object-fit-cover">
+                                    <h6 class="text-lg mb-0 mt-4">AKBAR</h6>
+                                    <span class="text-secondary-light mb-16">Fajar Achmad Akbar</span>
+
+                                    <div class="center-border position-relative bg-danger-gradient-light radius-8 p-12 d-flex align-items-center gap-4">
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">Tier 3</h6>
+                                            <span class="text-secondary-light text-sm mb-0">User Tier</span>
+                                        </div>
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">09/03/2017</h6>
+                                            <span class="text-secondary-light text-sm mb-0">Start Work</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary-50 text-primary-600 bg-hover-primary-600 hover-text-white p-10 text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center justify-content-center mt-16 fw-medium gap-2 w-100" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="AKBAR" data-user-name="Fajar Achmad Akbar" data-user-tier="Tier 3" data-start-work="09/03/2017" data-user-role="User" data-user-email="" data-birthday="02/12/1994">
+                                        View Profile
+                                        <iconify-icon icon="solar:alt-arrow-right-linear" class="icon text-xl line-height-1"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ALDI - Rifaldi Hidayat -->
+                        <div class="col-xxl-3 col-md-6 user-grid-card">
+                            <div class="position-relative border radius-16 overflow-hidden">
+                                <img src="assets/images/user-grid/user-grid-bg2.png" alt="" class="w-100 object-fit-cover">
+
+                                <div class="dropdown position-absolute top-0 end-0 me-16 mt-16">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="bg-white-gradient-light w-32-px h-32-px radius-8 border border-light-white d-flex justify-content-center align-items-center text-white">
+                                        <iconify-icon icon="entypo:dots-three-vertical" class="icon"></iconify-icon>
+                                    </button>
+                                    <ul class="dropdown-menu p-12 border bg-base shadow">
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="ALDI" data-user-name="Rifaldi Hidayat" data-user-tier="Tier 2" data-start-work="13/08/2018" data-user-role="User" data-user-email="" data-birthday="04/12/2025">
+                                                View
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="ALDI" data-user-name="Rifaldi Hidayat" data-user-tier="Tier 2" data-start-work="13/08/2018" data-user-role="User" data-user-email="" data-birthday="04/12/2025">
+                                                Edit
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="delete-btn dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-danger-100 text-hover-danger-600 d-flex align-items-center gap-10">
+                                                Delete
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-16 pb-16 pe-16 text-center mt--50">
+                                    <img src="assets/images/user-grid/user-grid-img2.png" alt="" class="border br-white border-width-2-px w-100-px h-100-px rounded-circle object-fit-cover">
+                                    <h6 class="text-lg mb-0 mt-4">ALDI</h6>
+                                    <span class="text-secondary-light mb-16">Rifaldi Hidayat</span>
+
+                                    <div class="center-border position-relative bg-danger-gradient-light radius-8 p-12 d-flex align-items-center gap-4">
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">Tier 2</h6>
+                                            <span class="text-secondary-light text-sm mb-0">User Tier</span>
+                                        </div>
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">13/08/2018</h6>
+                                            <span class="text-secondary-light text-sm mb-0">Start Work</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary-50 text-primary-600 bg-hover-primary-600 hover-text-white p-10 text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center justify-content-center mt-16 fw-medium gap-2 w-100" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="ALDI" data-user-name="Rifaldi Hidayat" data-user-tier="Tier 2" data-start-work="13/08/2018" data-user-role="User" data-user-email="" data-birthday="04/12/2025">
+                                        View Profile
+                                        <iconify-icon icon="solar:alt-arrow-right-linear" class="icon text-xl line-height-1"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- ANDREAS - Andreas Daniel Gunadi -->
+                        <div class="col-xxl-3 col-md-6 user-grid-card">
+                            <div class="position-relative border radius-16 overflow-hidden">
+                                <img src="assets/images/user-grid/user-grid-bg3.png" alt="" class="w-100 object-fit-cover">
+
+                                <div class="dropdown position-absolute top-0 end-0 me-16 mt-16">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="bg-white-gradient-light w-32-px h-32-px radius-8 border border-light-white d-flex justify-content-center align-items-center text-white">
+                                        <iconify-icon icon="entypo:dots-three-vertical" class="icon"></iconify-icon>
+                                    </button>
+                                    <ul class="dropdown-menu p-12 border bg-base shadow">
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="ANDREAS" data-user-name="Andreas Daniel Gunadi" data-user-tier="Tier 1" data-start-work="31/01/2023" data-user-role="User" data-user-email="" data-birthday="31/03/2004">
+                                                View
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="ANDREAS" data-user-name="Andreas Daniel Gunadi" data-user-tier="Tier 1" data-start-work="31/01/2023" data-user-role="User" data-user-email="" data-birthday="31/03/2004">
+                                                Edit
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="delete-btn dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-danger-100 text-hover-danger-600 d-flex align-items-center gap-10">
+                                                Delete
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-16 pb-16 pe-16 text-center mt--50">
+                                    <img src="assets/images/user-grid/user-grid-img3.png" alt="" class="border br-white border-width-2-px w-100-px h-100-px rounded-circle object-fit-cover">
+                                    <h6 class="text-lg mb-0 mt-4">ANDREAS</h6>
+                                    <span class="text-secondary-light mb-16">Andreas Daniel Gunadi</span>
+
+                                    <div class="center-border position-relative bg-danger-gradient-light radius-8 p-12 d-flex align-items-center gap-4">
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">Tier 1</h6>
+                                            <span class="text-secondary-light text-sm mb-0">User Tier</span>
+                                        </div>
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">31/01/2023</h6>
+                                            <span class="text-secondary-light text-sm mb-0">Start Work</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary-50 text-primary-600 bg-hover-primary-600 hover-text-white p-10 text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center justify-content-center mt-16 fw-medium gap-2 w-100" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="ANDREAS" data-user-name="Andreas Daniel Gunadi" data-user-tier="Tier 1" data-start-work="31/01/2023" data-user-role="User" data-user-email="" data-birthday="31/03/2004">
+                                        View Profile
+                                        <iconify-icon icon="solar:alt-arrow-right-linear" class="icon text-xl line-height-1"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- KOMENG - Rudianto -->
+                        <div class="col-xxl-3 col-md-6 user-grid-card">
+                            <div class="position-relative border radius-16 overflow-hidden">
+                                <img src="assets/images/user-grid/user-grid-bg4.png" alt="" class="w-100 object-fit-cover">
+
+                                <div class="dropdown position-absolute top-0 end-0 me-16 mt-16">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="bg-white-gradient-light w-32-px h-32-px radius-8 border border-light-white d-flex justify-content-center align-items-center text-white">
+                                        <iconify-icon icon="entypo:dots-three-vertical" class="icon"></iconify-icon>
+                                    </button>
+                                    <ul class="dropdown-menu p-12 border bg-base shadow">
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="KOMENG" data-user-name="Rudianto" data-user-tier="Tier 3" data-start-work="05/04/2010" data-user-role="Administrator" data-user-email="pms@powerpro.id" data-birthday="">
+                                                View
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="KOMENG" data-user-name="Rudianto" data-user-tier="Tier 3" data-start-work="05/04/2010" data-user-role="Administrator" data-user-email="pms@powerpro.id" data-birthday="">
+                                                Edit
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="delete-btn dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-danger-100 text-hover-danger-600 d-flex align-items-center gap-10">
+                                                Delete
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-16 pb-16 pe-16 text-center mt--50">
+                                    <img src="assets/images/user-grid/user-grid-img4.png" alt="" class="border br-white border-width-2-px w-100-px h-100-px rounded-circle object-fit-cover">
+                                    <h6 class="text-lg mb-0 mt-4">KOMENG</h6>
+                                    <span class="text-secondary-light mb-16">Rudianto</span>
+
+                                    <div class="center-border position-relative bg-danger-gradient-light radius-8 p-12 d-flex align-items-center gap-4">
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">Tier 3</h6>
+                                            <span class="text-secondary-light text-sm mb-0">User Tier</span>
+                                        </div>
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">05/04/2010</h6>
+                                            <span class="text-secondary-light text-sm mb-0">Start Work</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary-50 text-primary-600 bg-hover-primary-600 hover-text-white p-10 text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center justify-content-center mt-16 fw-medium gap-2 w-100" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="KOMENG" data-user-name="Rudianto" data-user-tier="Tier 3" data-start-work="05/04/2010" data-user-role="Administrator" data-user-email="pms@powerpro.id" data-birthday="">
+                                        View Profile
+                                        <iconify-icon icon="solar:alt-arrow-right-linear" class="icon text-xl line-height-1"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- TRI - Triono -->
+                        <div class="col-xxl-3 col-md-6 user-grid-card">
+                            <div class="position-relative border radius-16 overflow-hidden">
+                                <img src="assets/images/user-grid/user-grid-bg5.png" alt="" class="w-100 object-fit-cover">
+
+                                <div class="dropdown position-absolute top-0 end-0 me-16 mt-16">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="bg-white-gradient-light w-32-px h-32-px radius-8 border border-light-white d-flex justify-content-center align-items-center text-white">
+                                        <iconify-icon icon="entypo:dots-three-vertical" class="icon"></iconify-icon>
+                                    </button>
+                                    <ul class="dropdown-menu p-12 border bg-base shadow">
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="TRI" data-user-name="Triono" data-user-tier="" data-start-work="13/01/2014" data-user-role="Admin Officer" data-user-email="account.executive@powerpro.id" data-birthday="">
+                                                View
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="TRI" data-user-name="Triono" data-user-tier="" data-start-work="13/01/2014" data-user-role="Admin Officer" data-user-email="account.executive@powerpro.id" data-birthday="">
+                                                Edit
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="delete-btn dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-danger-100 text-hover-danger-600 d-flex align-items-center gap-10">
+                                                Delete
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-16 pb-16 pe-16 text-center mt--50">
+                                    <img src="assets/images/user-grid/user-grid-img5.png" alt="" class="border br-white border-width-2-px w-100-px h-100-px rounded-circle object-fit-cover">
+                                    <h6 class="text-lg mb-0 mt-4">TRI</h6>
+                                    <span class="text-secondary-light mb-16">Triono</span>
+
+                                    <div class="center-border position-relative bg-danger-gradient-light radius-8 p-12 d-flex align-items-center gap-4">
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">New Born</h6>
+                                            <span class="text-secondary-light text-sm mb-0">User Tier</span>
+                                        </div>
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">13/01/2014</h6>
+                                            <span class="text-secondary-light text-sm mb-0">Start Work</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary-50 text-primary-600 bg-hover-primary-600 hover-text-white p-10 text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center justify-content-center mt-16 fw-medium gap-2 w-100" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="TRI" data-user-name="Triono" data-user-tier="" data-start-work="13/01/2014" data-user-role="Admin Officer" data-user-email="account.executive@powerpro.id" data-birthday="">
+                                        View Profile
+                                        <iconify-icon icon="solar:alt-arrow-right-linear" class="icon text-xl line-height-1"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <!-- IAM - M. Ilham Rizki -->
+                        <div class="col-xxl-3 col-md-6 user-grid-card">
+                            <div class="position-relative border radius-16 overflow-hidden">
+                                <img src="assets/images/user-grid/user-grid-bg6.png" alt="" class="w-100 object-fit-cover">
+
+                                <div class="dropdown position-absolute top-0 end-0 me-16 mt-16">
+                                    <button type="button" data-bs-toggle="dropdown" aria-expanded="false" class="bg-white-gradient-light w-32-px h-32-px radius-8 border border-light-white d-flex justify-content-center align-items-center text-white">
+                                        <iconify-icon icon="entypo:dots-three-vertical" class="icon"></iconify-icon>
+                                    </button>
+                                    <ul class="dropdown-menu p-12 border bg-base shadow">
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="IAM" data-user-name="M. Ilham Rizki" data-user-tier="New Born" data-start-work="" data-user-role="Admin Officer" data-user-email="iam@powerpro.co.id" data-birthday="">
+                                                View
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-10" data-bs-toggle="modal" data-bs-target="#editUserModal" data-user-id="IAM" data-user-name="M. Ilham Rizki" data-user-tier="New Born" data-start-work="" data-user-role="Admin Officer" data-user-email="iam@powerpro.co.id" data-birthday="">
+                                                Edit
+                                            </button>
+                                        </li>
+                                        <li>
+                                            <button type="button" class="delete-btn dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-danger-100 text-hover-danger-600 d-flex align-items-center gap-10">
+                                                Delete
+                                            </button>
+                                        </li>
+                                    </ul>
+                                </div>
+
+                                <div class="ps-16 pb-16 pe-16 text-center mt--50">
+                                    <img src="assets/images/user-grid/user-grid-img6.png" alt="" class="border br-white border-width-2-px w-100-px h-100-px rounded-circle object-fit-cover">
+                                    <h6 class="text-lg mb-0 mt-4">IAM</h6>
+                                    <span class="text-secondary-light mb-16">M. Ilham Rizki</span>
+
+                                    <div class="center-border position-relative bg-danger-gradient-light radius-8 p-12 d-flex align-items-center gap-4">
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0">New Born</h6>
+                                            <span class="text-secondary-light text-sm mb-0">User Tier</span>
+                                        </div>
+                                        <div class="text-center w-50">
+                                            <h6 class="text-md mb-0"></h6>
+                                            <span class="text-secondary-light text-sm mb-0">Start Work</span>
+                                        </div>
+                                    </div>
+                                    <button class="bg-primary-50 text-primary-600 bg-hover-primary-600 hover-text-white p-10 text-sm btn-sm px-12 py-12 radius-8 d-flex align-items-center justify-content-center mt-16 fw-medium gap-2 w-100" data-bs-toggle="modal" data-bs-target="#viewUserModal" data-user-id="IAM" data-user-name="M. Ilham Rizki" data-user-tier="New Born" data-start-work="" data-user-role="Admin Officer" data-user-email="iam@powerpro.co.id" data-birthday="">
+                                        View Profile
+                                        <iconify-icon icon="solar:alt-arrow-right-linear" class="icon text-xl line-height-1"></iconify-icon>
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="d-flex align-items-center justify-content-between flex-wrap gap-2 mt-24">
+                        <span>Showing 1 to 6 of 6 entries</span>
+                        <ul class="pagination d-flex flex-wrap align-items-center gap-2 justify-content-center">
+                            <li class="page-item">
+                                <a class="page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md" href="javascript:void(0)">
+                                    <iconify-icon icon="ep:d-arrow-left" class=""></iconify-icon>
+                                </a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md bg-primary-600 text-white" href="javascript:void(0)">1</a>
+                            </li>
+                            <li class="page-item">
+                                <a class="page-link bg-neutral-200 text-secondary-light fw-semibold radius-8 border-0 d-flex align-items-center justify-content-center h-32-px w-32-px text-md" href="javascript:void(0)">
+                                    <iconify-icon icon="ep:d-arrow-right" class=""></iconify-icon>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Edit User Modal -->
+        <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <form id="editUserForm">
+                            <input type="hidden" id="editUserId">
+                            <div class="mb-3">
+                                <label for="editUserName" class="form-label">User Name</label>
+                                <input type="text" class="form-control" id="editUserName" required>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editUserTier" class="form-label">User Tier</label>
+                                <select class="form-control" id="editUserTier">
+                                    <?php echo generateTierOptions(); ?>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editStartWork" class="form-label">Start Work</label>
+                                <input type="text" class="form-control" id="editStartWork" placeholder="DD/MM/YYYY">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editUserRole" class="form-label">User Roles</label>
+                                <select class="form-control" id="editUserRole">
+                                    <option value="">Select Role</option>
+                                    <option value="Administrator">Administrator</option>
+                                    <option value="Supervisor">Supervisor</option>
+                                    <option value="Admin Officer">Admin Officer</option>
+                                    <option value="User">User</option>
+                                    <option value="Client">Client</option>
+                                </select>
+                            </div>
+                            <div class="mb-3">
+                                <label for="editUserEmail" class="form-label">User Email</label>
+                                <input type="email" class="form-control" id="editUserEmail">
+                            </div>
+                            <div class="mb-3">
+                                <label for="editBirthday" class="form-label">Birthday</label>
+                                <input type="text" class="form-control" id="editBirthday" placeholder="DD/MM/YYYY">
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                        <button type="button" class="btn btn-primary" id="updateUserBtn">Update User</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- View User Modal -->
+        <div class="modal fade" id="viewUserModal" tabindex="-1" aria-labelledby="viewUserModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="viewUserModalLabel">User Details</h5>
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-12">
+                                <div class="card">
+                                    <div class="card-body">
+                                        <div class="d-flex flex-column align-items-center mb-4">
+                                            <img src="assets/images/user-grid/user-grid-img1.png" alt="User" class="w-100-px h-100-px rounded-circle object-fit-cover mb-3">
+                                            <h5 class="mb-0" id="viewUserName"></h5>
+                                            <span class="text-secondary-light" id="viewUserId"></span>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-6">
+                                                <p class="mb-1"><strong>User Tier:</strong></p>
+                                                <p class="text-secondary-light mb-3" id="viewUserTier"></p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="mb-1"><strong>User Role:</strong></p>
+                                                <p class="text-secondary-light mb-3" id="viewUserRole"></p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="mb-1"><strong>Start Work:</strong></p>
+                                                <p class="text-secondary-light mb-3" id="viewStartWork"></p>
+                                            </div>
+                                            <div class="col-6">
+                                                <p class="mb-1"><strong>Birthday:</strong></p>
+                                                <p class="text-secondary-light mb-3" id="viewBirthday"></p>
+                                            </div>
+                                            <div class="col-12">
+                                                <p class="mb-1"><strong>Email:</strong></p>
+                                                <p class="text-secondary-light mb-0" id="viewUserEmail"></p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            // Add event listeners for view buttons
+            document.querySelectorAll('[data-bs-target="#viewUserModal"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('viewUserId').textContent = this.getAttribute('data-user-id');
+                    document.getElementById('viewUserName').textContent = this.getAttribute('data-user-name');
+                    document.getElementById('viewUserTier').textContent = this.getAttribute('data-user-tier');
+                    document.getElementById('viewStartWork').textContent = this.getAttribute('data-start-work');
+                    document.getElementById('viewUserRole').textContent = this.getAttribute('data-user-role');
+                    document.getElementById('viewUserEmail').textContent = this.getAttribute('data-user-email');
+                    document.getElementById('viewBirthday').textContent = this.getAttribute('data-birthday');
+                });
+            });
+
+            // Add event listeners for edit buttons
+            document.querySelectorAll('[data-bs-target="#editUserModal"]').forEach(button => {
+                button.addEventListener('click', function() {
+                    document.getElementById('editUserId').value = this.getAttribute('data-user-id');
+                    document.getElementById('editUserName').value = this.getAttribute('data-user-name');
+                    document.getElementById('editUserTier').value = this.getAttribute('data-user-tier');
+                    document.getElementById('editStartWork').value = this.getAttribute('data-start-work');
+                    document.getElementById('editUserRole').value = this.getAttribute('data-user-role');
+                    document.getElementById('editUserEmail').value = this.getAttribute('data-user-email');
+                    document.getElementById('editBirthday').value = this.getAttribute('data-birthday');
+                });
+            });
+
+            // Update user button event
+            document.getElementById('updateUserBtn').addEventListener('click', function() {
+                const userId = document.getElementById('editUserId').value;
+                const userName = document.getElementById('editUserName').value;
+                const userTier = document.getElementById('editUserTier').value;
+                const startWork = document.getElementById('editStartWork').value;
+                const userRole = document.getElementById('editUserRole').value;
+                const userEmail = document.getElementById('editUserEmail').value;
+                const birthday = document.getElementById('editBirthday').value;
+                
+                // Here you would typically send the data to the server
+                console.log('Updating user:', { userId, userName, userTier, startWork, userRole, userEmail, birthday });
+                
+                // Close the modal
+                document.getElementById('editUserModal').querySelector('.btn-close').click();
+                
+                // Show success message (in a real app)
+                alert('User updated successfully!');
+            });
+        </script>

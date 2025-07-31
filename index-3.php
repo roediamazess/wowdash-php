@@ -169,7 +169,7 @@
                                     <thead>
                                         <tr>
                                             <th scope="col">Users</th>
-                                            <th scope="col">Invoice</th>
+                                            <th scope="col">Activity</th>
                                             <th scope="col">Items</th>
                                             <th scope="col">Qty</th>
                                             <th scope="col">Amount</th>

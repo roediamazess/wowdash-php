@@ -70,16 +70,24 @@
                     <span>Calendar</span>
                 </a>
             </li>
+
             <li>
-                <a href="kanban.php">
+                <a href="activity.php">
+                    <iconify-icon icon="mdi:chart-timeline-variant" class="menu-icon"></iconify-icon>
+                    <span>List</span>
+                </a>
+            </li>
+
+            <li>
+                <a href="activity.php?view=kanban">
                     <iconify-icon icon="material-symbols:map-outline" class="menu-icon"></iconify-icon>
-                    <span>Kanban</span>
+                    <span>Kanban Board</span>
                 </a>
             </li>
             <li class="dropdown">
                 <a href="javascript:void(0)">
                     <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
-                    <span>Invoice</span>
+                    <span>Daily Activity</span>
                 </a>
                 <ul class="sidebar-submenu">
                     <li>
@@ -247,40 +255,11 @@
                     <span>Widgets</span>
                 </a>
             </li>
-            <li class="dropdown">
-                <a href="javascript:void(0)">
+            <li>
+                <a href="users-list.php">
                     <iconify-icon icon="flowbite:users-group-outline" class="menu-icon"></iconify-icon>
                     <span>Users</span>
                 </a>
-                <ul class="sidebar-submenu">
-                    <li>
-                        <a href="users-list.php"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Users List</a>
-                    </li>
-                    <li>
-                        <a href="users-grid.php"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Users Grid</a>
-                    </li>
-                    <li>
-                        <a href="add-user.php"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Add User</a>
-                    </li>
-                    <li>
-                        <a href="view-profile.php"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> View Profile</a>
-                    </li>
-                </ul>
-            </li>
-
-            <li class="dropdown">
-                <a href="javascript:void(0)">
-                    <i class="ri-user-settings-line text-xl me-6 d-flex w-auto"></i>
-                    <span>Role & Access</span>
-                </a>
-                <ul class="sidebar-submenu">
-                    <li>
-                        <a href="role-access.php"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Role & Access</a>
-                    </li>
-                    <li>
-                        <a href="assign-role.php"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Assign Role</a>
-                    </li>
-                </ul>
             </li>
 
             <li class="sidebar-menu-group-title">Application</li>
@@ -301,24 +280,6 @@
                         <a href="forgot-password.php"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Forgot Password</a>
                     </li>
                 </ul>
-            </li>
-            <li>
-                <a href="testimonials.php">
-                    <i class="ri-star-line text-xl me-6 d-flex w-auto"></i>
-                    <span>Testimonial</span>
-                </a>
-            </li>
-            <li>
-                <a href="faq.php">
-                    <iconify-icon icon="mage:message-question-mark-round" class="menu-icon"></iconify-icon>
-                    <span>FAQs</span>
-                </a>
-            </li>
-            <li>
-                <a href="coming-soon.php">
-                    <i class="ri-rocket-line text-xl me-6 d-flex w-auto"></i>
-                    <span>Coming Soon</span>
-                </a>
             </li>
             <li class="dropdown">
                 <a href="javascript:void(0)">
@@ -346,6 +307,27 @@
                     </li>
                     <li>
                         <a href="payment-gateway.php"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Payment Gateway</a>
+                    </li>
+                    <li>
+                        <a href="project-status.php"><i class="ri-circle-fill circle-icon text-success-main w-auto"></i> Project Status</a>
+                    </li>
+                    <li>
+                        <a href="project-type.php"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Project Type</a>
+                    </li>
+                    <li>
+                        <a href="applications.php"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> Applications</a>
+                    </li>
+                    <li>
+                        <a href="project-information.php"><i class="ri-circle-fill circle-icon text-warning-main w-auto"></i> Project Information</a>
+                    </li>
+                    <li>
+                        <a href="assignment-pic.php"><i class="ri-circle-fill circle-icon text-danger-main w-auto"></i> Assignment PIC</a>
+                    </li>
+                    <li>
+                        <a href="tier-level.php"><i class="ri-circle-fill circle-icon text-info-main w-auto"></i> Tier Level</a>
+                    </li>
+                    <li>
+                        <a href="user-roles.php"><i class="ri-circle-fill circle-icon text-primary-600 w-auto"></i> User Roles</a>
                     </li>
                 </ul>
             </li>

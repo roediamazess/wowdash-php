@@ -36,7 +36,7 @@
                                         </label>
                                     </div>
                                 </th>
-                                <th scope="col">Invoice</th>
+                                <th scope="col">Activity</th>
                                 <th scope="col">Name</th>
                                 <th scope="col">Issued Date</th>
                                 <th scope="col">Amount</th>

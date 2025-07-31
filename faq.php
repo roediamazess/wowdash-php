@@ -84,7 +84,7 @@
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
                                                 <button class="accordion-button text-primary-light text-xl collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
-                                                    Can other info be added to an invoice?
+                                                    Can other info be added to a daily activity?
                                                 </button>
                                             </h2>
                                             <div id="collapseFour" class="accordion-collapse collapse" data-bs-parent="#accordionExample">
@@ -161,7 +161,7 @@
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
                                                 <button class="accordion-button text-primary-light text-xl collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-4" aria-expanded="false" aria-controls="c-4">
-                                                    Can other info be added to an invoice?
+                                                    Can other info be added to a daily activity?
                                                 </button>
                                             </h2>
                                             <div id="c-4" class="accordion-collapse collapse" data-bs-parent="#accordionExampleTwo">
@@ -238,7 +238,7 @@
                                         <div class="accordion-item">
                                             <h2 class="accordion-header">
                                                 <button class="accordion-button text-primary-light text-xl collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#c-10" aria-expanded="false" aria-controls="c-10">
-                                                    Can other info be added to an invoice?
+                                                    Can other info be added to a daily activity?
                                                 </button>
                                             </h2>
                                             <div id="c-10" class="accordion-collapse collapse" data-bs-parent="#accordionExampleThree">

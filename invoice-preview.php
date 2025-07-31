@@ -16,7 +16,7 @@
         <div class="dashboard-main-body">
 
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-                <h6 class="fw-semibold mb-0">Invoice List</h6>
+                <h6 class="fw-semibold mb-0">Daily Activity List</h6>
                 <ul class="d-flex align-items-center gap-2">
                     <li class="fw-medium">
                         <a href="index.php" class="d-flex align-items-center gap-1 hover-text-primary">
@@ -25,7 +25,7 @@
                         </a>
                     </li>
                     <li>-</li>
-                    <li class="fw-medium">Invoice List</li>
+                    <li class="fw-medium">Daily Activity List</li>
                 </ul>
             </div>
 
@@ -34,7 +34,7 @@
                     <div class="d-flex flex-wrap align-items-center justify-content-end gap-2">
                         <a href="javascript:void(0)" class="btn btn-sm btn-primary-600 radius-8 d-inline-flex align-items-center gap-1">
                             <iconify-icon icon="pepicons-pencil:paper-plane" class="text-xl"></iconify-icon>
-                            Send Invoice
+                            Send Daily Activity
                         </a>
                         <a href="javascript:void(0)" class="btn btn-sm btn-warning radius-8 d-inline-flex align-items-center gap-1">
                             <iconify-icon icon="solar:download-linear" class="text-xl"></iconify-icon>
@@ -56,7 +56,7 @@
                             <div class="shadow-4 border radius-8">
                                 <div class="p-20 d-flex flex-wrap justify-content-between gap-3 border-bottom">
                                     <div>
-                                        <h3 class="text-xl">Invoice #3492</h3>
+                                        <h3 class="text-xl">Daily Activity #3492</h3>
                                         <p class="mb-1 text-sm">Date Issued: 25/08/2020</p>
                                         <p class="mb-0 text-sm">Date Due: 29/08/2020</p>
                                     </div>

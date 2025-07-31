@@ -5,7 +5,7 @@
         <div class="dashboard-main-body">
 
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-                <h6 class="fw-semibold mb-0">Invoice List</h6>
+                <h6 class="fw-semibold mb-0">Daily Activity List</h6>
                 <ul class="d-flex align-items-center gap-2">
                     <li class="fw-medium">
                         <a href="index.php" class="d-flex align-items-center gap-1 hover-text-primary">
@@ -14,7 +14,7 @@
                         </a>
                     </li>
                     <li>-</li>
-                    <li class="fw-medium">Invoice List</li>
+                    <li class="fw-medium">Daily Activity List</li>
                 </ul>
             </div>
 
@@ -34,7 +34,7 @@
                                 <div class="p-20 border-bottom">
                                     <div class="row justify-content-between g-3">
                                         <div class="col-sm-4">
-                                            <h3 class="text-xl">Invoice #3492</h3>
+                                            <h3 class="text-xl">Daily Activity #3492</h3>
                                             <p class="mb-1 text-sm">Date Issued: <span class="editable text-decoration-underline">25/08/2020</span> <span class="text-success-main">
                                                     <iconify-icon icon="mage:edit"></iconify-icon>
                                                 </span></p>

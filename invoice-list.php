@@ -3,7 +3,7 @@
         <div class="dashboard-main-body">
 
             <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
-                <h6 class="fw-semibold mb-0">Invoice List</h6>
+                <h6 class="fw-semibold mb-0">Daily Activity List</h6>
                 <ul class="d-flex align-items-center gap-2">
                     <li class="fw-medium">
                         <a href="index.php" class="d-flex align-items-center gap-1 hover-text-primary">
@@ -12,7 +12,7 @@
                         </a>
                     </li>
                     <li>-</li>
-                    <li class="fw-medium">Invoice List</li>
+                    <li class="fw-medium">Daily Activity List</li>
                 </ul>
             </div>
 
@@ -40,7 +40,7 @@
                             <option>Paid</option>
                             <option>Pending</option>
                         </select>
-                        <a href="invoice-add.php" class="btn btn-sm btn-primary-600"><i class="ri-add-line"></i> Create Invoice</a>
+                        <a href="invoice-add.php" class="btn btn-sm btn-primary-600"><i class="ri-add-line"></i> Create Daily Activity</a>
                     </div>
                 </div>
                 <div class="card-body">

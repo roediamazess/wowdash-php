@@ -154,10 +154,6 @@ if ($result && $result->num_rows > 0) {
                     <div class="modal-body">
                         <form id="addUserForm">
                             <div class="mb-3">
-                                <label for="addUserId" class="form-label">User ID</label>
-                                <input type="text" class="form-control" id="addUserId" required>
-                            </div>
-                            <div class="mb-3">
                                 <label for="userName" class="form-label">User Name</label>
                                 <input type="text" class="form-control" id="userName" required>
                             </div>
@@ -210,10 +206,7 @@ if ($result && $result->num_rows > 0) {
                     </div>
                     <div class="modal-body">
                         <form id="editUserForm">
-                            <div class="mb-3">
-                                <label for="editUserId" class="form-label">User ID</label>
-                                <input type="text" class="form-control" id="editUserId" required readonly>
-                            </div>
+                            <input type="hidden" id="editUserId">
                             <div class="mb-3">
                                 <label for="editUserName" class="form-label">User Name</label>
                                 <input type="text" class="form-control" id="editUserName" required>
@@ -306,7 +299,6 @@ if ($result && $result->num_rows > 0) {
                 // Save user button event
                 document.getElementById('saveUserBtn').addEventListener('click', async function() {
                     const userData = {
-                        userId: document.getElementById('addUserId').value,
                         userName: document.getElementById('userName').value,
                         userTier: document.getElementById('userTier').value,
                         startWork: document.getElementById('startWork').value,
@@ -357,27 +349,33 @@ if ($result && $result->num_rows > 0) {
 
                     if (userIds.length > 0) {
                         Swal.fire({
-                            title: `Are you sure you want to delete ${userIds.length} user(s)?`,
+                            title: 'Are you sure?',
                             text: "You won't be able to revert this!",
                             icon: 'warning',
                             showCancelButton: true,
                             confirmButtonColor: '#3085d6',
                             cancelButtonColor: '#d33',
-                            confirmButtonText: 'Yes, delete them!'
+                            confirmButtonText: 'Yes, delete it!'
                         }).then(async (result) => {
-                            if (result.isConfirmed) {
-                                const data = await apiCall('api-user-delete.php', { userIds: userIds });
-                                if (data && data.success) {
-                                    showToast(data.message || `${userIds.length} user(s) deleted successfully.`);
-                                    userIds.forEach(userId => {
+                            if (result.isConfirmed) { 
+                                let successCount = 0;
+                                let errorCount = 0;
+                                for (const userId of userIds) {
+                                    const data = await apiCall('api-user-delete.php', { userId: userId });
+                                    if (data && data.success) {
                                         const row = document.getElementById(`user-row-${userId}`);
                                         if (row) row.remove();
-                                    });
-                                } else {
-                                    showToast(data.message || 'Failed to delete users.', 'error');
+                                        successCount++;
+                                    } else {
+                                        errorCount++;
+                                    }
                                 }
-                                // Uncheck select all and update button states
-                                selectAllCheckbox.checked = false;
+                                if(successCount > 0) {
+                                    showToast(`${successCount} user(s) deleted successfully.`, 'success');
+                                }
+                                if(errorCount > 0) {
+                                    showToast(`${errorCount} user(s) could not be deleted.`, 'error');
+                                }
                                 updateButtonStates();
                             }
                         });
@@ -427,13 +425,14 @@ if ($result && $result->num_rows > 0) {
                         row.querySelector('.user-email').textContent = userData.userEmail;
                         row.querySelector('.birthday').textContent = userData.birthday;
 
-                        // Also update data attributes on the row for future edits
-                        row.dataset.userName = userData.userName;
-                        row.dataset.userTier = userData.userTier;
-                        row.dataset.startWork = userData.startWork;
-                        row.dataset.userRole = userData.userRole;
-                        row.dataset.userEmail = userData.userEmail;
-                        row.dataset.birthday = userData.birthday;
+                        // Also update data attributes on the edit button for future edits
+                        const editBtn = row.querySelector('.edit-btn');
+                        editBtn.setAttribute('data-user-name', userData.userName);
+                        editBtn.setAttribute('data-user-tier', userData.userTier);
+                        editBtn.setAttribute('data-start-work', userData.startWork);
+                        editBtn.setAttribute('data-user-role', userData.userRole);
+                        editBtn.setAttribute('data-user-email', userData.userEmail);
+                        editBtn.setAttribute('data-birthday', userData.birthday);
                     }
                 } 
                 // Initial state

@@ -95,7 +95,7 @@ include './partials/layouts/layoutTop.php';
 <div class="dashboard-main-body d-flex flex-column min-vh-100">
     <div class="d-flex flex-wrap align-items-center justify-content-between gap-3 mb-24">
         <div class="d-flex align-items-center gap-3">
-            <h6 class="fw-semibold mb-0">Activities</h6>
+            <h6 class="fw-semibold mb-0">List</h6>
             <button type="button" class="btn btn-primary btn-sm d-flex align-items-center gap-2" data-bs-toggle="modal" data-bs-target="#addActivityModal">
                 <i class="ri-add-line align-bottom"></i> Add New Activity
             </button>
@@ -111,449 +111,138 @@ include './partials/layouts/layoutTop.php';
             <li class="fw-medium">Components / Activity</li>
         </ul>
     </div>
-    <!-- Tabs for List and Kanban -->
-    <ul class="nav nav-tabs mb-3" id="activityTabs" role="tablist">
+    <!-- Tab Navigation -->
+    <ul class="nav nav-tabs mb-3" id="activityTab" role="tablist" style="background:transparent; border-bottom:0;">
         <li class="nav-item" role="presentation">
-            <button class="nav-link active" id="list-tab" data-bs-toggle="tab" data-bs-target="#listView" type="button" role="tab" aria-controls="listView" aria-selected="true">List</button>
+            <button class="nav-link active d-flex align-items-center" id="list-tab" data-bs-toggle="tab" data-bs-target="#listView" type="button" role="tab" aria-controls="listView" aria-selected="true">
+                <i class="ri-list-check-2 mr-1"></i> List
+            </button>
         </li>
         <li class="nav-item" role="presentation">
-            <button class="nav-link" id="kanban-tab" data-bs-toggle="tab" data-bs-target="#kanbanView" type="button" role="tab" aria-controls="kanbanView" aria-selected="false">Kanban</button>
+            <button class="nav-link d-flex align-items-center" id="kanban-tab" data-bs-toggle="tab" data-bs-target="#kanbanView" type="button" role="tab" aria-controls="kanbanView" aria-selected="false">
+                <i class="ri-layout-column-line mr-1"></i> Kanban
+            </button>
         </li>
     </ul>
-    <div class="tab-content" id="activityTabsContent">
+    <div class="tab-content" id="activityTabContent">
         <div class="tab-pane fade show active" id="listView" role="tabpanel" aria-labelledby="list-tab">
-            <!-- List view content will remain here -->
+            <!-- Main Content -->
+            <div class="content">
+                <div class="card border-0 shadow-sm">
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table align-middle table-hover" id="activityTable">
+                                <thead>
+                                    <tr>
+                                        <th>No</th>
+                                        <th>Information Date</th>
+                                        <th>User & Position</th>
+                                        <th>Department</th>
+                                        <th>Application</th>
+                                        <th>Type</th>
+                                        <th>Description</th>
+                                        <th>Action/Solution</th>
+                                        <th>Due Date</th>
+                                        <th>Status</th>
+                                        <th>CNC Number</th>
+                                        <th class="text-center">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                <?php 
+                                $query = "SELECT * FROM activities ORDER BY information_date DESC";
+                                $result = $conn->query($query);
+                                $no = 1;
+                                
+                                if ($result && $result->num_rows > 0) {
+                                    while($row = $result->fetch_assoc()) {
+                                        echo "<tr>";
+                                        echo "<td>".$no++."</td>";
+                                        echo "<td>".date('d M Y', strtotime($row['information_date']))."</td>";
+                                        echo "<td>".htmlspecialchars($row['user_position'])."</td>";
+                                        echo "<td>".htmlspecialchars($row['department'])."</td>";
+                                        echo "<td>".htmlspecialchars($row['application'])."</td>";
+                                        echo "<td>".htmlspecialchars($row['type'])."</td>";
+                                        echo "<td>".htmlspecialchars($row['description'])."</td>";
+                                        echo "<td>".htmlspecialchars($row['action_solution'])."</td>";
+                                        echo "<td>".($row['due_date'] ? date('d M Y', strtotime($row['due_date'])) : '-')."</td>";
+                                        echo "<td><span class='badge bg-".($row['status'] == 'Open' ? 'primary' : ($row['status'] == 'In Progress' ? 'warning' : ($row['status'] == 'Completed' ? 'success' : 'secondary')))."'>".$row['status']."</span></td>";
+                                        echo "<td>".htmlspecialchars($row['cnc_number'])."</td>";
+                                        echo "<td class='text-center'>
+                                            <button class='btn btn-xs btn-warning me-1' onclick='editActivity(".$row['id'].")'><i class='ri-edit-line'></i></button>
+                                            <button class='btn btn-xs btn-danger' onclick='deleteActivity(".$row['id'].")'><i class='ri-delete-bin-line'></i></button>
+                                        </td>";
+                                        echo "</tr>";
+                                    }
+                                } else {
+                                    echo "<tr><td colspan='12' class='text-center'>No activities found</td></tr>";
+                                }
+                                ?>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="tab-pane fade" id="kanbanView" role="tabpanel" aria-labelledby="kanban-tab">
-            <!-- Kanban Board Start -->
-            <div class="overflow-x-auto scroll-sm pb-8">
-                <div class="kanban-wrapper">
-                    <div class="d-flex align-items-start gap-24" id="sortable-wrapper">
-                        <!-- In Progress Column -->
-                        <div class="w-25 kanban-item radius-12 progress-card">
-                            <div class="card p-0 radius-12 overflow-hidden shadow-none">
-                                <div class="card-body p-0 pb-24">
-                                    <div class="d-flex align-items-center gap-2 justify-content-between ps-24 pt-24 pe-24">
-                                        <h6 class="text-lg fw-semibold mb-0">In Progress</h6>
-                                        <div class="d-flex align-items-center gap-3 justify-content-between mb-0">
-                                            <button type="button" class="text-2xl hover-text-primary add-task-button">
-                                                <iconify-icon icon="ph:plus-circle" class="icon"></iconify-icon>
-                                            </button>
-                                            <div class="dropdown">
-                                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <iconify-icon icon="entypo:dots-three-vertical" class="text-xl"></iconify-icon>
-                                                </button>
-                                                <ul class="dropdown-menu p-12 border bg-base shadow">
-                                                    <li>
-                                                        <a class="duplicate-button dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2" href="javascript:void(0)">
-                                                            <iconify-icon class="text-xl" icon="humbleicons:duplicate"></iconify-icon>
-                                                            Duplicate
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="delete-button dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2" href="javascript:void(0)">
-                                                            <iconify-icon class="text-xl" icon="mingcute:delete-2-line"></iconify-icon>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="connectedSortable ps-24 pt-24 pe-24" id="sortable1">
-                                        <div class="kanban-card bg-neutral-50 p-16 radius-8 mb-24" id="kanban-1">
-                                            <div class="radius-8 mb-12 max-h-350-px overflow-hidden">
-                                                <img src="assets/images/kanban/kanban-1.png" alt="" class="w-100 h-100 object-fit-cover">
-                                            </div>
-                                            <h6 class="kanban-title text-lg fw-semibold mb-8">Creating a new website</h6>
-                                            <p class="kanban-desc text-secondary-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                                            <button type="button" class="btn text-primary-600 border rounded border-primary-600 bg-hover-primary-600 text-hover-white d-flex align-items-center gap-2">
-                                                <iconify-icon icon="lucide:tag" class="icon"></iconify-icon>
-                                                <span class="kanban-tag fw-semibold">UI Design</span>
-                                            </button>
-                                            <div class="mt-12 d-flex align-items-center justify-content-between gap-10">
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <iconify-icon icon="solar:calendar-outline" class="text-primary-light"></iconify-icon>
-                                                    <span class="start-date text-secondary-light">25 Aug 2024</span>
-                                                </div>
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <button type="button" class="card-edit-button text-success-600">
-                                                        <iconify-icon icon="lucide:edit" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                    <button type="button" class="card-delete-button text-danger-600">
-                                                        <iconify-icon icon="fluent:delete-24-regular" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kanban-card bg-neutral-50 p-16 radius-8 mb-24" id="kanban-2">
-                                            <div class="radius-8 mb-12 max-h-350-px overflow-hidden">
-                                                <img src="assets/images/kanban/kanban-2.png" alt="" class="w-100 h-100 object-fit-cover">
-                                            </div>
-                                            <h6 class="kanban-title text-lg fw-semibold mb-8">Creating a new website</h6>
-                                            <p class="kanban-desc text-secondary-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                                            <button type="button" class="btn text-primary-600 border rounded border-primary-600 bg-hover-primary-600 text-hover-white d-flex align-items-center gap-2">
-                                                <iconify-icon icon="lucide:tag" class="icon"></iconify-icon>
-                                                <span class="kanban-tag fw-semibold">UI Design</span>
-                                            </button>
-                                            <div class="mt-12 d-flex align-items-center justify-content-between gap-10">
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <iconify-icon icon="solar:calendar-outline" class="text-primary-light"></iconify-icon>
-                                                    <span class="start-date text-secondary-light">25 Aug 2024</span>
-                                                </div>
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <button type="button" class="card-edit-button text-success-600">
-                                                        <iconify-icon icon="lucide:edit" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                    <button type="button" class="card-delete-button text-danger-600">
-                                                        <iconify-icon icon="fluent:delete-24-regular" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Add Task Button -->
-                                    <button type="button" class="d-flex align-items-center gap-2 fw-medium w-100 text-primary-600 justify-content-center text-hover-primary-800 add-task-button">
-                                        <iconify-icon icon="ph:plus-circle" class="icon text-xl"></iconify-icon>
-                                        Add Task
-                                    </button>
-                                </div>
-                            </div>
+            <!-- Kanban board dynamically generated from activities -->
+            <div class="kanban-board row g-3">
+                <?php
+                // Prepare activities grouped by status
+                $statuses = [
+                    'Open' => [],
+                    'On Progress' => [],
+                    'Need Requirement' => [],
+                    'Done' => []
+                ];
+                $query = "SELECT * FROM activities ORDER BY information_date DESC";
+                $result = $conn->query($query);
+                if ($result && $result->num_rows > 0) {
+                    while($row = $result->fetch_assoc()) {
+                        $statuses[$row['status']][] = $row;
+                    }
+                }
+                $kanban_colors = [
+                    'Open' => 'primary',
+                    'On Progress' => 'warning',
+                    'Need Requirement' => 'info',
+                    'Done' => 'success'
+                ];
+                foreach ($statuses as $status => $items) {
+                ?>
+                <div class="col-md-3">
+                    <div class="card h-100">
+                        <div class="card-header bg-<?php echo $kanban_colors[$status]; ?> text-white fw-semibold">
+                            <?php echo $status; ?>
                         </div>
-                        <!-- Pending Column -->
-                        <div class="w-25 kanban-item radius-12 pending-card">
-                            <div class="card p-0 radius-12 overflow-hidden shadow-none">
-                                <div class="card-body p-0 pb-24">
-                                    <div class="d-flex align-items-center gap-2 justify-content-between ps-24 pt-24 pe-24">
-                                        <h6 class="text-lg fw-semibold mb-0">Pending</h6>
-                                        <div class="d-flex align-items-center gap-3 justify-content-between mb-0">
-                                            <button type="button" class="text-2xl hover-text-primary add-task-button">
-                                                <iconify-icon icon="ph:plus-circle" class="icon"></iconify-icon>
-                                            </button>
-                                            <div class="dropdown">
-                                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <iconify-icon icon="entypo:dots-three-vertical" class="text-xl"></iconify-icon>
-                                                </button>
-                                                <ul class="dropdown-menu p-12 border bg-base shadow">
-                                                    <li>
-                                                        <a class="duplicate-button dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2" href="javascript:void(0)">
-                                                            <iconify-icon class="text-xl" icon="humbleicons:duplicate"></iconify-icon>
-                                                            Duplicate
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="delete-button dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2" href="javascript:void(0)">
-                                                            <iconify-icon class="text-xl" icon="mingcute:delete-2-line"></iconify-icon>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
+                        <div class="card-body kanban-column" style="min-height:200px;">
+                            <?php if (count($items) > 0) {
+                                foreach ($items as $item) { ?>
+                                    <div class="kanban-card mb-3 p-2 border rounded bg-light">
+                                        <div class="fw-semibold mb-1"> <?php echo htmlspecialchars($item['user_position']); ?> </div>
+                                        <div class="small text-muted mb-1"> <?php echo htmlspecialchars($item['department']); ?> | <?php echo htmlspecialchars($item['application']); ?> </div>
+                                        <div class="mb-1"> <span class="badge bg-<?php echo $kanban_colors[$status]; ?>"> <?php echo $item['type']; ?> </span> </div>
+                                        <div class="mb-1"> <?php echo htmlspecialchars($item['description']); ?> </div>
+                                        <div class="mb-1 text-secondary"> Due: <?php echo ($item['due_date'] ? date('d M Y', strtotime($item['due_date'])) : '-'); ?> </div>
+                                        <div class="d-flex justify-content-end gap-2">
+                                            <button type="button" class="btn btn-xs btn-warning edit-btn" data-id="<?php echo $item['id']; ?>"><i class="ri-edit-line"></i></button>
+                                            <button type="button" class="btn btn-xs btn-danger delete-btn" data-id="<?php echo $item['id']; ?>"><i class="ri-delete-bin-line"></i></button>
                                         </div>
                                     </div>
-                                    <div class="connectedSortable ps-24 pt-24 pe-24" id="sortable2">
-                                        <div class="kanban-card bg-neutral-50 p-16 radius-8 mb-24" id="kanban-3">
-                                            <h6 class="kanban-title text-lg fw-semibold mb-8">Creating a new website</h6>
-                                            <p class="kanban-desc text-secondary-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                                            <button type="button" class="btn text-primary-600 border rounded border-primary-600 bg-hover-primary-600 text-hover-white d-flex align-items-center gap-2">
-                                                <iconify-icon icon="lucide:tag" class="icon"></iconify-icon>
-                                                <span class="kanban-tag fw-semibold">UI Design</span>
-                                            </button>
-                                            <div class="mt-12 d-flex align-items-center justify-content-between gap-10">
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <iconify-icon icon="solar:calendar-outline" class="text-primary-light"></iconify-icon>
-                                                    <span class="start-date text-secondary-light">25 Aug 2024</span>
-                                                </div>
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <button type="button" class="card-edit-button text-success-600">
-                                                        <iconify-icon icon="lucide:edit" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                    <button type="button" class="card-delete-button text-danger-600">
-                                                        <iconify-icon icon="fluent:delete-24-regular" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kanban-card bg-neutral-50 p-16 radius-8 mb-24" id="kanban-4">
-                                            <div class="radius-8 mb-12 max-h-350-px overflow-hidden">
-                                                <img src="assets/images/kanban/kanban-2.png" alt="" class="w-100 h-100 object-fit-cover">
-                                            </div>
-                                            <h6 class="kanban-title text-lg fw-semibold mb-8">Creating a new website</h6>
-                                            <p class="kanban-desc text-secondary-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                                            <button type="button" class="btn text-primary-600 border rounded border-primary-600 bg-hover-primary-600 text-hover-white d-flex align-items-center gap-2">
-                                                <iconify-icon icon="lucide:tag" class="icon"></iconify-icon>
-                                                <span class="kanban-tag fw-semibold">UI Design</span>
-                                            </button>
-                                            <div class="mt-12 d-flex align-items-center justify-content-between gap-10">
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <iconify-icon icon="solar:calendar-outline" class="text-primary-light"></iconify-icon>
-                                                    <span class="start-date text-secondary-light">25 Aug 2024</span>
-                                                </div>
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <button type="button" class="card-edit-button text-success-600">
-                                                        <iconify-icon icon="lucide:edit" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                    <button type="button" class="card-delete-button text-danger-600">
-                                                        <iconify-icon icon="fluent:delete-24-regular" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Add Task Button -->
-                                    <button type="button" class="d-flex align-items-center gap-2 fw-medium w-100 text-primary-600 justify-content-center text-hover-primary-800 add-task-button">
-                                        <iconify-icon icon="ph:plus-circle" class="icon text-xl"></iconify-icon>
-                                        Add Task
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Done Column -->
-                        <div class="w-25 kanban-item radius-12 done-card">
-                            <div class="card p-0 radius-12 overflow-hidden shadow-none">
-                                <div class="card-body p-0 pb-24">
-                                    <div class="d-flex align-items-center gap-2 justify-content-between ps-24 pt-24 pe-24">
-                                        <h6 class="text-lg fw-semibold mb-0">Done</h6>
-                                        <div class="d-flex align-items-center gap-3 justify-content-between mb-0">
-                                            <button type="button" class="text-2xl hover-text-primary add-task-button">
-                                                <iconify-icon icon="ph:plus-circle" class="icon"></iconify-icon>
-                                            </button>
-                                            <div class="dropdown">
-                                                <button type="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                                    <iconify-icon icon="entypo:dots-three-vertical" class="text-xl"></iconify-icon>
-                                                </button>
-                                                <ul class="dropdown-menu p-12 border bg-base shadow">
-                                                    <li>
-                                                        <a class="duplicate-button dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2" href="javascript:void(0)">
-                                                            <iconify-icon class="text-xl" icon="humbleicons:duplicate"></iconify-icon>
-                                                            Duplicate
-                                                        </a>
-                                                    </li>
-                                                    <li>
-                                                        <a class="delete-button dropdown-item px-16 py-8 rounded text-secondary-light bg-hover-neutral-200 text-hover-neutral-900 d-flex align-items-center gap-2" href="javascript:void(0)">
-                                                            <iconify-icon class="text-xl" icon="mingcute:delete-2-line"></iconify-icon>
-                                                            Delete
-                                                        </a>
-                                                    </li>
-                                                </ul>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <div class="connectedSortable ps-24 pt-24 pe-24" id="sortable3">
-                                        <div class="kanban-card bg-neutral-50 p-16 radius-8 mb-24" id="kanban-5">
-                                            <h6 class="kanban-title text-lg fw-semibold mb-8">Creating a new website</h6>
-                                            <p class="kanban-desc text-secondary-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                                            <button type="button" class="btn text-primary-600 border rounded border-primary-600 bg-hover-primary-600 text-hover-white d-flex align-items-center gap-2">
-                                                <iconify-icon icon="lucide:tag" class="icon"></iconify-icon>
-                                                <span class="kanban-tag fw-semibold">UI Design</span>
-                                            </button>
-                                            <div class="mt-12 d-flex align-items-center justify-content-between gap-10">
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <iconify-icon icon="solar:calendar-outline" class="text-primary-light"></iconify-icon>
-                                                    <span class="start-date text-secondary-light">25 Aug 2024</span>
-                                                </div>
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <button type="button" class="card-edit-button text-success-600">
-                                                        <iconify-icon icon="lucide:edit" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                    <button type="button" class="card-delete-button text-danger-600">
-                                                        <iconify-icon icon="fluent:delete-24-regular" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kanban-card bg-neutral-50 p-16 radius-8 mb-24" id="kanban-6">
-                                            <h6 class="kanban-title text-lg fw-semibold mb-8">Creating a new website</h6>
-                                            <p class="kanban-desc text-secondary-light">Lorem ipsum dolor sit amet, consectetur </p>
-                                            <button type="button" class="btn text-primary-600 border rounded border-primary-600 bg-hover-primary-600 text-hover-white d-flex align-items-center gap-2">
-                                                <iconify-icon icon="lucide:tag" class="icon"></iconify-icon>
-                                                <span class="kanban-tag fw-semibold">UI Design</span>
-                                            </button>
-                                            <div class="mt-12 d-flex align-items-center justify-content-between gap-10">
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <iconify-icon icon="solar:calendar-outline" class="text-primary-light"></iconify-icon>
-                                                    <span class="start-date text-secondary-light">25 Aug 2024</span>
-                                                </div>
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <button type="button" class="card-edit-button text-success-600">
-                                                        <iconify-icon icon="lucide:edit" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                    <button type="button" class="card-delete-button text-danger-600">
-                                                        <iconify-icon icon="fluent:delete-24-regular" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="kanban-card bg-neutral-50 p-16 radius-8 mb-24" id="kanban-7">
-                                            <div class="radius-8 mb-12 max-h-350-px overflow-hidden">
-                                                <img src="assets/images/kanban/kanban-2.png" alt="" class="w-100 h-100 object-fit-cover">
-                                            </div>
-                                            <h6 class="kanban-title text-lg fw-semibold mb-8">Creating a new website</h6>
-                                            <p class="kanban-desc text-secondary-light">Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore</p>
-                                            <button type="button" class="btn text-primary-600 border rounded border-primary-600 bg-hover-primary-600 text-hover-white d-flex align-items-center gap-2">
-                                                <iconify-icon icon="lucide:tag" class="icon"></iconify-icon>
-                                                <span class="kanban-tag fw-semibold">UI Design</span>
-                                            </button>
-                                            <div class="mt-12 d-flex align-items-center justify-content-between gap-10">
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <iconify-icon icon="solar:calendar-outline" class="text-primary-light"></iconify-icon>
-                                                    <span class="start-date text-secondary-light">25 Aug 2024</span>
-                                                </div>
-                                                <div class="d-flex align-items-center justify-content-between gap-10">
-                                                    <button type="button" class="card-edit-button text-success-600">
-                                                        <iconify-icon icon="lucide:edit" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                    <button type="button" class="card-delete-button text-danger-600">
-                                                        <iconify-icon icon="fluent:delete-24-regular" class="icon text-lg line-height-1"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                    <!-- Add Task Button -->
-                                    <button type="button" class="d-flex align-items-center gap-2 fw-medium w-100 text-primary-600 justify-content-center text-hover-primary-800 add-task-button">
-                                        <iconify-icon icon="ph:plus-circle" class="icon text-xl"></iconify-icon>
-                                        Add Task
-                                    </button>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- Add New Column -->
-                        <div class="w-25 kanban-item radius-12 overflow-hidden">
-                            <div class="card p-0 radius-12 overflow-hidden shadow-none">
-                                <div class="card-body p-24">
-                                    <button type="button" class="add-kanban d-flex align-items-center gap-2 fw-medium w-100 text-primary-600 justify-content-center text-hover-primary-800 line-height-1">
-                                        <iconify-icon icon="ph:plus-circle" class="icon text-xl d-flex"></iconify-icon>
-                                        Add Task
-                                    </button>
-                                </div>
-                            </div>
+                                <?php }
+                            } else {
+                                echo '<div class="text-center text-muted">No activities</div>';
+                            } ?>
                         </div>
                     </div>
                 </div>
+                <?php } ?>
             </div>
-            <!-- Add/Edit Task Modal -->
-            <div class="modal fade" id="addTaskModal" tabindex="-1" aria-labelledby="addTaskModalLabel" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h6 class="modal-title text-xl mb-0" id="addTaskModalLabel">Add New Task</h6>
-                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                        </div>
-                        <div class="modal-body">
-                            <form id="taskForm">
-                                <input type="hidden" id="editTaskId" value="">
-                                <div class="mb-3">
-                                    <label for="taskTitle" class="form-label fw-semibold text-primary-light text-sm mb-8">Title</label>
-                                    <input type="text" class="form-control" placeholder="Enter Event Title " id="taskTitle" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="taskTag" class="form-label fw-semibold text-primary-light text-sm mb-8">Tag</label>
-                                    <input type="text" class="form-control" placeholder="Enter tag" id="taskTag" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="startDate" class="form-label fw-semibold text-primary-light text-sm mb-8">Start Date</label>
-                                    <input type="date" class="form-control" id="startDate" required>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="taskDescription" class="form-label fw-semibold text-primary-light text-sm mb-8">Description</label>
-                                    <textarea class="form-control" id="taskDescription" rows="3" placeholder="Write some text" required></textarea>
-                                </div>
-                                <div class="mb-3">
-                                    <label for="taskImage" class="form-label fw-semibold text-primary-light text-sm mb-8">Attachments <span class="text-sm">(Jpg, Png format)</span> </label>
-                                    <input type="file" class="form-control" id="taskImage">
-                                    <img id="taskImagePreview" src="assets/images/carousel/carousel-img1.png" alt="Image Preview">
-                                </div>
-                            </form>
-                        </div>
-                        <div class="modal-footer justify-content-center gap-3">
-                            <button type="button" class="border border-danger-600 bg-hover-danger-200 text-danger-600 text-md px-50 py-11 radius-8" data-bs-dismiss="modal">
-                                Cancel
-                            </button>
-                            <button type="button" class="btn btn-primary border border-primary-600 text-md px-28 py-12 radius-8" id="saveTaskButton">
-                                Save Changes
-                            </button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <!-- Kanban Board End -->
         </div>
     </div>
 
-    <div class="flex-grow-1 d-flex flex-column">
-        <div class="row gy-4 flex-grow-1">
-            <div class="col-12 flex-grow-1 d-flex flex-column">
-                <div class="card h-100 p-0 flex-grow-1 d-flex flex-column">
-                    <div class="card-body p-24 flex-grow-1 d-flex flex-column">
-                        <div class="table-responsive flex-grow-1 d-flex flex-column">
-                            <!-- Only one custom search bar above the table -->
-                    <!-- Only one custom search bar above the table -->
-                    <div class="px-4 pt-4 pb-2">
-                        <div class="d-flex justify-content-start" style="margin-left: 16px;">
-                            <div style="max-width: 400px; width: 100%;">
-                                <div class="input-group" style="border-radius: 0.5rem; overflow: hidden; border: 1px solid #d1d5db;">
-                                    <span class="input-group-text bg-white border-end-0 pe-2" style="border-radius: 0.5rem 0 0 0.5rem;">
-                                        <i class="ri-search-line text-muted"></i>
-                                    </span>
-                                    <input type="text" id="customSearch" class="form-control border-start-0 ps-2" placeholder="Search" aria-label="Search" style="border-radius: 0 0.5rem 0.5rem 0; height: 44px;">
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <table class="table align-middle table-hover" id="activityTable">
-                        <thead>
-                            <tr>
-                                <th>No</th>
-                                <th>Information Date</th>
-                                <th>User & Position</th>
-                                <th>Department</th>
-                                <th>Application</th>
-                                <th>Type</th>
-                                <th>Description</th>
-                                <th>Action/Solution</th>
-                                <th>Due Date</th>
-                                <th>Status</th>
-                                <th>CNC Number</th>
-                                <th class="text-center">Actions</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                        <?php 
-                        $query = "SELECT * FROM activities ORDER BY information_date DESC";
-                        $result = $conn->query($query);
-                        $no = 1;
-                        if ($result && $result->num_rows > 0) {
-                            while($row = $result->fetch_assoc()) {
-                                echo "<tr>";
-                                echo "<td>".$no++."</td>";
-                                echo "<td>".date('d M Y', strtotime($row['information_date']))."</td>";
-                                echo "<td>".htmlspecialchars($row['user_position'])."</td>";
-                                echo "<td>".htmlspecialchars($row['department'])."</td>";
-                                echo "<td>".htmlspecialchars($row['application'])."</td>";
-                                echo "<td>".htmlspecialchars($row['type'])."</td>";
-                                echo "<td>".htmlspecialchars($row['description'])."</td>";
-                                echo "<td>".htmlspecialchars($row['action_solution'])."</td>";
-                                echo "<td>".($row['due_date'] ? date('d M Y', strtotime($row['due_date'])) : '-')."</td>";
-                                echo "<td><span class='badge bg-".($row['status'] == 'Open' ? 'primary' : ($row['status'] == 'In Progress' ? 'warning' : ($row['status'] == 'Completed' ? 'success' : 'secondary')))."'>".$row['status']."</span></td>";
-                                echo "<td>".htmlspecialchars($row['cnc_number'])."</td>";
-                                echo "<td class='text-center'>
-                                    <button type='button' class='btn btn-xs btn-warning me-1 edit-btn' data-id='".$row['id']."'><i class='ri-edit-line'></i></button>
-                                    <button type='button' class='btn btn-xs btn-danger delete-btn' data-id='".$row['id']."'><i class='ri-delete-bin-line'></i></button>
-                                </td>";
-                                echo "</tr>";
-                            }
-                        } else {
-                            echo "<tr><td colspan='12' class='text-center'>No activities found</td></tr>";
-                        }
-                        ?>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
+
 
 <!-- Add Activity Modal -->
 <div class="modal fade" id="addActivityModal" tabindex="-1">
@@ -933,6 +622,32 @@ include './partials/layouts/layoutTop.php';
     border-color: #3b82f6 !important;
     box-shadow: none;
 }
+
+/* Nav Tabs */
+.nav-tabs {
+    border-bottom: 1px solid #e5e7eb;
+}
+.nav-tabs .nav-link {
+    color: #374151;
+    font-weight: 500;
+    border: 0;
+    border-radius: 0.5rem 0.5rem 0 0;
+    background: #f8f9fa;
+    margin-right: 0.25rem;
+    padding: 0.75rem 1.5rem;
+    transition: background 0.2s, color 0.2s;
+    display: flex;
+    align-items: center;
+}
+.nav-tabs .nav-link.active {
+    background: #fff;
+    color: #2563eb;
+    box-shadow: 0 -2px 8px rgba(59,130,246,0.05);
+}
+.nav-tabs .nav-link i {
+    font-size: 1.1rem;
+    margin-right: 0.5rem;
+}
 </style>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
@@ -1031,6 +746,13 @@ $(document).ready(function() {
                 timer: 3000
             });
         }
+    }
+
+    // Handle tab view from URL
+    const view = urlParams.get('view');
+    if (view === 'kanban') {
+        const kanbanTab = new bootstrap.Tab(document.getElementById('kanban-tab'));
+        kanbanTab.show();
     }
 
     // Use event delegation for edit/delete buttons
