@@ -17,7 +17,18 @@
                 </div>
                 <div class="col-auto">
                     <div class="d-flex flex-wrap align-items-center gap-3">
-                        <button type="button" data-theme-toggle class="w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center"></button>
+                        <div class="theme-toggle-wrapper">
+                            <button type="button" data-theme-toggle class="theme-toggle-btn">
+                                <div class="toggle-slider">
+                                    <div class="toggle-icon toggle-icon-light">
+                                        <iconify-icon icon="solar:sun-bold" class="icon"></iconify-icon>
+                                    </div>
+                                    <div class="toggle-icon toggle-icon-dark">
+                                        <iconify-icon icon="solar:moon-bold" class="icon"></iconify-icon>
+                                    </div>
+                                </div>
+                            </button>
+                        </div>
                         <div class="dropdown d-none d-sm-inline-block">
                             <button class="has-indicator w-40-px h-40-px bg-neutral-200 rounded-circle d-flex justify-content-center align-items-center" type="button" data-bs-toggle="dropdown">
                                 <img src="assets/images/lang-flag.png" alt="image" class="w-24 h-24 object-fit-cover rounded-circle">

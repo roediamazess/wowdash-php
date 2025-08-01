@@ -67,7 +67,15 @@ function calculateSettingAsThemeString({ localStorageTheme }) {
 function updateButton({ buttonEl, isDark }) {
   const newCta = isDark ? "dark" : "light";
   buttonEl.setAttribute("aria-label", newCta);
-  buttonEl.innerText = newCta;
+  
+  // Add visual feedback for the new toggle
+  if (buttonEl) {
+    // Add a subtle animation class
+    buttonEl.classList.add('toggle-animated');
+    setTimeout(() => {
+      buttonEl.classList.remove('toggle-animated');
+    }, 300);
+  }
 }
 
 /**
@@ -104,6 +112,12 @@ if (button) {
     localStorage.setItem("theme", newTheme);
     updateButton({ buttonEl: button, isDark: newTheme === "dark" });
     updateThemeOnHtmlEl({ theme: newTheme });
+
+    // Add success animation
+    button.classList.add('toggle-success');
+    setTimeout(() => {
+      button.classList.remove('toggle-success');
+    }, 600);
 
     currentThemeSetting = newTheme;
   });

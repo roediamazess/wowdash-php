@@ -39,7 +39,7 @@ include './partials/layouts/layoutTop.php';
     <div class="card">
         <div class="card-body">
             <div class="table-responsive">
-                <table class="table table-hover">
+                <table class="table bordered-table table-hover">
                     <thead>
                         <tr>
                             <th>No</th>
@@ -416,109 +416,99 @@ include './partials/layouts/layoutTop.php';
 </div>
 
 <style>
-    /* Dark mode support for table and components */
-    [data-bs-theme="dark"] .table {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
+    /* Dark mode support for table and components - IMPROVED COLORS */
+    [data-theme=dark] .table,
+    [data-theme=dark] .table-responsive .table {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .table thead th {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
-        border-color: var(--bs-border-color);
+    [data-theme=dark] .table thead th,
+    [data-theme=dark] .table-responsive .table thead th {
+        background-color: var(--neutral-50) !important;
+        color: var(--text-primary-light) !important;
+        border-color: var(--neutral-200) !important;
     }
     
-    [data-bs-theme="dark"] .table tbody tr {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
-        border-color: var(--bs-border-color);
+    [data-theme=dark] .table tbody tr,
+    [data-theme=dark] .table-responsive .table tbody tr {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
+        border-color: var(--neutral-200) !important;
     }
     
-    [data-bs-theme="dark"] .table tbody tr:hover {
-        background-color: var(--bs-secondary) !important;
-        color: var(--bs-light);
+    [data-theme=dark] .table tbody tr td,
+    [data-theme=dark] .table-responsive .table tbody tr td {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
+        border-color: var(--neutral-200) !important;
+    }
+    
+    [data-theme=dark] .table tbody tr:hover,
+    [data-theme=dark] .table-responsive .table tbody tr:hover {
+        background-color: var(--neutral-200) !important;
+        color: var(--text-secondary-light) !important;
     }
     
     /* Force table background in dark mode */
-    [data-bs-theme="dark"] .table-responsive {
-        background-color: var(--bs-dark);
+    [data-theme=dark] .table-responsive {
+        background-color: var(--neutral-100) !important;
     }
     
-    [data-bs-theme="dark"] .table-responsive .table {
-        background-color: var(--bs-dark) !important;
+    [data-theme=dark] .card {
+        background-color: var(--neutral-100) !important;
+        border-color: var(--neutral-200) !important;
     }
     
-    [data-bs-theme="dark"] .table-responsive .table tbody tr {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
+    [data-theme=dark] .card-body {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .table-responsive .table tbody tr td {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
-        border-color: var(--bs-border-color);
+    [data-theme=dark] .modal-content {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .table-responsive .table thead tr th {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
-        border-color: var(--bs-border-color);
+    [data-theme=dark] .modal-header {
+        background-color: var(--neutral-100) !important;
+        border-color: var(--neutral-200) !important;
     }
     
-    [data-bs-theme="dark"] .card {
-        background-color: var(--bs-dark);
-        border-color: var(--bs-border-color);
+    [data-theme=dark] .modal-body {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .card-body {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
+    [data-theme=dark] .modal-footer {
+        background-color: var(--neutral-100) !important;
+        border-color: var(--neutral-200) !important;
     }
     
-    [data-bs-theme="dark"] .modal-content {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
+    [data-theme=dark] .form-control {
+        background-color: var(--input-bg) !important;
+        color: var(--text-secondary-light) !important;
+        border-color: var(--neutral-200) !important;
     }
     
-    [data-bs-theme="dark"] .modal-header {
-        background-color: var(--bs-dark);
-        border-color: var(--bs-border-color);
+    [data-theme=dark] .form-control:focus {
+        background-color: var(--input-bg) !important;
+        color: var(--text-secondary-light) !important;
+        border-color: var(--primary-600) !important;
     }
     
-    [data-bs-theme="dark"] .modal-body {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
+    [data-theme=dark] .form-select {
+        background-color: var(--input-bg) !important;
+        color: var(--text-secondary-light) !important;
+        border-color: var(--neutral-200) !important;
     }
     
-    [data-bs-theme="dark"] .modal-footer {
-        background-color: var(--bs-dark);
-        border-color: var(--bs-border-color);
+    [data-theme=dark] .form-label {
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .form-control {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
-        border-color: var(--bs-border-color);
-    }
-    
-    [data-bs-theme="dark"] .form-control:focus {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
-        border-color: var(--bs-primary);
-    }
-    
-    [data-bs-theme="dark"] .form-select {
-        background-color: var(--bs-dark);
-        color: var(--bs-light);
-        border-color: var(--bs-border-color);
-    }
-    
-    [data-bs-theme="dark"] .form-label {
-        color: var(--bs-light);
-    }
-    
-    [data-bs-theme="dark"] .form-label.fw-semibold {
-        color: var(--bs-light);
+    [data-theme=dark] .form-label.fw-semibold {
+        color: var(--text-secondary-light) !important;
     }
     
     /* Hover effects for activity rows - updated for dark mode */
@@ -537,10 +527,10 @@ include './partials/layouts/layoutTop.php';
         border-radius: 4px;
     }
     
-    [data-bs-theme="dark"] .activity-row:hover {
-        background-color: #1976d2 !important;
-        color: var(--bs-light);
-        border-left: 4px solid #42a5f5;
+    [data-theme=dark] .activity-row:hover {
+        background-color: var(--neutral-200) !important;
+        color: var(--text-secondary-light) !important;
+        border-left: 4px solid var(--primary-600);
     }
     
     /* Table styling improvements */
@@ -548,8 +538,8 @@ include './partials/layouts/layoutTop.php';
         border-bottom: 1px solid #e9ecef;
     }
     
-    [data-bs-theme="dark"] .table tbody tr {
-        border-bottom: 1px solid var(--bs-border-color);
+    [data-theme=dark] .table tbody tr {
+        border-bottom: 1px solid var(--neutral-200) !important;
     }
     
     .table tbody tr:last-child {
@@ -577,49 +567,97 @@ include './partials/layouts/layoutTop.php';
     }
     
     /* Dark mode text colors */
-    [data-bs-theme="dark"] .text-muted {
-        color: var(--bs-light) !important;
+    [data-theme=dark] .text-muted {
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .text-secondary {
-        color: var(--bs-light) !important;
+    [data-theme=dark] .text-secondary {
+        color: var(--text-secondary-light) !important;
     }
     
     /* Dark mode badge colors */
-    [data-bs-theme="dark"] .badge.bg-secondary {
-        background-color: var(--bs-secondary) !important;
-        color: var(--bs-light);
+    [data-theme=dark] .badge.bg-secondary {
+        background-color: var(--neutral-300) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .badge.bg-success {
-        background-color: var(--bs-success) !important;
-        color: var(--bs-light);
+    [data-theme=dark] .badge.bg-success {
+        background-color: var(--success-600) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .badge.bg-warning {
-        background-color: var(--bs-warning) !important;
-        color: var(--bs-dark);
+    [data-theme=dark] .badge.bg-warning {
+        background-color: var(--warning-600) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .badge.bg-info {
-        background-color: var(--bs-info) !important;
-        color: var(--bs-light);
+    [data-theme=dark] .badge.bg-info {
+        background-color: var(--info-600) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    /* Override any white backgrounds in dark mode */
-    [data-bs-theme="dark"] * {
-        background-color: var(--bs-dark) !important;
+    /* Override any white backgrounds in dark mode - ENHANCED */
+    [data-theme=dark] .table,
+    [data-theme=dark] .table tbody,
+    [data-theme=dark] .table tbody tr,
+    [data-theme=dark] .table tbody tr td,
+    [data-theme=dark] .table thead,
+    [data-theme=dark] .table thead tr,
+    [data-theme=dark] .table thead tr th,
+    [data-theme=dark] .table-responsive,
+    [data-theme=dark] .table-responsive .table,
+    [data-theme=dark] .table-responsive .table tbody,
+    [data-theme=dark] .table-responsive .table tbody tr,
+    [data-theme=dark] .table-responsive .table tbody tr td,
+    [data-theme=dark] .table-responsive .table thead,
+    [data-theme=dark] .table-responsive .table thead tr,
+    [data-theme=dark] .table-responsive .table thead tr th {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
     }
     
-    [data-bs-theme="dark"] .table,
-    [data-bs-theme="dark"] .table tbody,
-    [data-bs-theme="dark"] .table tbody tr,
-    [data-bs-theme="dark"] .table tbody tr td,
-    [data-bs-theme="dark"] .table thead,
-    [data-bs-theme="dark"] .table thead tr,
-    [data-bs-theme="dark"] .table thead tr th {
-        background-color: var(--bs-dark) !important;
-        color: var(--bs-light) !important;
+    /* Additional specificity for table elements */
+    [data-theme=dark] .table.table-hover tbody tr:hover {
+        background-color: var(--neutral-200) !important;
+        color: var(--text-secondary-light) !important;
+    }
+    
+    [data-theme=dark] .table.table-hover tbody tr {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
+    }
+    
+    /* Force override for any remaining white backgrounds */
+    [data-theme=dark] *[class*="table"] {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
+    }
+    
+    [data-theme=dark] *[class*="table"] * {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
+    }
+    
+    /* Specific styling for bordered-table in dark mode */
+    [data-theme=dark] .bordered-table {
+        border-color: var(--neutral-200) !important;
+    }
+    
+    [data-theme=dark] .bordered-table thead tr th {
+        background-color: var(--neutral-50) !important;
+        color: var(--text-primary-light) !important;
+        border-color: var(--neutral-200) !important;
+    }
+    
+    [data-theme=dark] .bordered-table tbody tr td {
+        background-color: var(--neutral-100) !important;
+        color: var(--text-secondary-light) !important;
+        border-color: var(--neutral-200) !important;
+    }
+    
+    [data-theme=dark] .bordered-table tbody tr:hover td {
+        background-color: var(--neutral-200) !important;
+        color: var(--text-secondary-light) !important;
     }
 </style>
 
