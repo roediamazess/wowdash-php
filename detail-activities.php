@@ -159,7 +159,7 @@ include './partials/layouts/layoutTop.php';
                             <select class="form-control" id="application" name="application" required>
                                 <option value="">Select Application</option>
                                 <?php foreach ($applications as $app): ?>
-                                    <option value="<?php echo $app['id']; ?>"><?php echo htmlspecialchars($app['app_code'] . ' - ' . $app['app_name']); ?></option>
+                                    <option value="<?php echo htmlspecialchars($app['app_code'] . ' - ' . $app['app_name']); ?>"><?php echo htmlspecialchars($app['app_code'] . ' - ' . $app['app_name']); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -354,7 +354,7 @@ include './partials/layouts/layoutTop.php';
                             <select class="form-control" id="editApplication" name="application" required>
                                 <option value="">Select Application</option>
                                 <?php foreach ($applications as $app): ?>
-                                    <option value="<?php echo $app['id']; ?>"><?php echo htmlspecialchars($app['app_code'] . ' - ' . $app['app_name']); ?></option>
+                                    <option value="<?php echo htmlspecialchars($app['app_code'] . ' - ' . $app['app_name']); ?>"><?php echo htmlspecialchars($app['app_code'] . ' - ' . $app['app_name']); ?></option>
                                 <?php endforeach; ?>
                             </select>
                         </div>
@@ -485,12 +485,12 @@ include './partials/layouts/layoutTop.php';
                 applicationSelects.forEach(selectId => {
                     const select = document.getElementById(selectId);
                     if (select) {
-                        data.data.forEach(app => {
-                            const option = document.createElement('option');
-                            option.value = app.id;
-                            option.textContent = `${app.code} - ${app.name}`;
-                            select.appendChild(option);
-                        });
+                                                 data.data.forEach(app => {
+                             const option = document.createElement('option');
+                             option.value = `${app.code} - ${app.name}`;
+                             option.textContent = `${app.code} - ${app.name}`;
+                             select.appendChild(option);
+                         });
                     }
                 });
             }
