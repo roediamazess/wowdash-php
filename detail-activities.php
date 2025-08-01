@@ -416,7 +416,112 @@ include './partials/layouts/layoutTop.php';
 </div>
 
 <style>
-    /* Hover effects for activity rows */
+    /* Dark mode support for table and components */
+    [data-bs-theme="dark"] .table {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+    }
+    
+    [data-bs-theme="dark"] .table thead th {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .table tbody tr {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .table tbody tr:hover {
+        background-color: var(--bs-secondary) !important;
+        color: var(--bs-light);
+    }
+    
+    /* Force table background in dark mode */
+    [data-bs-theme="dark"] .table-responsive {
+        background-color: var(--bs-dark);
+    }
+    
+    [data-bs-theme="dark"] .table-responsive .table {
+        background-color: var(--bs-dark) !important;
+    }
+    
+    [data-bs-theme="dark"] .table-responsive .table tbody tr {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+    }
+    
+    [data-bs-theme="dark"] .table-responsive .table tbody tr td {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .table-responsive .table thead tr th {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .card {
+        background-color: var(--bs-dark);
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .card-body {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+    }
+    
+    [data-bs-theme="dark"] .modal-content {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+    }
+    
+    [data-bs-theme="dark"] .modal-header {
+        background-color: var(--bs-dark);
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .modal-body {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+    }
+    
+    [data-bs-theme="dark"] .modal-footer {
+        background-color: var(--bs-dark);
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .form-control {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .form-control:focus {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border-color: var(--bs-primary);
+    }
+    
+    [data-bs-theme="dark"] .form-select {
+        background-color: var(--bs-dark);
+        color: var(--bs-light);
+        border-color: var(--bs-border-color);
+    }
+    
+    [data-bs-theme="dark"] .form-label {
+        color: var(--bs-light);
+    }
+    
+    [data-bs-theme="dark"] .form-label.fw-semibold {
+        color: var(--bs-light);
+    }
+    
+    /* Hover effects for activity rows - updated for dark mode */
     .activity-row {
         transition: all 0.3s ease;
         cursor: pointer;
@@ -432,9 +537,19 @@ include './partials/layouts/layoutTop.php';
         border-radius: 4px;
     }
     
+    [data-bs-theme="dark"] .activity-row:hover {
+        background-color: #1976d2 !important;
+        color: var(--bs-light);
+        border-left: 4px solid #42a5f5;
+    }
+    
     /* Table styling improvements */
     .table tbody tr {
         border-bottom: 1px solid #e9ecef;
+    }
+    
+    [data-bs-theme="dark"] .table tbody tr {
+        border-bottom: 1px solid var(--bs-border-color);
     }
     
     .table tbody tr:last-child {
@@ -460,7 +575,53 @@ include './partials/layouts/layoutTop.php';
         font-size: 0.875rem;
         margin-bottom: 0.25rem;
     }
-        </style>
+    
+    /* Dark mode text colors */
+    [data-bs-theme="dark"] .text-muted {
+        color: var(--bs-light) !important;
+    }
+    
+    [data-bs-theme="dark"] .text-secondary {
+        color: var(--bs-light) !important;
+    }
+    
+    /* Dark mode badge colors */
+    [data-bs-theme="dark"] .badge.bg-secondary {
+        background-color: var(--bs-secondary) !important;
+        color: var(--bs-light);
+    }
+    
+    [data-bs-theme="dark"] .badge.bg-success {
+        background-color: var(--bs-success) !important;
+        color: var(--bs-light);
+    }
+    
+    [data-bs-theme="dark"] .badge.bg-warning {
+        background-color: var(--bs-warning) !important;
+        color: var(--bs-dark);
+    }
+    
+    [data-bs-theme="dark"] .badge.bg-info {
+        background-color: var(--bs-info) !important;
+        color: var(--bs-light);
+    }
+    
+    /* Override any white backgrounds in dark mode */
+    [data-bs-theme="dark"] * {
+        background-color: var(--bs-dark) !important;
+    }
+    
+    [data-bs-theme="dark"] .table,
+    [data-bs-theme="dark"] .table tbody,
+    [data-bs-theme="dark"] .table tbody tr,
+    [data-bs-theme="dark"] .table tbody tr td,
+    [data-bs-theme="dark"] .table thead,
+    [data-bs-theme="dark"] .table thead tr,
+    [data-bs-theme="dark"] .table thead tr th {
+        background-color: var(--bs-dark) !important;
+        color: var(--bs-light) !important;
+    }
+</style>
 
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
