@@ -19,30 +19,9 @@ class DetailActivitiesManager {
             return [];
         }
         
-        // Check if applications table exists and has the required columns
-        $checkTable = $this->conn->query("SHOW TABLES LIKE 'applications'");
-        if ($checkTable->num_rows > 0) {
-            // Check if application_id column exists in detail_activities
-            $checkAppIdColumn = $this->conn->query("SHOW COLUMNS FROM detail_activities LIKE 'application_id'");
-            if ($checkAppIdColumn->num_rows > 0) {
-                $checkColumns = $this->conn->query("SHOW COLUMNS FROM applications LIKE 'app_code'");
-                if ($checkColumns->num_rows > 0) {
-                    $sql = "SELECT da.*, a.app_name as application_name, a.app_code as application_code 
-                            FROM detail_activities da 
-                            LEFT JOIN applications a ON da.application_id = a.id";
-                } else {
-                    $sql = "SELECT da.*, a.app_name as application_name, '' as application_code 
-                            FROM detail_activities da 
-                            LEFT JOIN applications a ON da.application_id = a.id";
-                }
-            } else {
-                $sql = "SELECT da.*, '' as application_name, '' as application_code 
-                        FROM detail_activities da";
-            }
-        } else {
-            $sql = "SELECT da.*, '' as application_name, '' as application_code 
-                    FROM detail_activities da";
-        }
+        // Use the actual table structure
+        $sql = "SELECT da.*, da.application as application_name, '' as application_code 
+                FROM detail_activities da";
         
         $params = [];
         $conditions = [];
@@ -82,34 +61,10 @@ class DetailActivitiesManager {
             return null;
         }
         
-        // Check if applications table exists and has the required columns
-        $checkTable = $this->conn->query("SHOW TABLES LIKE 'applications'");
-        if ($checkTable->num_rows > 0) {
-            // Check if application_id column exists in detail_activities
-            $checkAppIdColumn = $this->conn->query("SHOW COLUMNS FROM detail_activities LIKE 'application_id'");
-            if ($checkAppIdColumn->num_rows > 0) {
-                $checkColumns = $this->conn->query("SHOW COLUMNS FROM applications LIKE 'app_code'");
-                if ($checkColumns->num_rows > 0) {
-                    $sql = "SELECT da.*, a.app_name as application_name, a.app_code as application_code 
-                            FROM detail_activities da 
-                            LEFT JOIN applications a ON da.application_id = a.id 
-                            WHERE da.id = ?";
-                } else {
-                    $sql = "SELECT da.*, a.app_name as application_name, '' as application_code 
-                            FROM detail_activities da 
-                            LEFT JOIN applications a ON da.application_id = a.id 
-                            WHERE da.id = ?";
-                }
-            } else {
-                $sql = "SELECT da.*, '' as application_name, '' as application_code 
-                        FROM detail_activities da 
-                        WHERE da.id = ?";
-            }
-        } else {
-            $sql = "SELECT da.*, '' as application_name, '' as application_code 
-                    FROM detail_activities da 
-                    WHERE da.id = ?";
-        }
+        // Use the actual table structure
+        $sql = "SELECT da.*, da.application as application_name, '' as application_code 
+                FROM detail_activities da 
+                WHERE da.id = ?";
         
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param('i', $id);
@@ -121,7 +76,7 @@ class DetailActivitiesManager {
     // Create new activity
     public function createActivity($data) {
         try {
-            $sql = "INSERT INTO detail_activities (project_id, information_date, user_position, department, application_id, type, description, action_solution, due_date, status, cnc_number, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO detail_activities (project_id, information_date, user_position, department, application, type, description, action_solution, due_date, status, cnc_number, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             // Debug: Log SQL and data
             error_log("SQL: " . $sql);
@@ -138,7 +93,7 @@ class DetailActivitiesManager {
             $information_date = $data['information_date'] ?? '';
             $user_position = $data['user_position'] ?? '';
             $department = $data['department'] ?? '';
-            $application_id = ($data['application_id'] && $data['application_id'] !== '') ? $data['application_id'] : null;
+            $application = $data['application'] ?? '';
             $type = $data['type'] ?? '';
             $description = $data['description'] ?? '';
             $action_solution = $data['action_solution'] ?? '';
@@ -148,14 +103,14 @@ class DetailActivitiesManager {
             $created_by = $data['created_by'] ?? 1;
             
             // Debug: Log binding parameters
-            error_log("Binding parameters: project_id='$project_id', information_date='$information_date', user_position='$user_position', department='$department', application_id='" . ($application_id ?? 'NULL') . "', type='$type', description='$description', action_solution='$action_solution', due_date='$due_date', status='$status', cnc_number='$cnc_number', created_by='$created_by'");
+            error_log("Binding parameters: project_id='$project_id', information_date='$information_date', user_position='$user_position', department='$department', application='$application', type='$type', description='$description', action_solution='$action_solution', due_date='$due_date', status='$status', cnc_number='$cnc_number', created_by='$created_by'");
             
-            $bind_result = $stmt->bind_param('ssssissssssi', 
+            $bind_result = $stmt->bind_param('sssssssssssi', 
                 $project_id,
                 $information_date,
                 $user_position,
                 $department,
-                $application_id,
+                $application,
                 $type,
                 $description,
                 $action_solution,
@@ -193,7 +148,7 @@ class DetailActivitiesManager {
                 information_date = ?, 
                 user_position = ?, 
                 department = ?, 
-                application_id = ?, 
+                application = ?, 
                 type = ?, 
                 description = ?, 
                 action_solution = ?, 
@@ -209,7 +164,7 @@ class DetailActivitiesManager {
         $information_date = $data['information_date'] ?? '';
         $user_position = $data['user_position'] ?? '';
         $department = $data['department'] ?? '';
-        $application_id = ($data['application_id'] && $data['application_id'] !== '') ? $data['application_id'] : null;
+        $application = $data['application'] ?? '';
         $type = $data['type'] ?? '';
         $description = $data['description'] ?? '';
         $action_solution = $data['action_solution'] ?? '';
@@ -217,12 +172,12 @@ class DetailActivitiesManager {
         $status = $data['status'] ?? '';
         $cnc_number = $data['cnc_number'] ?? '';
         
-        $stmt->bind_param('ssssissssssi', 
+        $stmt->bind_param('sssssssssssi', 
             $project_id,
             $information_date,
             $user_position,
             $department,
-            $application_id,
+            $application,
             $type,
             $description,
             $action_solution,
@@ -396,7 +351,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                     'information_date' => $_POST['information_date'] ?? '',
                     'user_position' => $_POST['user_position'] ?? '',
                     'department' => $_POST['department'] ?? '',
-                    'application_id' => ($_POST['application_id'] && $_POST['application_id'] !== '') ? $_POST['application_id'] : null,
+                    'application' => $_POST['application'] ?? '',
                     'type' => $_POST['type'] ?? '',
                     'description' => $_POST['description'] ?? '',
                     'action_solution' => $_POST['action_solution'] ?? '',
@@ -429,7 +384,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
                         'information_date' => $_POST['information_date'] ?? '',
                         'user_position' => $_POST['user_position'] ?? '',
                         'department' => $_POST['department'] ?? '',
-                        'application_id' => ($_POST['application_id'] && $_POST['application_id'] !== '') ? $_POST['application_id'] : null,
+                        'application' => $_POST['application'] ?? '',
                         'type' => $_POST['type'] ?? '',
                         'description' => $_POST['description'] ?? '',
                         'action_solution' => $_POST['action_solution'] ?? '',
