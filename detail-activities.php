@@ -156,7 +156,7 @@ include './partials/layouts/layoutTop.php';
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="application" class="form-label">Application <span class="text-danger">*</span></label>
-                            <select class="form-control" id="application" name="application_id" required>
+                            <select class="form-control" id="application" name="application" required>
                                 <option value="">Select Application</option>
                                 <?php foreach ($applications as $app): ?>
                                     <option value="<?php echo $app['id']; ?>"><?php echo htmlspecialchars($app['app_code'] . ' - ' . $app['app_name']); ?></option>
@@ -213,8 +213,8 @@ include './partials/layouts/layoutTop.php';
                 </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                 <button type="button" class="btn btn-primary" onclick="saveDetailActivity()">Save Activity</button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -351,7 +351,7 @@ include './partials/layouts/layoutTop.php';
                     <div class="row">
                         <div class="col-md-6 mb-3">
                             <label for="editApplication" class="form-label">Application <span class="text-danger">*</span></label>
-                            <select class="form-control" id="editApplication" name="application_id" required>
+                            <select class="form-control" id="editApplication" name="application" required>
                                 <option value="">Select Application</option>
                                 <?php foreach ($applications as $app): ?>
                                     <option value="<?php echo $app['id']; ?>"><?php echo htmlspecialchars($app['app_code'] . ' - ' . $app['app_name']); ?></option>
@@ -519,21 +519,21 @@ include './partials/layouts/layoutTop.php';
             document.getElementById('viewDescription').textContent = row.dataset.description;
             document.getElementById('viewActionSolution').textContent = row.dataset.actionSolution;
             
-            // Store current activity data for edit/delete
-            window.currentActivityData = {
-                id: row.dataset.activityId,
-                project_id: row.dataset.projectId,
-                information_date: row.dataset.informationDate,
-                user_position: row.dataset.userPosition,
-                department: row.dataset.department,
-                application_id: row.dataset.applicationId,
-                type: row.dataset.type,
-                status: row.dataset.status,
-                due_date: row.dataset.dueDate,
-                description: row.dataset.description,
-                action_solution: row.dataset.actionSolution,
-                cnc_number: row.dataset.cncNumber
-            };
+                         // Store current activity data for edit/delete
+             window.currentActivityData = {
+                 id: row.dataset.activityId,
+                 project_id: row.dataset.projectId,
+                 information_date: row.dataset.informationDate,
+                 user_position: row.dataset.userPosition,
+                 department: row.dataset.department,
+                 application: row.dataset.application,
+                 type: row.dataset.type,
+                 status: row.dataset.status,
+                 due_date: row.dataset.dueDate,
+                 description: row.dataset.description,
+                 action_solution: row.dataset.actionSolution,
+                 cnc_number: row.dataset.cncNumber
+             };
             
             const modal = new bootstrap.Modal(document.getElementById('viewDetailActivityModal'));
             modal.show();
@@ -549,7 +549,7 @@ include './partials/layouts/layoutTop.php';
             document.getElementById('editInformationDate').value = window.currentActivityData.information_date;
             document.getElementById('editUserPosition').value = window.currentActivityData.user_position;
             document.getElementById('editDepartment').value = window.currentActivityData.department;
-            document.getElementById('editApplication').value = window.currentActivityData.application_id || '';
+                         document.getElementById('editApplication').value = window.currentActivityData.application || '';
             document.getElementById('editType').value = window.currentActivityData.type;
             document.getElementById('editDueDate').value = window.currentActivityData.due_date;
             document.getElementById('editStatus').value = window.currentActivityData.status;
@@ -648,7 +648,7 @@ include './partials/layouts/layoutTop.php';
                         information_date: formData.get('information_date'),
                         user_position: formData.get('user_position'),
                         department: formData.get('department'),
-                        application_id: formData.get('application_id'),
+                        application: formData.get('application'),
                         type: formData.get('type'),
                         status: formData.get('status'),
                         due_date: formData.get('due_date'),
@@ -669,7 +669,7 @@ include './partials/layouts/layoutTop.php';
                             information_date: formData.get('information_date'),
                             user_position: formData.get('user_position'),
                             department: formData.get('department'),
-                            application_id: formData.get('application_id'),
+                            application: formData.get('application'),
                             type: formData.get('type'),
                             status: formData.get('status'),
                             due_date: formData.get('due_date'),
@@ -717,7 +717,7 @@ include './partials/layouts/layoutTop.php';
             row.dataset.informationDate = activityData.information_date;
             row.dataset.userPosition = activityData.user_position;
             row.dataset.department = activityData.department;
-            row.dataset.applicationId = activityData.application_id;
+            row.dataset.application = activityData.application;
             row.dataset.type = activityData.type;
             row.dataset.status = activityData.status;
             row.dataset.dueDate = activityData.due_date;
