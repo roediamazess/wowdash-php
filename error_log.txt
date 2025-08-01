@@ -19,3 +19,9 @@ Stack trace:
 [31-Jul-2025 14:49:18 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: USR005
 [31-Jul-2025 15:17:56 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["USR003"]}
 [31-Jul-2025 15:17:56 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: USR003
+[01-Aug-2025 06:20:41 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["ANDI"]}
+[01-Aug-2025 06:20:41 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: ANDI
+[01-Aug-2025 06:22:59 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["RANGGA"]}
+[01-Aug-2025 06:22:59 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: RANGGA
+[01-Aug-2025 06:24:46 Europe/Berlin] api-user-delete.php: Received raw input: {"userIds":["RIDWAN"]}
+[01-Aug-2025 06:24:46 Europe/Berlin] api-user-delete.php: Attempting to delete users with IDs: RIDWAN

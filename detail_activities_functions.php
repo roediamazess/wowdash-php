@@ -75,30 +75,23 @@ class DetailActivitiesManager {
     
     // Create new activity
     public function createActivity($data) {
-        error_log("=== CREATE ACTIVITY FUNCTION DEBUG ===");
-        error_log("Input data: " . print_r($data, true));
-        
         try {
             // Validate required fields
             $required_fields = ['type', 'application', 'description'];
             foreach ($required_fields as $field) {
                 if (empty($data[$field])) {
-                    error_log("Missing required field: $field");
                     return ['success' => false, 'message' => "Missing required field: $field"];
                 }
             }
             
             // Generate activity number if not provided
             $activity_number = $data['activity_number'] ?? 'ACT' . date('md') . rand(100, 999);
-            error_log("Generated activity_number: $activity_number");
             
             // Prepare SQL statement
             $sql = "INSERT INTO detail_activities (project_id, activity_number, information_date, user_position, department, application, type, description, action_solution, due_date, status, cnc_number, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
-            error_log("SQL query: $sql");
             
             $stmt = $this->conn->prepare($sql);
             if (!$stmt) {
-                error_log("Prepare statement failed: " . $this->conn->error);
                 return ['success' => false, 'message' => 'Database prepare error: ' . $this->conn->error];
             }
             
@@ -115,8 +108,6 @@ class DetailActivitiesManager {
             $status = $data['status'] ?? '';
             $cnc_number = $data['cnc_number'] ?? '';
             $created_by = $data['created_by'] ?? 1;
-            
-            error_log("Data to bind: project_id=$project_id, activity_number=$activity_number, information_date=$information_date, user_position=$user_position, department=$department, application=$application, type=$type, description=$description, action_solution=$action_solution, due_date=$due_date, status=$status, cnc_number=$cnc_number, created_by=$created_by");
             
             // Bind parameters
             $bind_result = $stmt->bind_param('ssssssssssssi', 
@@ -136,32 +127,22 @@ class DetailActivitiesManager {
             );
             
             if (!$bind_result) {
-                error_log("Bind param failed: " . $stmt->error);
                 return ['success' => false, 'message' => 'Database bind error: ' . $stmt->error];
             }
-            
-            error_log("Parameters bound successfully");
             
             // Execute the statement
             $execute_result = $stmt->execute();
             if (!$execute_result) {
-                error_log("Execute failed: " . $stmt->error);
                 return ['success' => false, 'message' => 'Database execute error: ' . $stmt->error];
             }
             
-            error_log("Statement executed successfully");
-            
             // Get the inserted ID
             $inserted_id = $stmt->insert_id;
-            error_log("Inserted ID: $inserted_id");
-            
             $stmt->close();
             
             return ['success' => true, 'message' => 'Activity created successfully', 'id' => $inserted_id];
             
         } catch (Exception $e) {
-            error_log("Exception in createActivity: " . $e->getMessage());
-            error_log("Exception trace: " . $e->getTraceAsString());
             return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
         }
     }
@@ -169,12 +150,16 @@ class DetailActivitiesManager {
     // Update activity
     public function updateActivity($id, $data) {
         try {
-            // Generate activity number if not provided
-            $activity_number = $data['activity_number'] ?? 'ACT' . date('md') . rand(100, 999);
+            // Validate required fields
+            $required_fields = ['type', 'application', 'description'];
+            foreach ($required_fields as $field) {
+                if (empty($data[$field])) {
+                    return ['success' => false, 'message' => "Missing required field: $field"];
+                }
+            }
             
             $sql = "UPDATE detail_activities SET
                     project_id = ?,
-                    activity_number = ?,
                     information_date = ?,
                     user_position = ?,
                     department = ?,
@@ -189,7 +174,7 @@ class DetailActivitiesManager {
             
             $stmt = $this->conn->prepare($sql);
             if (!$stmt) {
-                return false;
+                return ['success' => false, 'message' => 'Database prepare error: ' . $this->conn->error];
             }
             
             $project_id = $data['project_id'] ?? '';
@@ -204,9 +189,8 @@ class DetailActivitiesManager {
             $status = $data['status'] ?? '';
             $cnc_number = $data['cnc_number'] ?? '';
             
-            $stmt->bind_param('ssssssssssssi',
+            $stmt->bind_param('sssssssssssi',
                 $project_id,
-                $activity_number,
                 $information_date,
                 $user_position,
                 $department,
@@ -222,11 +206,15 @@ class DetailActivitiesManager {
             
             $result = $stmt->execute();
             $stmt->close();
-            return $result;
+            
+            if ($result) {
+                return ['success' => true, 'message' => 'Activity updated successfully', 'id' => $id];
+            } else {
+                return ['success' => false, 'message' => 'Database execute error: ' . $stmt->error];
+            }
             
         } catch (Exception $e) {
-            error_log("Exception in updateActivity: " . $e->getMessage());
-            return false;
+            return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
         }
     }
     
@@ -307,20 +295,22 @@ class DetailActivitiesManager {
 
 // Handle AJAX requests
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
-    error_log("=== DETAIL ACTIVITIES AJAX HANDLER DEBUG ===");
-    error_log("Request method: " . $_SERVER['REQUEST_METHOD']);
-    error_log("Action: " . $_POST['action']);
-    error_log("POST data: " . print_r($_POST, true));
+    // Ensure clean output
+    if (ob_get_level()) {
+        ob_end_clean();
+    }
+    ob_start();
     
     $manager = new DetailActivitiesManager($conn);
     $response = ['success' => false, 'message' => 'Invalid action'];
     
+    // Set headers
     header('Content-Type: application/json');
+    header('Cache-Control: no-cache, must-revalidate');
     
     try {
         switch ($_POST['action']) {
             case 'create':
-                error_log("Processing CREATE action");
                 $data = [
                     'project_id' => $_POST['project_id'] ?? null,
                     'activity_number' => $_POST['activity_number'] ?? null,
@@ -337,11 +327,7 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' &
                     'created_by' => $_SESSION['user_id'] ?? 1
                 ];
                 
-                error_log("Data to be inserted: " . print_r($data, true));
-                
                 $result = $manager->createActivity($data);
-                error_log("Create result: " . print_r($result, true));
-                
                 echo json_encode($result);
                 break;
             
@@ -364,14 +350,12 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' &
                         ];
                         
                         $result = $manager->updateActivity($_POST['id'], $data);
-                        if ($result) {
-                            $response = ['success' => true, 'message' => 'Activity updated successfully'];
-                        } else {
-                            $response = ['success' => false, 'message' => 'Failed to update activity'];
-                        }
+                        echo json_encode($result);
                     } catch (Exception $e) {
-                        $response = ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
+                        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
                     }
+                } else {
+                    echo json_encode(['success' => false, 'message' => 'Missing activity ID']);
                 }
                 break;
                 
@@ -384,23 +368,22 @@ if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' &
                         $response = ['success' => false, 'message' => 'Failed to delete activity'];
                     }
                 }
+                echo json_encode($response);
                 break;
                 
             case 'get_applications':
                 $applications = $manager->getApplications();
                 $response = ['success' => true, 'data' => $applications];
+                echo json_encode($response);
                 break;
         }
         
-        if ($_POST['action'] !== 'create') {
-            echo json_encode($response);
-        }
-        
     } catch (Exception $e) {
-        error_log("Exception in AJAX handler: " . $e->getMessage());
         echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
     }
     
+    // End output buffering and send
+    ob_end_flush();
     exit();
 }
 ?> 

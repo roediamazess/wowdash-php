@@ -575,87 +575,80 @@ include './partials/layouts/layoutTop.php';
     function saveDetailActivity() {
         const form = document.getElementById('addDetailActivityForm');
         
-        // Additional validation for required fields
+        // Client-side validation
         const typeField = document.getElementById('type');
         const applicationField = document.getElementById('application');
         const descriptionField = document.getElementById('description');
         
         if (!typeField.value) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Field Required',
-                text: 'Please select a Type for the activity.'
-            });
+            Swal.fire({ icon: 'warning', title: 'Field Required', text: 'Please select a Type for the activity.' });
             typeField.focus();
             return;
         }
         
         if (!applicationField.value) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Field Required',
-                text: 'Please select an Application for the activity.'
-            });
+            Swal.fire({ icon: 'warning', title: 'Field Required', text: 'Please select an Application.' });
             applicationField.focus();
             return;
         }
         
         if (!descriptionField.value.trim()) {
-            Swal.fire({
-                icon: 'warning',
-                title: 'Field Required',
-                text: 'Please enter a Description for the activity.'
-            });
+            Swal.fire({ icon: 'warning', title: 'Field Required', text: 'Please enter a Description for the activity.' });
             descriptionField.focus();
             return;
         }
         
         if (form.checkValidity()) {
             const formData = new FormData(form);
-            formData.append('action', 'create_activity');
-            
-            // Debug: Log form data
-            console.log('Form data being sent:');
-            for (let [key, value] of formData.entries()) {
-                console.log(key + ': ' + value);
-            }
+            formData.append('action', 'create');
             
             fetch('detail_activities_functions.php', {
                 method: 'POST',
                 body: formData
             })
             .then(response => {
-                console.log('Response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! status: ${response.status}`);
+                }
                 return response.json();
             })
-            .then(data => {
-                console.log('Response data:', data);
-                if (data.success) {
+            .then(result => {
+                if (result.success === true) {
                     Swal.fire({
                         icon: 'success',
-                        title: 'Created!',
-                        text: 'Activity created successfully.',
-                        timer: 2000,
-                        showConfirmButton: false
+                        title: 'Success!',
+                        text: result.message || 'Activity created successfully',
+                        showConfirmButton: false,
+                        timer: 1500
                     });
-                    location.reload();
+                    
+                    // Close modal and refresh table
+                    const modal = bootstrap.Modal.getInstance(document.getElementById('addDetailActivityModal'));
+                    modal.hide();
+                    form.reset();
+                    
+                    // Refresh the page to show new data
+                    setTimeout(() => {
+                        location.reload();
+                    }, 1500);
                 } else {
                     Swal.fire({
                         icon: 'error',
                         title: 'Error!',
-                        text: data.message || 'Failed to create activity.'
+                        text: result.message || 'Failed to create activity'
                     });
                 }
             })
             .catch(error => {
-                console.error('Error:', error);
+                console.error('Fetch error:', error);
                 Swal.fire({
                     icon: 'error',
                     title: 'Error!',
-                    text: 'Error creating activity: ' + error.message
+                    text: 'Failed to create activity. Please try again.'
                 });
             });
         } else {
+            console.log('Form validation failed');
             form.reportValidity();
         }
     }
