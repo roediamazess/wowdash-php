@@ -264,11 +264,11 @@ class DetailActivitiesManager {
         // Check if applications table exists
         $checkTable = $this->conn->query("SHOW TABLES LIKE 'applications'");
         if ($checkTable->num_rows > 0) {
-            $checkColumns = $this->conn->query("SHOW COLUMNS FROM applications LIKE 'code'");
+            $checkColumns = $this->conn->query("SHOW COLUMNS FROM applications LIKE 'app_code'");
             if ($checkColumns->num_rows > 0) {
-                $sql = "SELECT id, code, name FROM applications ORDER BY name";
+                $sql = "SELECT id, app_code as code, app_name as name FROM applications ORDER BY app_name";
             } else {
-                $sql = "SELECT id, '' as code, name FROM applications ORDER BY name";
+                $sql = "SELECT id, '' as code, app_name as name FROM applications ORDER BY app_name";
             }
             $result = $this->conn->query($sql);
             return $result->fetch_all(MYSQLI_ASSOC);
