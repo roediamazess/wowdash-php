@@ -75,22 +75,35 @@ class DetailActivitiesManager {
     
     // Create new activity
     public function createActivity($data) {
+        error_log("=== CREATE ACTIVITY FUNCTION DEBUG ===");
+        error_log("Input data: " . print_r($data, true));
+        
         try {
-            $sql = "INSERT INTO detail_activities (project_id, activity_number, information_date, user_position, department, application, type, description, action_solution, due_date, status, cnc_number, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            // Validate required fields
+            $required_fields = ['type', 'application', 'description'];
+            foreach ($required_fields as $field) {
+                if (empty($data[$field])) {
+                    error_log("Missing required field: $field");
+                    return ['success' => false, 'message' => "Missing required field: $field"];
+                }
+            }
             
-            // Debug: Log SQL and data
-            error_log("SQL: " . $sql);
-            error_log("Data for binding: " . print_r($data, true));
+            // Generate activity number if not provided
+            $activity_number = $data['activity_number'] ?? 'ACT' . date('md') . rand(100, 999);
+            error_log("Generated activity_number: $activity_number");
+            
+            // Prepare SQL statement
+            $sql = "INSERT INTO detail_activities (project_id, activity_number, information_date, user_position, department, application, type, description, action_solution, due_date, status, cnc_number, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            error_log("SQL query: $sql");
             
             $stmt = $this->conn->prepare($sql);
             if (!$stmt) {
-                error_log("Prepare failed: " . $this->conn->error);
-                return false;
+                error_log("Prepare statement failed: " . $this->conn->error);
+                return ['success' => false, 'message' => 'Database prepare error: ' . $this->conn->error];
             }
             
-            // Handle null values properly
+            // Prepare data for binding
             $project_id = $data['project_id'] ?? '';
-            $activity_number = $data['activity_number'] ?? 'ACT-' . date('Ymd') . '-' . rand(1000, 9999);
             $information_date = $data['information_date'] ?? '';
             $user_position = $data['user_position'] ?? '';
             $department = $data['department'] ?? '';
@@ -103,9 +116,9 @@ class DetailActivitiesManager {
             $cnc_number = $data['cnc_number'] ?? '';
             $created_by = $data['created_by'] ?? 1;
             
-            // Debug: Log binding parameters
-            error_log("Binding parameters: project_id='$project_id', activity_number='$activity_number', information_date='$information_date', user_position='$user_position', department='$department', application='$application', type='$type', description='$description', action_solution='$action_solution', due_date='$due_date', status='$status', cnc_number='$cnc_number', created_by='$created_by'");
+            error_log("Data to bind: project_id=$project_id, activity_number=$activity_number, information_date=$information_date, user_position=$user_position, department=$department, application=$application, type=$type, description=$description, action_solution=$action_solution, due_date=$due_date, status=$status, cnc_number=$cnc_number, created_by=$created_by");
             
+            // Bind parameters
             $bind_result = $stmt->bind_param('ssssssssssssi', 
                 $project_id,
                 $activity_number,
@@ -123,76 +136,98 @@ class DetailActivitiesManager {
             );
             
             if (!$bind_result) {
-                error_log("Bind failed: " . $stmt->error);
-                return false;
+                error_log("Bind param failed: " . $stmt->error);
+                return ['success' => false, 'message' => 'Database bind error: ' . $stmt->error];
             }
             
-            $result = $stmt->execute();
-            if (!$result) {
+            error_log("Parameters bound successfully");
+            
+            // Execute the statement
+            $execute_result = $stmt->execute();
+            if (!$execute_result) {
                 error_log("Execute failed: " . $stmt->error);
-                return false;
+                return ['success' => false, 'message' => 'Database execute error: ' . $stmt->error];
             }
             
-            $insert_id = $this->conn->insert_id;
-            error_log("Insert successful, ID: " . $insert_id);
-            return $insert_id;
+            error_log("Statement executed successfully");
+            
+            // Get the inserted ID
+            $inserted_id = $stmt->insert_id;
+            error_log("Inserted ID: $inserted_id");
+            
+            $stmt->close();
+            
+            return ['success' => true, 'message' => 'Activity created successfully', 'id' => $inserted_id];
             
         } catch (Exception $e) {
             error_log("Exception in createActivity: " . $e->getMessage());
-            return false;
+            error_log("Exception trace: " . $e->getTraceAsString());
+            return ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
         }
     }
     
     // Update activity
     public function updateActivity($id, $data) {
-        $sql = "UPDATE detail_activities SET 
-                project_id = ?,
-                activity_number = ?,
-                information_date = ?, 
-                user_position = ?, 
-                department = ?, 
-                application = ?, 
-                type = ?, 
-                description = ?, 
-                action_solution = ?, 
-                due_date = ?, 
-                status = ?, 
-                cnc_number = ? 
-                WHERE id = ?";
-        
-        $stmt = $this->conn->prepare($sql);
-        
-        // Handle null values properly
-        $project_id = $data['project_id'] ?? '';
-        $activity_number = $data['activity_number'] ?? 'ACT-' . date('Ymd') . '-' . rand(1000, 9999);
-        $information_date = $data['information_date'] ?? '';
-        $user_position = $data['user_position'] ?? '';
-        $department = $data['department'] ?? '';
-        $application = $data['application'] ?? '';
-        $type = $data['type'] ?? '';
-        $description = $data['description'] ?? '';
-        $action_solution = $data['action_solution'] ?? '';
-        $due_date = $data['due_date'] ?? '';
-        $status = $data['status'] ?? '';
-        $cnc_number = $data['cnc_number'] ?? '';
-        
-        $stmt->bind_param('ssssssssssssi', 
-            $project_id,
-            $activity_number,
-            $information_date,
-            $user_position,
-            $department,
-            $application,
-            $type,
-            $description,
-            $action_solution,
-            $due_date,
-            $status,
-            $cnc_number,
-            $id
-        );
-        
-        return $stmt->execute();
+        try {
+            // Generate activity number if not provided
+            $activity_number = $data['activity_number'] ?? 'ACT' . date('md') . rand(100, 999);
+            
+            $sql = "UPDATE detail_activities SET
+                    project_id = ?,
+                    activity_number = ?,
+                    information_date = ?,
+                    user_position = ?,
+                    department = ?,
+                    application = ?,
+                    type = ?,
+                    description = ?,
+                    action_solution = ?,
+                    due_date = ?,
+                    status = ?,
+                    cnc_number = ?
+                    WHERE id = ?";
+            
+            $stmt = $this->conn->prepare($sql);
+            if (!$stmt) {
+                return false;
+            }
+            
+            $project_id = $data['project_id'] ?? '';
+            $information_date = $data['information_date'] ?? '';
+            $user_position = $data['user_position'] ?? '';
+            $department = $data['department'] ?? '';
+            $application = $data['application'] ?? '';
+            $type = $data['type'] ?? '';
+            $description = $data['description'] ?? '';
+            $action_solution = $data['action_solution'] ?? '';
+            $due_date = $data['due_date'] ?? '';
+            $status = $data['status'] ?? '';
+            $cnc_number = $data['cnc_number'] ?? '';
+            
+            $stmt->bind_param('ssssssssssssi',
+                $project_id,
+                $activity_number,
+                $information_date,
+                $user_position,
+                $department,
+                $application,
+                $type,
+                $description,
+                $action_solution,
+                $due_date,
+                $status,
+                $cnc_number,
+                $id
+            );
+            
+            $result = $stmt->execute();
+            $stmt->close();
+            return $result;
+            
+        } catch (Exception $e) {
+            error_log("Exception in updateActivity: " . $e->getMessage());
+            return false;
+        }
     }
     
     // Delete activity
@@ -200,122 +235,63 @@ class DetailActivitiesManager {
         $sql = "DELETE FROM detail_activities WHERE id = ?";
         $stmt = $this->conn->prepare($sql);
         $stmt->bind_param('i', $id);
-        return $stmt->execute();
+        $result = $stmt->execute();
+        $stmt->close();
+        return $result;
     }
     
     // Get departments
     public function getDepartments() {
-        return [
-            'Food & Beverage',
-            'Kitchen', 
-            'Room Division',
-            'Front Office',
-            'Housekeeping',
-            'Engineering',
-            'Sales & Marketing',
-            'IT / EDP',
-            'Accounting',
-            'Executive Office'
-        ];
+        $sql = "SELECT DISTINCT department FROM detail_activities WHERE department IS NOT NULL AND department != '' ORDER BY department";
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
     // Get applications
     public function getApplications() {
         // Check if applications table exists
         $checkTable = $this->conn->query("SHOW TABLES LIKE 'applications'");
-        if ($checkTable->num_rows > 0) {
-            $checkColumns = $this->conn->query("SHOW COLUMNS FROM applications LIKE 'app_code'");
-            if ($checkColumns->num_rows > 0) {
-                $sql = "SELECT id, app_code as code, app_name as name FROM applications ORDER BY app_name";
-            } else {
-                $sql = "SELECT id, '' as code, app_name as name FROM applications ORDER BY app_name";
-            }
-            $result = $this->conn->query($sql);
-            return $result->fetch_all(MYSQLI_ASSOC);
-        } else {
-            // Return empty array if table doesn't exist
+        if ($checkTable->num_rows == 0) {
             return [];
         }
+        
+        $sql = "SELECT id, app_code as code, app_name as name FROM applications ORDER BY app_name";
+        $result = $this->conn->query($sql);
+        return $result->fetch_all(MYSQLI_ASSOC);
     }
     
     // Get activity types
     public function getActivityTypes() {
         return [
-            'Setup',
-            'Question',
-            'Issue',
-            'Report Issue',
-            'Report Request',
-            'Feature Request'
+            ['type' => 'Bug Fix'],
+            ['type' => 'Feature Request'],
+            ['type' => 'Improvement'],
+            ['type' => 'Maintenance'],
+            ['type' => 'Support']
         ];
     }
     
     // Get status options
     public function getStatusOptions() {
         return [
-            'Open',
-            'On Progress',
-            'Need Requirement',
-            'Done'
+            ['status' => 'Open'],
+            ['status' => 'In Progress'],
+            ['status' => 'Completed'],
+            ['status' => 'On Hold'],
+            ['status' => 'Cancelled']
         ];
     }
     
     // Search activities
     public function searchActivities($searchTerm, $limit = 20) {
-        // Check if detail_activities table exists
-        $checkDetailTable = $this->conn->query("SHOW TABLES LIKE 'detail_activities'");
-        if ($checkDetailTable->num_rows == 0) {
-            return [];
-        }
-        
-        // Check if applications table exists and has the required columns
-        $checkTable = $this->conn->query("SHOW TABLES LIKE 'applications'");
-        if ($checkTable->num_rows > 0) {
-            // Check if application_id column exists in detail_activities
-            $checkAppIdColumn = $this->conn->query("SHOW COLUMNS FROM detail_activities LIKE 'application_id'");
-            if ($checkAppIdColumn->num_rows > 0) {
-                $checkColumns = $this->conn->query("SHOW COLUMNS FROM applications LIKE 'app_code'");
-                if ($checkColumns->num_rows > 0) {
-                    $sql = "SELECT da.*, a.app_name as application_name, a.app_code as application_code 
-                            FROM detail_activities da 
-                            LEFT JOIN applications a ON da.application_id = a.id 
-                            WHERE da.project_id LIKE ? 
-                            OR da.user_position LIKE ? 
-                            OR da.description LIKE ? 
-                            OR da.action_solution LIKE ?
-                            ORDER BY da.created_at DESC LIMIT ?";
-                } else {
-                    $sql = "SELECT da.*, a.app_name as application_name, '' as application_code 
-                            FROM detail_activities da 
-                            LEFT JOIN applications a ON da.application_id = a.id 
-                            WHERE da.project_id LIKE ? 
-                            OR da.user_position LIKE ? 
-                            OR da.description LIKE ? 
-                            OR da.action_solution LIKE ?
-                            ORDER BY da.created_at DESC LIMIT ?";
-                }
-            } else {
-                $sql = "SELECT da.*, '' as application_name, '' as application_code 
-                        FROM detail_activities da 
-                        WHERE da.project_id LIKE ? 
-                        OR da.user_position LIKE ? 
-                        OR da.description LIKE ? 
-                        OR da.action_solution LIKE ?
-                        ORDER BY da.created_at DESC LIMIT ?";
-            }
-        } else {
-            $sql = "SELECT da.*, '' as application_name, '' as application_code 
-                    FROM detail_activities da 
-                    WHERE da.project_id LIKE ? 
-                    OR da.user_position LIKE ? 
-                    OR da.description LIKE ? 
-                    OR da.action_solution LIKE ?
-                    ORDER BY da.created_at DESC LIMIT ?";
-        }
+        $sql = "SELECT da.*, da.application as application_name, '' as application_code 
+                FROM detail_activities da 
+                WHERE da.description LIKE ? OR da.activity_number LIKE ? OR da.application LIKE ?
+                ORDER BY da.created_at DESC LIMIT ?";
         
         $searchPattern = "%$searchTerm%";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bind_param('ssssi', $searchPattern, $searchPattern, $searchPattern, $searchPattern, $limit);
+        $stmt->bind_param('sssi', $searchPattern, $searchPattern, $searchPattern, $limit);
         $stmt->execute();
         $result = $stmt->get_result();
         return $result->fetch_all(MYSQLI_ASSOC);
@@ -331,104 +307,100 @@ class DetailActivitiesManager {
 
 // Handle AJAX requests
 if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+    error_log("=== DETAIL ACTIVITIES AJAX HANDLER DEBUG ===");
+    error_log("Request method: " . $_SERVER['REQUEST_METHOD']);
+    error_log("Action: " . $_POST['action']);
+    error_log("POST data: " . print_r($_POST, true));
+    
     $manager = new DetailActivitiesManager($conn);
     $response = ['success' => false, 'message' => 'Invalid action'];
     
-    switch ($_POST['action']) {
-        case 'get_activity':
-            if (isset($_POST['id'])) {
-                $activity = $manager->getActivityById($_POST['id']);
-                if ($activity) {
-                    $response = ['success' => true, 'data' => $activity];
-                } else {
-                    $response = ['success' => false, 'message' => 'Activity not found'];
-                }
-            }
-            break;
-            
-        case 'create_activity':
-            try {
-                // Debug: Log received data
-                error_log("Received POST data: " . print_r($_POST, true));
-                
+    header('Content-Type: application/json');
+    
+    try {
+        switch ($_POST['action']) {
+            case 'create':
+                error_log("Processing CREATE action");
                 $data = [
-                    'project_id' => $_POST['project_id'] ?? '',
-                    'information_date' => $_POST['information_date'] ?? '',
-                    'user_position' => $_POST['user_position'] ?? '',
-                    'department' => $_POST['department'] ?? '',
-                    'application' => $_POST['application'] ?? '',
-                    'type' => $_POST['type'] ?? '',
-                    'description' => $_POST['description'] ?? '',
-                    'action_solution' => $_POST['action_solution'] ?? '',
-                    'due_date' => $_POST['due_date'] ?? '',
-                    'status' => $_POST['status'] ?? '',
-                    'cnc_number' => $_POST['cnc_number'] ?? '',
-                    'created_by' => 1
+                    'project_id' => $_POST['project_id'] ?? null,
+                    'activity_number' => $_POST['activity_number'] ?? null,
+                    'information_date' => $_POST['information_date'] ?? null,
+                    'user_position' => $_POST['user_position'] ?? null,
+                    'department' => $_POST['department'] ?? null,
+                    'application' => $_POST['application'] ?? null,
+                    'type' => $_POST['type'] ?? null,
+                    'description' => $_POST['description'] ?? null,
+                    'action_solution' => $_POST['action_solution'] ?? null,
+                    'due_date' => $_POST['due_date'] ?? null,
+                    'status' => $_POST['status'] ?? null,
+                    'cnc_number' => $_POST['cnc_number'] ?? null,
+                    'created_by' => $_SESSION['user_id'] ?? 1
                 ];
                 
-                // Debug: Log processed data
-                error_log("Processed data: " . print_r($data, true));
+                error_log("Data to be inserted: " . print_r($data, true));
                 
                 $result = $manager->createActivity($data);
-                if ($result) {
-                    $response = ['success' => true, 'message' => 'Activity created successfully', 'id' => $result];
-                } else {
-                    $response = ['success' => false, 'message' => 'Failed to create activity'];
-                }
-            } catch (Exception $e) {
-                error_log("Exception in create_activity: " . $e->getMessage());
-                $response = ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
-            }
-            break;
+                error_log("Create result: " . print_r($result, true));
+                
+                echo json_encode($result);
+                break;
             
-        case 'update_activity':
-            if (isset($_POST['id'])) {
-                try {
-                    $data = [
-                        'project_id' => $_POST['project_id'] ?? '',
-                        'information_date' => $_POST['information_date'] ?? '',
-                        'user_position' => $_POST['user_position'] ?? '',
-                        'department' => $_POST['department'] ?? '',
-                        'application' => $_POST['application'] ?? '',
-                        'type' => $_POST['type'] ?? '',
-                        'description' => $_POST['description'] ?? '',
-                        'action_solution' => $_POST['action_solution'] ?? '',
-                        'due_date' => $_POST['due_date'] ?? '',
-                        'status' => $_POST['status'] ?? '',
-                        'cnc_number' => $_POST['cnc_number'] ?? ''
-                    ];
-                    
-                    $result = $manager->updateActivity($_POST['id'], $data);
-                    if ($result) {
-                        $response = ['success' => true, 'message' => 'Activity updated successfully'];
-                    } else {
-                        $response = ['success' => false, 'message' => 'Failed to update activity'];
+            case 'update_activity':
+                if (isset($_POST['id'])) {
+                    try {
+                        $data = [
+                            'project_id' => $_POST['project_id'] ?? '',
+                            'activity_number' => $_POST['activity_number'] ?? '',
+                            'information_date' => $_POST['information_date'] ?? '',
+                            'user_position' => $_POST['user_position'] ?? '',
+                            'department' => $_POST['department'] ?? '',
+                            'application' => $_POST['application'] ?? '',
+                            'type' => $_POST['type'] ?? '',
+                            'description' => $_POST['description'] ?? '',
+                            'action_solution' => $_POST['action_solution'] ?? '',
+                            'due_date' => $_POST['due_date'] ?? '',
+                            'status' => $_POST['status'] ?? '',
+                            'cnc_number' => $_POST['cnc_number'] ?? ''
+                        ];
+                        
+                        $result = $manager->updateActivity($_POST['id'], $data);
+                        if ($result) {
+                            $response = ['success' => true, 'message' => 'Activity updated successfully'];
+                        } else {
+                            $response = ['success' => false, 'message' => 'Failed to update activity'];
+                        }
+                    } catch (Exception $e) {
+                        $response = ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
                     }
-                } catch (Exception $e) {
-                    $response = ['success' => false, 'message' => 'Error: ' . $e->getMessage()];
                 }
-            }
-            break;
-            
-        case 'delete_activity':
-            if (isset($_POST['id'])) {
-                $result = $manager->deleteActivity($_POST['id']);
-                if ($result) {
-                    $response = ['success' => true, 'message' => 'Activity deleted successfully'];
-                } else {
-                    $response = ['success' => false, 'message' => 'Failed to delete activity'];
+                break;
+                
+            case 'delete_activity':
+                if (isset($_POST['id'])) {
+                    $result = $manager->deleteActivity($_POST['id']);
+                    if ($result) {
+                        $response = ['success' => true, 'message' => 'Activity deleted successfully'];
+                    } else {
+                        $response = ['success' => false, 'message' => 'Failed to delete activity'];
+                    }
                 }
-            }
-            break;
-            
-        case 'get_applications':
-            $applications = $manager->getApplications();
-            $response = ['success' => true, 'data' => $applications];
-            break;
+                break;
+                
+            case 'get_applications':
+                $applications = $manager->getApplications();
+                $response = ['success' => true, 'data' => $applications];
+                break;
+        }
+        
+        if ($_POST['action'] !== 'create') {
+            echo json_encode($response);
+        }
+        
+    } catch (Exception $e) {
+        error_log("Exception in AJAX handler: " . $e->getMessage());
+        echo json_encode(['success' => false, 'message' => 'Error: ' . $e->getMessage()]);
     }
     
-    header('Content-Type: application/json');
-    echo json_encode($response);
     exit();
 }
 ?> 
