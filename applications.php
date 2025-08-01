@@ -1,4 +1,11 @@
-<?php include './partials/layouts/layoutTop.php' ?>
+<?php 
+include './partials/layouts/layoutTop.php';
+include_once './applications_functions.php';
+
+// Get applications data
+$manager = new ApplicationsManager($conn);
+$applications = $manager->getAllApplications();
+?>
 
         <div class="dashboard-main-body">
 
@@ -30,7 +37,7 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table bordered-table mb-0">
+                                <table class="table bordered-table mb-0" id="applicationsTable">
                                     <thead>
                                         <tr>
                                             <th scope="col">App Code</th>
@@ -38,80 +45,12 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr class="app-row" data-app-code="FO8" data-app-name="Cloud FO">
-                                            <td>FO8</td>
-                                            <td>Cloud FO</td>
+                                        <?php foreach ($applications as $app): ?>
+                                        <tr class="app-row" data-app-id="<?= $app['id'] ?>" data-app-code="<?= $app['app_code'] ?>" data-app-name="<?= htmlspecialchars($app['app_name']) ?>">
+                                            <td><?= $app['app_code'] ?></td>
+                                            <td><?= htmlspecialchars($app['app_name']) ?></td>
                                         </tr>
-                                        <tr>
-                                            <td>POS8</td>
-                                            <td>Cloud POS</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editAppModal" data-code="POS8" data-name="Cloud POS">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAppModal" data-code="POS8">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>AR8</td>
-                                            <td>Clout AR</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editAppModal" data-code="AR8" data-name="Clout AR">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAppModal" data-code="AR8">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>INV8</td>
-                                            <td>Cloud INV</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editAppModal" data-code="INV8" data-name="Cloud INV">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAppModal" data-code="INV8">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>AP8</td>
-                                            <td>Cloud AP</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editAppModal" data-code="AP8" data-name="Cloud AP">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAppModal" data-code="AP8">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>GL8</td>
-                                            <td>Cloud GL</td>
-                                            <td>
-                                                <div class="d-flex align-items-center gap-2">
-                                                    <button class="btn btn-sm btn-warning" data-bs-toggle="modal" data-bs-target="#editAppModal" data-code="GL8" data-name="Cloud GL">
-                                                        <iconify-icon icon="uil:edit" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                    <button class="btn btn-sm btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAppModal" data-code="GL8">
-                                                        <iconify-icon icon="mingcute:delete-2-line" class="text-xl"></iconify-icon>
-                                                    </button>
-                                                </div>
-                                            </td>
-                                        </tr>
+                                        <?php endforeach; ?>
                                     </tbody>
                                 </table>
                             </div>
@@ -167,8 +106,8 @@
                         </form>
                     </div>
                     <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="updateAppBtn">Close</button>
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                        <button type="button" class="btn btn-primary" id="updateAppBtn">Update Application</button>
                     </div>
                 </div>
             </div>
@@ -187,78 +126,204 @@
                         <input type="hidden" id="deleteAppCode">
                     </div>
                     <div class="modal-footer">
-                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                         <button type="button" class="btn btn-danger" id="confirmDeleteBtn">Delete</button>
+                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
                     </div>
                 </div>
             </div>
         </div>
 
+        <style>
+            /* Hover effects for application rows */
+            .app-row {
+                transition: all 0.3s ease;
+                cursor: pointer;
+            }
+            
+            .app-row:hover {
+                background-color: #90caf9 !important;
+                transform: translateY(-2px);
+                box-shadow: 0 6px 12px rgba(33, 150, 243, 0.3);
+                border-left: 4px solid #1565c0;
+                color: #0d47a1;
+                font-weight: 600;
+                border-radius: 4px;
+            }
+            
+            /* Table styling improvements */
+            .table tbody tr {
+                border-bottom: 1px solid #e9ecef;
+            }
+            
+            .table tbody tr:last-child {
+                border-bottom: none;
+            }
+            
+            /* Smooth transitions for all interactive elements */
+            .btn {
+                transition: all 0.2s ease;
+            }
+            
+            .btn:hover {
+                transform: translateY(-1px);
+            }
+        </style>
+
+        <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script>
-            // Add event listeners for edit buttons
-            document.querySelectorAll('[data-bs-target="#editAppModal"]').forEach(button => {
-                button.addEventListener('click', function() {
-                    const appCode = this.getAttribute('data-code');
-                    const name = this.getAttribute('data-name');
+            document.addEventListener('DOMContentLoaded', function() {
+                const addAppModal = new bootstrap.Modal(document.getElementById('addAppModal'));
+                const editAppModal = new bootstrap.Modal(document.getElementById('editAppModal'));
+                const deleteAppModal = new bootstrap.Modal(document.getElementById('deleteAppModal'));
+
+                const showToast = (message, icon = 'success') => {
+                    Swal.fire({
+                        toast: true,
+                        position: 'top-end',
+                        icon: icon,
+                        title: message,
+                        showConfirmButton: false,
+                        timer: 3000,
+                        timerProgressBar: true,
+                    });
+                };
+
+                // Row click event to show application details
+                document.addEventListener('click', function(e) {
+                    if (e.target.closest('.app-row')) {
+                        const row = e.target.closest('.app-row');
+                        
+                        // Store current app data for edit/delete
+                        window.currentAppData = {
+                            id: row.dataset.appId,
+                            appCode: row.dataset.appCode,
+                            appName: row.dataset.appName
+                        };
+                        
+                        // Show edit modal directly
+                        document.getElementById('editAppCode').value = row.dataset.appCode;
+                        document.getElementById('editAppName').value = row.dataset.appName;
+                        editAppModal.show();
+                    }
+                });
+
+                // Save application button event
+                document.getElementById('saveAppBtn').addEventListener('click', function() {
+                    const appCode = document.getElementById('appCode').value;
+                    const appName = document.getElementById('appName').value;
                     
-                    document.getElementById('editAppCode').value = appCode;
-                    document.getElementById('editAppName').value = name;
+                    if (!appCode || !appName) {
+                        showToast('Please fill in all fields', 'error');
+                        return;
+                    }
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'create_application');
+                    formData.append('app_code', appCode);
+                    formData.append('app_name', appName);
+                    
+                    fetch('applications_functions.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast(data.message);
+                            addAppModal.hide();
+                            document.getElementById('addAppForm').reset();
+                            location.reload(); // Refresh to show new data
+                        } else {
+                            showToast(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showToast('Error saving application', 'error');
+                    });
                 });
-            });
 
-            // Add event listeners for delete buttons
-            document.querySelectorAll('[data-bs-target="#deleteAppModal"]').forEach(button => {
-                button.addEventListener('click', function() {
-                    const appCode = this.getAttribute('data-code');
-                    document.getElementById('deleteAppCode').value = appCode;
+                // Update application button event
+                document.getElementById('updateAppBtn').addEventListener('click', function() {
+                    if (!window.currentAppData) {
+                        showToast('No application selected', 'error');
+                        return;
+                    }
+                    
+                    const appCode = document.getElementById('editAppCode').value;
+                    const appName = document.getElementById('editAppName').value;
+                    
+                    if (!appCode || !appName) {
+                        showToast('Please fill in all fields', 'error');
+                        return;
+                    }
+                    
+                    const formData = new FormData();
+                    formData.append('action', 'update_application');
+                    formData.append('id', window.currentAppData.id);
+                    formData.append('app_code', appCode);
+                    formData.append('app_name', appName);
+                    
+                    fetch('applications_functions.php', {
+                        method: 'POST',
+                        body: formData
+                    })
+                    .then(response => response.json())
+                    .then(data => {
+                        if (data.success) {
+                            showToast(data.message);
+                            editAppModal.hide();
+                            location.reload(); // Refresh to show updated data
+                        } else {
+                            showToast(data.message, 'error');
+                        }
+                    })
+                    .catch(error => {
+                        showToast('Error updating application', 'error');
+                    });
                 });
-            });
 
-            // Save application button event
-            document.getElementById('saveAppBtn').addEventListener('click', function() {
-                const appCode = document.getElementById('appCode').value;
-                const name = document.getElementById('appName').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Saving application:', { appCode, name });
-                
-                // Close the modal
-                document.getElementById('addAppModal').querySelector('.btn-close').click();
-                
-                // Reset form
-                document.getElementById('addAppForm').reset();
-                
-                // Show success message (in a real app)
-                alert('Application saved successfully!');
-            });
-
-            // Update application button event
-            document.getElementById('updateAppBtn').addEventListener('click', function() {
-                const appCode = document.getElementById('editAppCode').value;
-                const name = document.getElementById('editAppName').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Updating application:', { appCode, name });
-                
-                // Close the modal
-                document.getElementById('editAppModal').querySelector('.btn-close').click();
-                
-                // Show success message (in a real app)
-                alert('Application updated successfully!');
-            });
-
-            // Delete application button event
-            document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
-                const appCode = document.getElementById('deleteAppCode').value;
-                
-                // Here you would typically send the data to the server
-                console.log('Deleting application:', appCode);
-                
-                // Close the modal
-                document.getElementById('deleteAppModal').querySelector('.btn-close').click();
-                
-                // Show success message (in a real app)
-                alert('Application deleted successfully!');
+                // Delete application button event
+                document.getElementById('confirmDeleteBtn').addEventListener('click', function() {
+                    if (!window.currentAppData) {
+                        showToast('No application selected', 'error');
+                        return;
+                    }
+                    
+                    Swal.fire({
+                        title: `Are you sure you want to delete "${window.currentAppData.appName}"?`,
+                        text: "You won't be able to revert this!",
+                        icon: 'warning',
+                        showCancelButton: true,
+                        confirmButtonColor: '#dc3545',
+                        cancelButtonColor: '#6c757d',
+                        confirmButtonText: 'Yes, delete!',
+                        cancelButtonText: 'Cancel'
+                    }).then((result) => {
+                        if (result.isConfirmed) {
+                            const formData = new FormData();
+                            formData.append('action', 'delete_application');
+                            formData.append('id', window.currentAppData.id);
+                            
+                            fetch('applications_functions.php', {
+                                method: 'POST',
+                                body: formData
+                            })
+                            .then(response => response.json())
+                            .then(data => {
+                                if (data.success) {
+                                    showToast(data.message);
+                                    deleteAppModal.hide();
+                                    location.reload(); // Refresh to show updated data
+                                } else {
+                                    showToast(data.message, 'error');
+                                }
+                            })
+                            .catch(error => {
+                                showToast('Error deleting application', 'error');
+                            });
+                        }
+                    });
+                });
             });
         </script>
 

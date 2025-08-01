@@ -475,8 +475,8 @@ include './partials/layouts/layoutTop.php';
                     </div>
                 </div>
                 <div class="modal-footer">
+                    <button type="submit" name="edit_activity" class="btn btn-primary">Close</button>
                     <button type="button" class="btn btn-light" data-bs-dismiss="modal">Close</button>
-                    <button type="submit" name="edit_activity" class="btn btn-primary">Update Activity</button>
                 </div>
             </form>
         </div>

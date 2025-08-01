@@ -66,18 +66,20 @@
                 </a>
             </li>
 
+
+
+
+
+
+
+
+
             <li>
-                <a href="detail-activity-list.php">
-                    <iconify-icon icon="hugeicons:invoice-03" class="menu-icon"></iconify-icon>
-                    <span>Detail Activity</span>
+                <a href="detail-activities.php">
+                    <iconify-icon icon="solar:document-text-outline" class="menu-icon"></iconify-icon>
+                    <span>Detail Activities</span>
                 </a>
             </li>
-
-
-
-
-
-
 
             <li class="sidebar-menu-group-title">UI Elements</li>
 
