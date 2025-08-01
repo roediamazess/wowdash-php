@@ -76,7 +76,7 @@ class DetailActivitiesManager {
     // Create new activity
     public function createActivity($data) {
         try {
-            $sql = "INSERT INTO detail_activities (project_id, information_date, user_position, department, application, type, description, action_solution, due_date, status, cnc_number, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
+            $sql = "INSERT INTO detail_activities (project_id, activity_number, information_date, user_position, department, application, type, description, action_solution, due_date, status, cnc_number, created_by) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)";
             
             // Debug: Log SQL and data
             error_log("SQL: " . $sql);
@@ -90,6 +90,7 @@ class DetailActivitiesManager {
             
             // Handle null values properly
             $project_id = $data['project_id'] ?? '';
+            $activity_number = $data['activity_number'] ?? 'ACT-' . date('Ymd') . '-' . rand(1000, 9999);
             $information_date = $data['information_date'] ?? '';
             $user_position = $data['user_position'] ?? '';
             $department = $data['department'] ?? '';
@@ -103,10 +104,11 @@ class DetailActivitiesManager {
             $created_by = $data['created_by'] ?? 1;
             
             // Debug: Log binding parameters
-            error_log("Binding parameters: project_id='$project_id', information_date='$information_date', user_position='$user_position', department='$department', application='$application', type='$type', description='$description', action_solution='$action_solution', due_date='$due_date', status='$status', cnc_number='$cnc_number', created_by='$created_by'");
+            error_log("Binding parameters: project_id='$project_id', activity_number='$activity_number', information_date='$information_date', user_position='$user_position', department='$department', application='$application', type='$type', description='$description', action_solution='$action_solution', due_date='$due_date', status='$status', cnc_number='$cnc_number', created_by='$created_by'");
             
-            $bind_result = $stmt->bind_param('sssssssssssi', 
+            $bind_result = $stmt->bind_param('ssssssssssssi', 
                 $project_id,
+                $activity_number,
                 $information_date,
                 $user_position,
                 $department,
@@ -145,6 +147,7 @@ class DetailActivitiesManager {
     public function updateActivity($id, $data) {
         $sql = "UPDATE detail_activities SET 
                 project_id = ?,
+                activity_number = ?,
                 information_date = ?, 
                 user_position = ?, 
                 department = ?, 
@@ -161,6 +164,7 @@ class DetailActivitiesManager {
         
         // Handle null values properly
         $project_id = $data['project_id'] ?? '';
+        $activity_number = $data['activity_number'] ?? 'ACT-' . date('Ymd') . '-' . rand(1000, 9999);
         $information_date = $data['information_date'] ?? '';
         $user_position = $data['user_position'] ?? '';
         $department = $data['department'] ?? '';
@@ -172,8 +176,9 @@ class DetailActivitiesManager {
         $status = $data['status'] ?? '';
         $cnc_number = $data['cnc_number'] ?? '';
         
-        $stmt->bind_param('sssssssssssi', 
+        $stmt->bind_param('ssssssssssssi', 
             $project_id,
+            $activity_number,
             $information_date,
             $user_position,
             $department,
@@ -325,7 +330,7 @@ class DetailActivitiesManager {
 }
 
 // Handle AJAX requests
-if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
+if (isset($_SERVER['REQUEST_METHOD']) && $_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['action'])) {
     $manager = new DetailActivitiesManager($conn);
     $response = ['success' => false, 'message' => 'Invalid action'];
     

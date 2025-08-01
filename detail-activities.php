@@ -578,6 +578,7 @@ include './partials/layouts/layoutTop.php';
         // Additional validation for required fields
         const typeField = document.getElementById('type');
         const applicationField = document.getElementById('application');
+        const descriptionField = document.getElementById('description');
         
         if (!typeField.value) {
             Swal.fire({
@@ -596,6 +597,16 @@ include './partials/layouts/layoutTop.php';
                 text: 'Please select an Application for the activity.'
             });
             applicationField.focus();
+            return;
+        }
+        
+        if (!descriptionField.value.trim()) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Field Required',
+                text: 'Please enter a Description for the activity.'
+            });
+            descriptionField.focus();
             return;
         }
         
