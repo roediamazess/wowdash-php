@@ -485,12 +485,17 @@ include './partials/layouts/layoutTop.php';
                 applicationSelects.forEach(selectId => {
                     const select = document.getElementById(selectId);
                     if (select) {
-                                                 data.data.forEach(app => {
-                             const option = document.createElement('option');
-                             option.value = `${app.code} - ${app.name}`;
-                             option.textContent = `${app.code} - ${app.name}`;
-                             select.appendChild(option);
-                         });
+                        // Clear existing options except the first one (placeholder)
+                        while (select.children.length > 1) {
+                            select.removeChild(select.lastChild);
+                        }
+                        
+                        data.data.forEach(app => {
+                            const option = document.createElement('option');
+                            option.value = `${app.code} - ${app.name}`;
+                            option.textContent = `${app.code} - ${app.name}`;
+                            select.appendChild(option);
+                        });
                     }
                 });
             }
@@ -569,6 +574,31 @@ include './partials/layouts/layoutTop.php';
     // Save Detail Activity
     function saveDetailActivity() {
         const form = document.getElementById('addDetailActivityForm');
+        
+        // Additional validation for required fields
+        const typeField = document.getElementById('type');
+        const applicationField = document.getElementById('application');
+        
+        if (!typeField.value) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Field Required',
+                text: 'Please select a Type for the activity.'
+            });
+            typeField.focus();
+            return;
+        }
+        
+        if (!applicationField.value) {
+            Swal.fire({
+                icon: 'warning',
+                title: 'Field Required',
+                text: 'Please select an Application for the activity.'
+            });
+            applicationField.focus();
+            return;
+        }
+        
         if (form.checkValidity()) {
             const formData = new FormData(form);
             formData.append('action', 'create_activity');
