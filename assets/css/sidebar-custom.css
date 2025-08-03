@@ -1,0 +1,74 @@
+/* Custom styling for Users menu items in sidebar */
+.sidebar-menu .sidebar-submenu li a[href="users-list.php"] {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.sidebar-menu .sidebar-submenu li a[href="users-list.php"]:hover {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+  transform: translateX(5px) !important;
+}
+
+.sidebar-menu .sidebar-submenu li a[href="profile-settings.php"] {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  transition: all 0.3s ease !important;
+}
+
+.sidebar-menu .sidebar-submenu li a[href="profile-settings.php"]:hover {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+  transform: translateX(5px) !important;
+}
+
+/* Active state for Users submenu items */
+.sidebar-menu .sidebar-submenu li.active-page a[href="users-list.php"],
+.sidebar-menu .sidebar-submenu li.active-page a[href="profile-settings.php"] {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.15) !important;
+}
+
+/* Dark mode support for Users menu items */
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a[href="users-list.php"],
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a[href="profile-settings.php"] {
+  background-color: var(--button-secondary) !important;
+  color: var(--text-primary-light) !important;
+}
+
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a[href="users-list.php"]:hover,
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a[href="profile-settings.php"]:hover {
+  background-color: var(--button-secondary) !important;
+  color: var(--text-primary-light) !important;
+}
+
+[data-theme=dark] .sidebar-menu .sidebar-submenu li.active-page a[href="users-list.php"],
+[data-theme=dark] .sidebar-menu .sidebar-submenu li.active-page a[href="profile-settings.php"] {
+  background-color: var(--button-secondary) !important;
+  color: var(--text-primary-light) !important;
+}
+
+/* Override default sidebar submenu styling for Users items */
+.sidebar-menu .sidebar-submenu li a[href="users-list.php"],
+.sidebar-menu .sidebar-submenu li a[href="profile-settings.php"] {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+  border-radius: 8px !important;
+  margin: 2px 0 !important;
+  padding: 0.4375rem 0.75rem !important;
+}
+
+/* Ensure the styling works even when not active */
+.sidebar-menu .sidebar-submenu li a[href="users-list.php"]:not(.active-page),
+.sidebar-menu .sidebar-submenu li a[href="profile-settings.php"]:not(.active-page) {
+  background-color: var(--brand) !important;
+  color: #fff !important;
+} 

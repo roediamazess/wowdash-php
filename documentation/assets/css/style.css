@@ -12577,6 +12577,86 @@ td.fc-header-center {
   z-index: 3;
 }
 
+/* Dark mode support for sidebar */
+[data-theme=dark] .sidebar {
+  background-color: var(--neutral-100);
+}
+
+/* High specificity selectors to prevent white flash */
+html[data-theme=dark] .sidebar {
+  background-color: var(--neutral-100) !important;
+}
+
+html[data-theme=dark] .sidebar * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Prevent white flash during page load */
+html[data-theme=dark] {
+  background-color: var(--neutral-100) !important;
+}
+
+html[data-theme=dark] body {
+  background-color: var(--neutral-100) !important;
+  color: var(--text-secondary-light) !important;
+}
+
+html[data-theme=dark] .dashboard-main {
+  background-color: var(--neutral-100) !important;
+}
+
+/* Ensure all elements have proper dark mode styling on load */
+html[data-theme=dark] * {
+  transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+/* Additional elements to prevent white flash */
+html[data-theme=dark] .card {
+  background-color: var(--neutral-100) !important;
+  border-color: var(--neutral-200) !important;
+}
+
+html[data-theme=dark] .card-body {
+  background-color: var(--neutral-100) !important;
+  color: var(--text-secondary-light) !important;
+}
+
+html[data-theme=dark] .navbar {
+  background-color: var(--neutral-100) !important;
+  border-color: var(--neutral-200) !important;
+}
+
+html[data-theme=dark] .navbar-header {
+  background-color: var(--neutral-100) !important;
+}
+
+html[data-theme=dark] .modal-content {
+  background-color: var(--neutral-100) !important;
+  border-color: var(--neutral-200) !important;
+}
+
+html[data-theme=dark] .modal-header {
+  background-color: var(--neutral-100) !important;
+  border-color: var(--neutral-200) !important;
+}
+
+html[data-theme=dark] .modal-body {
+  background-color: var(--neutral-100) !important;
+  color: var(--text-secondary-light) !important;
+}
+
+html[data-theme=dark] .form-control {
+  background-color: var(--neutral-100) !important;
+  border-color: var(--neutral-200) !important;
+  color: var(--text-secondary-light) !important;
+}
+
+html[data-theme=dark] .form-select {
+  background-color: var(--neutral-100) !important;
+  border-color: var(--neutral-200) !important;
+  color: var(--text-secondary-light) !important;
+}
+
 @media (min-width: 1200px) {
   .sidebar {
     inset-inline-start: 0;
@@ -12728,6 +12808,70 @@ td.fc-header-center {
   display: inline-block;
 }
 
+/* Additional dark mode support for sidebar elements */
+[data-theme=dark] .sidebar-menu li a {
+  color: var(--text-secondary-light);
+}
+
+[data-theme=dark] .sidebar-menu li a:hover {
+  background-color: var(--neutral-200);
+  color: var(--text-primary-light);
+}
+
+[data-theme=dark] .sidebar-menu li > a.active-page {
+  background-color: var(--primary-600);
+  color: var(--white);
+}
+
+[data-theme=dark] .sidebar-menu li > a.active-page:hover {
+  background-color: var(--primary-700);
+  color: var(--white);
+}
+
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a {
+  color: var(--text-secondary-light);
+}
+
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a:hover {
+  background-color: var(--neutral-200);
+  color: var(--text-primary-light);
+}
+
+[data-theme=dark] .sidebar-menu .sidebar-submenu li.active-page a {
+  background-color: var(--primary-600);
+  color: var(--white);
+}
+
+[data-theme=dark] .sidebar-menu .sidebar-menu-group-title {
+  color: var(--text-secondary-light);
+}
+
+[data-theme=dark] .sidebar-menu li.dropdown > a {
+  color: var(--text-secondary-light);
+}
+
+[data-theme=dark] .sidebar-menu li.dropdown.open > a,
+[data-theme=dark] .sidebar-menu li.dropdown.dropdown-open > a {
+  background-color: var(--neutral-200);
+  color: var(--text-primary-light);
+}
+
+[data-theme=dark] .sidebar-menu li.dropdown.open > a:hover,
+[data-theme=dark] .sidebar-menu li.dropdown.dropdown-open > a:hover {
+  background-color: var(--neutral-300);
+  color: var(--text-primary-light);
+}
+
+[data-theme=dark] .sidebar-close-btn {
+  border-color: var(--neutral-200);
+  color: var(--text-secondary-light);
+}
+
+[data-theme=dark] .sidebar-close-btn:hover {
+  background-color: var(--neutral-200);
+  color: var(--text-primary-light);
+}
+
 .sidebar-menu li.dropdown > a {
   position: relative;
 }
@@ -12863,6 +13007,60 @@ td.fc-header-center {
   }
 }
 /* === sidebar css end === */
+
+/* Custom styling for Users menu items */
+.sidebar-menu .sidebar-submenu li a[href="users-list.php"] {
+  background-color: var(--brand);
+  color: #fff;
+  border-radius: 8px;
+  margin: 2px 0;
+}
+
+.sidebar-menu .sidebar-submenu li a[href="users-list.php"]:hover {
+  background-color: var(--brand);
+  color: #fff;
+}
+
+.sidebar-menu .sidebar-submenu li a[href="profile-settings.php"] {
+  background-color: var(--brand);
+  color: #fff;
+  border-radius: 8px;
+  margin: 2px 0;
+}
+
+.sidebar-menu .sidebar-submenu li a[href="profile-settings.php"]:hover {
+  background-color: var(--brand);
+  color: #fff;
+}
+
+/* Active state for Users submenu items */
+.sidebar-menu .sidebar-submenu li.active-page a[href="users-list.php"],
+.sidebar-menu .sidebar-submenu li.active-page a[href="profile-settings.php"] {
+  background-color: var(--brand);
+  color: #fff;
+  border-radius: 8px;
+  margin: 2px 0;
+}
+
+/* Dark mode support for Users menu items */
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a[href="users-list.php"],
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a[href="profile-settings.php"] {
+  background-color: var(--brand);
+  color: #fff;
+}
+
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a[href="users-list.php"]:hover,
+[data-theme=dark] .sidebar-menu .sidebar-submenu li a[href="profile-settings.php"]:hover {
+  background-color: var(--brand);
+  color: #fff;
+}
+
+[data-theme=dark] .sidebar-menu .sidebar-submenu li.active-page a[href="users-list.php"],
+[data-theme=dark] .sidebar-menu .sidebar-submenu li.active-page a[href="profile-settings.php"] {
+  background-color: var(--brand);
+  color: #fff;
+}
+
 /* === breadcrumb css start === */
 /* === breadcrumb css end === */
 /* === dashboard body css start === */
